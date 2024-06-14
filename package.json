@@ -21,6 +21,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"bootstrap-icons": "^1.11.3",
 		"minecraft-data": "^3.65.0"
 	}
 }

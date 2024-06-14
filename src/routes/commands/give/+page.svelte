@@ -16,7 +16,7 @@ let command = "/give @s";
 
 function updateItem(itemId: string) {
     const selItem = items.find((i) => i.name == itemId);
-    if (!selItem) item = null;
+    if (!selItem) return item = null;
     components.max_stack_size = selItem.stackSize;
     item = item;
 }
@@ -55,8 +55,9 @@ refreshOutput();
 <div>
     <Container>
         {#key command}
-            <p>{command}</p>
+            <pre>{command}</pre>
         {/key}
+        <hr />
         <div class="main">
             <div class="item">
                 <label for="itemid">アイテム</label>
@@ -67,13 +68,14 @@ refreshOutput();
                 </select>
                 <input type="text" class="input-text" placeholder="検索..." bind:value={search} on:input={refreshSearch} />
             </div>
+            <hr />
             {#if item}
                 <div class="item-count component">
-                    <label for="count">数量 (count)</label>
+                    <label for="count">数量</label>
                     <input type="number" class="input-number" id="count" bind:value={count} max={item.stackSize} min={1} on:input={refreshOutput} />
                 </div>
                 <div class="item-count component">
-                    <label for="count">最大スタック数 (max_stack_size)</label>
+                    <label for="count">最大スタック数</label>
                     <input type="number" class="input-number" id="count" bind:value={components.max_stack_size} min={1} on:input={refreshOutput} />
                 </div>
                 <div class="item-ctm component">
@@ -107,6 +109,16 @@ refreshOutput();
 </div>
 
 <style>
+hr {
+    width: 100%;
+    margin: 40px 0;
+    border-color: #bbb;
+}
+pre {
+    border: #bbb 1px solid;
+    padding: 10px;
+    border-radius: 5px;
+}
 .component {
     display: flex;
 }
@@ -116,7 +128,7 @@ refreshOutput();
 .main {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
 }
 .item {
     display: flex;
