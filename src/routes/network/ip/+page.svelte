@@ -22,7 +22,6 @@
         ipv4 = await (await fetch("https://api.ipify.org/?format=text")).text()
         ipv6 = await (await fetch("https://api6.ipify.org/?format=text")).text()
         data = await (await fetch("https://ipapi.co/json/")).json()
-        console.log(data)
     })
 </script>
 <Container>
