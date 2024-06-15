@@ -2,21 +2,15 @@
     import Container from "$components/Container.svelte";
 
     let amount = 4
-    let noph = false
-    let useupper = false
-    let uuids: string[] = []
+    let max = 5
+    let min = 1
+    let randoms: string[] = []
     function gen() {
         if (amount <= 0) amount = 1
-        uuids = []
+        randoms = []
         for (let i = 0; i < amount; i++) {
-            let uuid: string = crypto.randomUUID()
-            if (noph) {
-                uuid = uuid.replace(/-/g, "")
-            }
-            if (useupper) {
-                uuid = uuid.toUpperCase()
-            }
-            uuids.push(uuid)
+            let random: string = Math.floor(Math.random() * (max - min) + min).toString();
+            randoms.push(random)
         }
     }
     function copy(data: string) {
@@ -25,29 +19,29 @@
     gen()
 </script>
 <Container>
-    <h1>UUIDジェネレーター</h1>
+    <h1>ランダム整数ジェネレーター</h1>
     <hr />
     <div class="main">
         <div>
             <div class="controls">
-                <div class="checks">
-                    <input bind:checked={noph} on:change={gen} type="checkbox" class="checkbox" id="no-ph">
-                    <label for="no-ph">ハイフンなし</label>
-                </div>
-                <div class="checks">
-                    <input bind:checked={useupper} on:change={gen} type="checkbox" class="checkbox" id="use-upper">
-                    <label for="use-upper">大文字</label>
-                </div>
                 <div class="counts">
                     <label for="amount">生成数</label>
                     <input bind:value={amount} on:change={gen} min={1} max={50} type="number" id="amount">
                 </div>
+                <div class="counts">
+                    <label for="max">最大</label>
+                    <input bind:value={max} on:change={gen} min={min} type="number" id="max">
+                </div>
+                <div class="counts">
+                    <label for="min">最小</label>
+                    <input bind:value={min} on:change={gen} max={max} type="number" id="min">
+                </div>
                 <button on:click={gen}>再生成</button>
             </div>
-            {#each uuids as uuid}
+            {#each randoms as random}
                 <div class="item">
-                    <textarea readonly bind:value={uuid}></textarea>
-                    <button on:click={_ => copy(uuid)}>コピー</button>
+                    <textarea readonly bind:value={random}></textarea>
+                    <button on:click={_ => copy(random)}>コピー</button>
                 </div>
             {/each}
         </div>
@@ -55,42 +49,10 @@
 </Container>
 
 <style>
-    .checks {
-        display: flex;
-        align-items: center;
-    }
-    .checks label {
-        cursor: pointer;
-    }
     .controls {
         display: flex;
         gap: 20px;
         align-items: center;
-    }
-    .checkbox {
-        cursor: pointer;
-        appearance: none;
-        height: 24px;
-        width: 24px;
-        margin: 4px;
-        border: 1px solid #8b98a5;
-        border-radius: 4px;
-    }
-    .checkbox:checked {
-        border: 1px solid #8b98a5;
-        background-color: #fff;
-    }
-    .checkbox:checked::before {
-        display: grid;
-        place-content: center;
-        color: #000;
-        height: 100%;
-        font-family: "bootstrap-icons";
-        font-size: 18px;
-        content: "\F633";
-    }
-    .checkbox:focus-visible {
-        outline: none;
     }
     .counts > input {
         background-color: #222;

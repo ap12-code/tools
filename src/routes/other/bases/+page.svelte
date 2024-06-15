@@ -25,7 +25,9 @@
     }
 </script>
 <Container>
-    <h3>基数変換</h3>
+    <h1>基数変換</h1>
+    <p>16進<i class="bi bi-arrow-left-right"></i>10進<i class="bi bi-arrow-left-right"></i>8進<i class="bi bi-arrow-left-right"></i>2進数を相互変換します</p>
+    <hr />
     <div class="main">
         <div>
             <p>16進数</p>
@@ -67,5 +69,9 @@
     }
     input:focus {
         outline: none;
+    }
+    hr {
+        margin: 20px 0;
+        border-color: #666;
     }
 </style>

@@ -16,7 +16,8 @@
     }
 </script>
 <Container>
-    <h3>Base64 エンコーダー / デコーダー</h3>
+    <h1>Base64 エンコーダー / デコーダー</h1>
+    <hr />
     <div class="main">
         <div>
             <p>テキスト</p>
@@ -60,5 +61,9 @@
         background-color: #666;
         transition: 0.2s all;
         cursor: pointer;
+    }
+    hr {
+        margin: 20px 0;
+        border-color: #666;
     }
 </style>

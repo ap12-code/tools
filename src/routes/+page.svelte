@@ -5,13 +5,32 @@
 <div>
     <Container>
         <h1>マイクラコマンド研究所's ToolBox</h1>
-        <p>なにかに使えそうなツールを作ってます</p>
+        <p>なにかに使えそうなツールを作ってます。要望あればdiscordまで。</p>
+        <hr />
         <div>
-            <hr />
             <div class="tools">
                 <span>生成ツール</span>
+                <a class="tool" href="/other/random" style="border-left: 10px solid #993;">
+                    <span class="tool-title">ランダム数</span>
+                </a>
+                <a class="tool" href="/other/password" style="border-left: 10px solid #993;">
+                    <span class="tool-title">パスワード</span>
+                </a>
                 <a class="tool" href="/other/uuid" style="border-left: 10px solid #993;">
                     <span class="tool-title">UUID</span>
+                </a>
+                <a class="tool" href="/json/pack-mcmeta" style="border-left: 10px solid #993;">
+                    <span class="tool-title">pack.mcmeta</span>
+                </a>
+            </div>
+            <hr />
+            <div class="tools">
+                <span>ネットワークツール</span>
+                <a class="tool" href="/network/ip" style="border-left: 10px solid #939;">
+                    <span class="tool-title">IPチェッカー</span>
+                </a>
+                <a class="tool" href="/network/lookup" style="border-left: 10px solid #939;">
+                    <span class="tool-title">dig / nslookup</span>
                 </a>
             </div>
             <hr />
@@ -19,6 +38,12 @@
                 <span>変換ツール</span>
                 <a class="tool" href="/other/bases" style="border-left: 10px solid #393;">
                     <span class="tool-title">基数</span>
+                </a>
+                <a class="tool" href="/other/upper-lower" style="border-left: 10px solid #393;">
+                    <span class="tool-title">大文字/小文字</span>
+                </a>
+                <a class="tool" href="/other/unix-timestamp" style="border-left: 10px solid #393;">
+                    <span class="tool-title">Unix Timestamp</span>
                 </a>
             </div>
             <hr />
