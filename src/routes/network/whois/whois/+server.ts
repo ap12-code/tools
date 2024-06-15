@@ -7,7 +7,7 @@ const execAsync = promisify(exec)
 export const POST: RequestHandler = async ({ request }) => {
     const body = await request.json()
     if (!body || !body.address) throw error(400)
-    const { stdout } = await execAsync(`dig @1.1.1.1 ${body.address} ${body.param}`)
+    const { stdout } = await execAsync(`whois ${body.address}`)
 
     return new Response(stdout.toString())
 }

@@ -3,7 +3,8 @@
     import { onMount } from "svelte";
 
     $: data = {
-        "ip": "取得中...",
+        "ipv4": "取得中...",
+        "ipv6": "取得中...",
         "hostname": "取得中...",
         "city": "取得中...",
         "region": "取得中...",
@@ -15,15 +16,19 @@
         "readme": "取得中..."
     }
     onMount(async () => {
-        data = await (await fetch("https://ipinfo.io?callback")).json()
+        data = await (await fetch("https://ipapi.co/json/")).json()
+        data.ipv4 = await (await fetch("https://api.ipify.org/?format=text")).text()
+        data.ipv6 = await (await fetch("https://api6.ipify.org/?format=text")).text()
         console.log(data)
     })
 </script>
 <Container>
     <h1>IPチェッカー</h1>
     <hr />
-    <span>グローバルIPアドレス</span>
-    <textarea readonly>{data.ip}</textarea>
+    <span>IPアドレス (IPv4)</span>
+    <textarea readonly>{data.ipv4}</textarea>
+    <span>IPアドレス (IPv6)</span>
+    <textarea readonly>{data.ipv6}</textarea>
     <hr />
     <span>国</span>
     <textarea readonly>{data.country}</textarea>
@@ -35,7 +40,7 @@
     <span>プロバイダ</span>
     <textarea readonly>{data.org}</textarea>
     <hr />
-    <p>Data Provided by ipinfo.io</p>
+    <p>Data Provided by ipapi.co & ipify.org</p>
 </Container>
 
 <style>

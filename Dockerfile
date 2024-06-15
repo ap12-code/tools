@@ -9,6 +9,7 @@ COPY vite.config.ts .
 COPY src src
 COPY static static
 
+RUN apk add --no-cache bind-tools
 RUN npm i
 RUN npm run build
 

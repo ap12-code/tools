@@ -5,24 +5,11 @@
     let result = ""
     let error = false
 
-    const dig_params = {
-        "A": "Aレコード - ホストアドレス",
-        "ANY": "ANY - 全て",
-        "CNAME": "CNAMEレコード - CNAMEレコード情報",
-        "MX": "MXレコード - メールサーバー",
-        "NS": "NSレコード - DNSサーバー",
-        "SOA": "SOAレコード - 管理情報",
-        "HINFO": "HINFO - ホスト情報",
-        "AXFR": "AXFR - ゾーン転送情報",
-        "TXT": "TXTレコード - TXTレコード情報"
-    }
-
     async function run(t: string) {
         error = false
-        const resp = await fetch(`/network/lookup/${t}`, {
+        const resp = await fetch(`/network/whois/${t}`, {
             body: JSON.stringify({
-                "address": ip,
-                "param": dig_param
+                "address": ip
             }),
             method: "POST",
             headers: {
@@ -39,25 +26,15 @@
 </script>
 <Container>
     <h1>dig / nslookup</h1>
-    <p>うちのサーバーからdigとかします。</p>
     <hr />
     <div class="main">
         <div class="input">
-            <span>IPアドレス</span>
+            <span>IPアドレス / ドメイン</span>
             <input type="text" bind:value={ip} class:err={error}>
-        </div>
-        <div class="input">
-            <p>DIGのパラメータ</p>
-            <select bind:value={dig_param}>
-                {#each Object.entries(dig_params) as [k, v]}
-                    <option value={k}>{v}</option>
-                {/each}
-            </select>
         </div>
         <div>
             <p>実行</p>
-            <button on:click={_ => run("dig")}>dig実行</button>
-            <button on:click={_ => run("nslookup")}>nslookup実行</button>
+            <button on:click={_ => run("whois")}>whois実行</button>
         </div>
     </div>
     <hr />
@@ -108,13 +85,5 @@
         background-color: #666;
         transition: 0.2s all;
         cursor: pointer;
-    }
-    select {
-        background-color: #222;
-        color: #fff;
-        border-radius: 5px;
-        padding: 5px;
-        outline: none;
-        width: 300px;
     }
 </style>
