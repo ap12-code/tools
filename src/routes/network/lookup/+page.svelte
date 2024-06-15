@@ -39,12 +39,11 @@
 </script>
 <Container>
     <h1>dig / nslookup</h1>
-    <p>うちのサーバーからdigとかします。</p>
     <hr />
     <div class="main">
         <div class="input">
-            <span>IPアドレス</span>
-            <input type="text" bind:value={ip} class:err={error}>
+            <span>IPアドレス / ドメイン</span>
+            <input type="text" placeholder="komaken.net, 1.1.1.1" bind:value={ip} class:err={error}>
         </div>
         <div class="input">
             <p>DIGのパラメータ</p>

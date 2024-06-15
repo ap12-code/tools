@@ -32,6 +32,9 @@
                 <a class="tool" href="/network/lookup" style="border-left: 10px solid #939;">
                     <span class="tool-title">dig / nslookup</span>
                 </a>
+                <a class="tool" href="/network/whois" style="border-left: 10px solid #939;">
+                    <span class="tool-title">whois</span>
+                </a>
             </div>
             <hr />
             <div class="tools">

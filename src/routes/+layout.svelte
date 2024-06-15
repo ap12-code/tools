@@ -7,6 +7,7 @@
         "/json/pack-mcmeta": "pack.mcmeta",
         "/network/ip": "IPチェッカー",
         "/network/lookup": "dig&nslookup",
+        "/network/whois": "whois",
         "/other/base64": "Base64 エンコーダー&デコーダー",
         "/other/bases": "基数変換",
         "/other/password": "パスワード生成",

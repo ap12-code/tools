@@ -1,7 +1,10 @@
 <script lang="ts">
     import Container from "$components/Container.svelte";
+  import Text from "$components/Text.svelte";
     import { onMount } from "svelte";
 
+    $: ipv4 = "取得中..."
+    $: ipv6 = "取得中..."
     $: data = {
         "ipv4": "取得中...",
         "ipv6": "取得中...",
@@ -16,9 +19,9 @@
         "readme": "取得中..."
     }
     onMount(async () => {
+        ipv4 = await (await fetch("https://api.ipify.org/?format=text")).text()
+        ipv6 = await (await fetch("https://api6.ipify.org/?format=text")).text()
         data = await (await fetch("https://ipapi.co/json/")).json()
-        data.ipv4 = await (await fetch("https://api.ipify.org/?format=text")).text()
-        data.ipv6 = await (await fetch("https://api6.ipify.org/?format=text")).text()
         console.log(data)
     })
 </script>
@@ -26,19 +29,19 @@
     <h1>IPチェッカー</h1>
     <hr />
     <span>IPアドレス (IPv4)</span>
-    <textarea readonly>{data.ipv4}</textarea>
+    <Text readonly value={ipv4} />
     <span>IPアドレス (IPv6)</span>
-    <textarea readonly>{data.ipv6}</textarea>
+    <Text readonly value={ipv6} />
     <hr />
     <span>国</span>
-    <textarea readonly>{data.country}</textarea>
+    <Text readonly value={data.country} />
     <span>県</span>
-    <textarea readonly>{data.region}</textarea>
+    <Text readonly value={data.region} />
     <span>市</span>
-    <textarea readonly>{data.city}</textarea>
+    <Text readonly value={data.city} />
     <hr />
     <span>プロバイダ</span>
-    <textarea readonly>{data.org}</textarea>
+    <Text readonly value={data.org} />
     <hr />
     <p>Data Provided by ipapi.co & ipify.org</p>
 </Container>
@@ -47,14 +50,5 @@
     hr {
         margin: 20px 0;
         border-color: #666;
-    }
-    textarea {
-        padding: 5px;
-        background-color: #222;
-        resize: none;
-        width: 100%;
-        align-content: center;
-        border-radius: 5px;
-        color: #fff;
     }
 </style>
