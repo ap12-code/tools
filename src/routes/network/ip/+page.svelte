@@ -1,6 +1,6 @@
 <script lang="ts">
     import Container from "$components/Container.svelte";
-  import Text from "$components/Text.svelte";
+    import Text from "$components/Text.svelte";
     import { onMount } from "svelte";
 
     $: ipv4 = "取得中..."
