@@ -158,7 +158,9 @@
         updateTS()
         update()
     })
-    function copy() {}
+    function copy(v: string) {
+        navigator.clipboard.writeText(v)
+    }
 </script>
 <Container>
     <h1>UNIX TIMESTAMP 変換</h1>
@@ -189,7 +191,7 @@
     </div>
     <div class="item">
         <textarea readonly bind:value={outputs.plain}></textarea>
-        <button on:click={_ => copy()}>コピー</button>
+        <button on:click={_ => copy(outputs.plain)}>コピー</button>
     </div>
     <hr />
     <div>
@@ -197,12 +199,12 @@
         <span>秒単位 (Pythonなど)</span>
         <div class="item">
             <input class="out" type="number" bind:value={outputs.time} on:input={updateTS} />
-            <button on:click={_ => copy()}>コピー</button>
+            <button on:click={_ => copy(outputs.time)}>コピー</button>
         </div>
         <span>ミリ秒単位 (JavaScriptなど)</span>
         <div class="item">
             <input class="out" type="number" bind:value={outputs.timems} on:input={updateTSMS} />
-            <button on:click={_ => copy()}>コピー</button>
+            <button on:click={_ => copy(outputs.timems)}>コピー</button>
         </div>
     </div>
 </Container>

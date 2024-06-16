@@ -1,14 +1,26 @@
 <script lang="ts">
     import Container from "$components/Container.svelte";
+    import { onMount } from "svelte";
     let dataVersion = ""
-    let modules = [
-        {
-            description: "",
-            type: "",
-            uuid: crypto.randomUUID(),
-            version: ""
-        }
-    ]
+    type Module = {
+        description: string,
+        type: string,
+        uuid: string,
+        version: string
+    }
+
+    const MODULE_TYPES = ["resources", "data", "script", "world_template"]
+    const LICENSE_TYPES = {
+        "The Unlicense": "",
+        "MIT License": "MIT",
+        "GNU AGPLv3": "AGPLv3",
+        "GNU GPLv3": "GPLv3",
+        "GNU LGPLv3": "LGPLv3",
+        "Mozilla Public License 2.0": "MPL2.0",
+        "Apache License 2.0": "Apache2.0"
+    }
+
+    let modules: Module[] = []
     let output = {
         "format_version": 2,
         "header": {
@@ -23,13 +35,17 @@
         "capabilities": [],
         "metadata":{
             "authors": [],
-            "url": "http://tokamcwin10.blog.jp/",
+            "url": "",
             "license": "v1.0"
         }
     }
     let outJSON = ""
 
     function update() {
+        output.modules = modules
+        for (let mod of output.modules) {
+            mod.version = output.header.version
+        }
         outJSON = JSON.stringify(output, null, 4)
     }
     function copy() {
@@ -46,12 +62,21 @@
     }
     function add_module() {
         modules.push({
-            description: "",
-            type: "",
+            description: output.header.description,
+            type: "resources",
             uuid: crypto.randomUUID(),
             version: ""
         })
+        modules = modules
+        update()
     }
+
+    function del_module(id: string) {
+        modules = modules.filter(p => p.uuid != id)
+        update()
+    }
+
+    onMount(update)
 </script>
 <Container>
     <h1>manifest.jsonジェネレーター</h1>
@@ -74,31 +99,58 @@
             <span>ゲームバージョン</span>
             <input type="text" bind:value={output.header.min_engine_version} on:input={update} />
         </div>
+        <hr />
+        <p>メタデータ</p>
+        <div class="control">
+            <span>制作者</span>
+            <input type="text" bind:value={output.metadata.authors[0]} on:input={update} />
+        </div>
+        <div class="control">
+            <span>URL</span>
+            <input type="text" bind:value={output.metadata.url} on:input={update} />
+        </div>
+        <div class="control">
+            <span>ライセンス</span>
+            <select bind:value={output.metadata.license} on:change={update}>
+                {#each Object.entries(LICENSE_TYPES) as [k, v]}
+                    <option value={v}>{k}</option>
+                {/each}
+            </select>
+        </div>
+        <hr />
     </div>
-    <hr />
     <div class="main">
         <p>モジュール</p>
         {#each modules as module}
-            <div>
+            <div class="module">
                 <div class="control">
                     <span>説明</span>
                     <input type="text" bind:value={module.description} on:input={update} />
                 </div>
                 <div class="control">
                     <span>種別</span>
-                    <select bind:value={module.type} on:input={update}>
-                        <option></option>
+                    <select bind:value={module.type} on:change={update}>
+                        {#each MODULE_TYPES as type}
+                            <option value={type}>{type}</option>
+                        {/each}
                     </select>
+                </div>
+                <div class="control">
+                    <span></span>
+                    <button class="delete-button" on:click={_ => del_module(module.uuid)}>削除</button>
                 </div>
             </div>
         {/each}
-        <button on:click={add_module}><i class="bi bi-plus-lg"></i> 追加</button>
+        <div class="control">
+            <span></span>
+            <button on:click={add_module}><i class="bi bi-plus-lg"></i> 追加</button>
+        </div>
     </div>
     <hr />
     <div>
         <p>出力</p>
         {#key dataVersion}
-            <textarea class="output" bind:value={outJSON} readonly></textarea>
+            <textarea class="output" value={outJSON} readonly></textarea>
         {/key}
         <button on:click={download}>ダウンロード</button>
         <button on:click={copy}>コピー</button>
@@ -129,8 +181,13 @@
         flex-direction: column;
         gap: 10px;
     }
+    .module {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
     .output {
-        height: 20vh;
+        height: 400px;
     }
     .control {
         display: flex;
@@ -169,7 +226,7 @@
     button {
         padding: 5px;
         background-color: #222;
-        width: 20%;
+        width: 150px;
         border: #666 1px solid;
         border-radius: 5px;
         color: #fff;
@@ -179,5 +236,13 @@
         background-color: #666;
         transition: 0.2s all;
         cursor: pointer;
+    }
+    .delete-button {
+        background-color: #b00;
+        width: 100px;
+    }
+    .delete-button:hover {
+        background-color: #900;
+        width: 100px;
     }
 </style>

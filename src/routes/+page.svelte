@@ -5,7 +5,7 @@
 <div>
     <Container>
         <h1>マイクラコマンド研究所's ToolBox</h1>
-        <p>なにかに使えそうなツールを作ってます。要望あればdiscordまで。</p>
+        <p>なにかに使えそうなツールをいろいろ作ってます。要望あればdiscordまで。</p>
         <hr />
         <div>
             <div class="tools">
@@ -21,6 +21,9 @@
                 </a>
                 <a class="tool" href="/json/pack-mcmeta" style="border-left: 10px solid #993;">
                     <span class="tool-title">pack.mcmeta</span>
+                </a>
+                <a class="tool" href="/json/manifests" style="border-left: 10px solid #993;">
+                    <span class="tool-title">manifest.json</span>
                 </a>
             </div>
             <hr />
@@ -60,6 +63,19 @@
                 </a>
                 <a class="tool" href="/other/unicode" style="border-left: 10px solid #55b;">
                     <span class="tool-title">Unicodeエスケープシーケンス</span>
+                </a>
+            </div>
+            <hr />
+            <div class="tools">
+                <span>その他</span>
+                <a class="tool" href="/other/text-counter" style="border-left: 10px solid #5bb;">
+                    <span class="tool-title">文字数カウンタ</span>
+                </a>
+                <a class="tool" href="/other/counter" style="border-left: 10px solid #5bb;">
+                    <span class="tool-title">カウンタ</span>
+                </a>
+                <a class="tool" href="/other/clock" style="border-left: 10px solid #5bb;">
+                    <span class="tool-title">時計</span>
                 </a>
             </div>
             <hr />

@@ -1,8 +1,11 @@
 <script lang="ts">
+    import { afterNavigate } from "$app/navigation";
     import { page } from "$app/stores";
     import "bootstrap-icons/font/bootstrap-icons.css"
+    import "./global.css"
 
     const data: Record<string, string> = {
+        "/": "ホーム",
         "/json/manifests": "manifest.json",
         "/json/pack-mcmeta": "pack.mcmeta",
         "/network/ip": "IPチェッカー",
@@ -16,8 +19,19 @@
         "/other/upper-lower": "大文字小文字変換",
         "/other/url": "URLエンコーダー&デコーダー",
         "/other/uuid": "UUID生成",
-        "/other/unix-timestamp": "UNIX TIMESTAMP 変換"
+        "/other/unix-timestamp": "UNIX TIMESTAMP 変換",
+        "/other/text-counter": "文字数カウンタ",
+        "/other/counter": "カウンタ",
+        "/other/clock": "時計"
     }
+
+    let sel = "..."
+    function move() {
+        location.href = sel
+    }
+    afterNavigate(() => {
+        sel = $page.url.pathname
+    })
 </script>
 
 <main>
@@ -26,7 +40,12 @@
             <img src="/favicon.png" alt="logo" />
             <a href="/" class:back={$page.url.pathname != "/"}>ToolBox</a>
             {#if $page.url.pathname != "/"}
-                <a href="/"> / {data[$page.url.pathname]}</a>
+            <i class="bi bi-caret-right-fill"></i>
+                <select bind:value={sel} on:change={move}>
+                    {#each Object.entries(data) as [k, v]}
+                        <option value={k}>{v}</option>
+                    {/each}
+                </select>
             {/if}
         </div>
     </header>
@@ -74,5 +93,13 @@
     }
     .back {
         text-decoration: underline;
+    }
+    select {
+        background-color: #222;
+        color: #fff;
+        border-radius: 5px;
+        padding: 5px;
+        outline: none;
+        width: 300px;
     }
 </style>
