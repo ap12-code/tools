@@ -1,7 +1,7 @@
 <script>
-  import Container from "$components/Container.svelte";
-
+    import Container from "$components/Container.svelte";
 </script>
+
 <div>
     <Container>
         <h1>マイクラコマンド研究所's ToolBox</h1>
@@ -43,6 +43,9 @@
                 </a>
                 <a class="tool" href="/network/ping" style="border-left: 10px solid #939;">
                     <span class="tool-title">Ping</span>
+                </a>
+                <a class="tool" href="/network/mcsrvstat" style="border-left: 10px solid #939;">
+                    <span class="tool-title">MCサーバーステータス</span>
                 </a>
             </div>
             <hr />

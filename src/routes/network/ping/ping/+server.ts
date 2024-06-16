@@ -11,8 +11,8 @@ export const POST: RequestHandler = async ({ request }) => {
     if (body.address.includes(" ")) throw error(403)
     if (!verifyAddress(body.address)) throw error(403)
     try {
-        const { stdout } = await execAsync(`ping -c 4 -w 1 ${body.address}`)
-        return new Response(stdout.toString())
+        const { stdout, stderr } = await execAsync(`ping -c 4 ${body.address}`)
+        return new Response(stdout)
     } catch (e: any) {
         return new Response(e.stderr)
     }

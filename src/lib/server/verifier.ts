@@ -11,7 +11,7 @@ function verifyIP(addr: string): boolean {
 
 export function verifyAddress(addr: string): boolean {
     if (!addr) return false
-    if (addr.match(/[&!"#\$%'\(\)=\*\+\,\>\<]/)) return false
+    if (addr.match(/[&!"#\$%'\(\)=\*\+\,\>\<;:]/)) return false
     try {
         new URL(`http://${addr}`)
         return true

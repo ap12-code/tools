@@ -7,10 +7,12 @@
 
     let input = "https://komaken.net";
     let err: string = "";
-    let backcol = "#ffff";
-    let forecol = "#000f";
+    let backcol = "#ffffffff";
+    let forecol = "#00000000";
     function update() {
         err = "";
+        backcol = backcol.substring(0, 7);
+        forecol = forecol.substring(0, 7);
         const canv = document.getElementById("output");
         if (!canv || !(canv instanceof HTMLCanvasElement)) return;
         const ctx = canv.getContext("2d");
@@ -20,7 +22,10 @@
         } else {
             QRCode.toCanvas(
                 input,
-                { width: 200, color: { dark: forecol, light: backcol } },
+                {
+                    width: 200,
+                    color: { dark: forecol, light: backcol },
+                },
                 (err2, canvas) => {
                     if (err2) err = err2.toString();
                     ctx.drawImage(canvas, 0, 0, canv.width, canv.height);
@@ -35,9 +40,25 @@
         if (!ctx) return;
         canv.toBlob((bl) => {
             if (!bl) return;
-            navigator.clipboard.write([
-                new ClipboardItem({ "image/png": bl }, {}),
-            ]);
+            navigator.clipboard.write([new ClipboardItem({ "image/png": bl }, {})]);
+        });
+    }
+    function download() {
+        const canv = document.getElementById("output");
+        if (!canv || !(canv instanceof HTMLCanvasElement)) return;
+        const ctx = canv.getContext("2d");
+        if (!ctx) return;
+        canv.toBlob((bl) => {
+            if (!bl) return;
+            const url = URL.createObjectURL(
+                new Blob([bl], {
+                    type: "image/png",
+                }),
+            );
+            const element = document.createElement("a");
+            element.href = url;
+            element.download = "qrcode.png";
+            element.click();
         });
     }
     onMount(() => {
@@ -56,16 +77,8 @@
         </div>
         <div class="colors">
             <p>色</p>
-            <ColorPicker
-                label="前側の色"
-                bind:hex={forecol}
-                on:input={update}
-            />
-            <ColorPicker
-                label="後側の色"
-                bind:hex={backcol}
-                on:input={update}
-            />
+            <ColorPicker label="前側の色" bind:hex={forecol} on:input={update} />
+            <ColorPicker label="後側の色" bind:hex={backcol} on:input={update} />
         </div>
         <hr />
         <span>出力</span>
@@ -74,6 +87,7 @@
             <p>{err}</p>
         {/if}
         <button on:click={copy}>コピー</button>
+        <button on:click={download}>ダウンロード</button>
     </div>
 </Container>
 
