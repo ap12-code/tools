@@ -1,3 +1,4 @@
-module.exports = {
-    tabWidth: 4
+export default {
+    tabWidth: 4,
+    printWidth: 100
 };

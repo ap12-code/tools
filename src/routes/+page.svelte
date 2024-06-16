@@ -25,6 +25,9 @@
                 <a class="tool" href="/json/manifests" style="border-left: 10px solid #993;">
                     <span class="tool-title">manifest.json</span>
                 </a>
+                <a class="tool" href="/other/qrcode" style="border-left: 10px solid #993;">
+                    <span class="tool-title">QRコード</span>
+                </a>
             </div>
             <hr />
             <div class="tools">
@@ -37,6 +40,9 @@
                 </a>
                 <a class="tool" href="/network/whois" style="border-left: 10px solid #939;">
                     <span class="tool-title">whois</span>
+                </a>
+                <a class="tool" href="/network/ping" style="border-left: 10px solid #939;">
+                    <span class="tool-title">Ping</span>
                 </a>
             </div>
             <hr />

@@ -1,13 +1,20 @@
 import { error, type RequestHandler } from "@sveltejs/kit";
 import { promisify } from "util"
 import { exec } from "child_process"
+import { verifyAddress } from "$lib/server/verifier";
 
 const execAsync = promisify(exec)
 
 export const POST: RequestHandler = async ({ request }) => {
     const body = await request.json()
     if (!body || !body.address) throw error(400)
-    const { stdout } = await execAsync(`dig @1.1.1.1 ${body.address} ${body.param}`)
-
-    return new Response(stdout.toString())
+    if (!verifyAddress(body.address)) throw error(403)
+    if (body.param.includes(" ")) throw error(403)
+    try {
+        const { stdout } = await execAsync(`dig @1.1.1.1 ${body.address} ${body.param}`)
+        return new Response(stdout)
+    } catch (e: any) {
+        console.log(e)
+        return new Response(e.stderr)
+    }
 }

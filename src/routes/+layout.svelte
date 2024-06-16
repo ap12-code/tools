@@ -1,8 +1,8 @@
 <script lang="ts">
     import { afterNavigate } from "$app/navigation";
     import { page } from "$app/stores";
-    import "bootstrap-icons/font/bootstrap-icons.css"
-    import "./global.css"
+    import "bootstrap-icons/font/bootstrap-icons.css";
+    import "./global.css";
 
     const data: Record<string, string> = {
         "/": "ホーム",
@@ -11,6 +11,7 @@
         "/network/ip": "IPチェッカー",
         "/network/lookup": "dig&nslookup",
         "/network/whois": "whois",
+        "/network/ping": "ping",
         "/other/base64": "Base64 エンコーダー&デコーダー",
         "/other/bases": "基数変換",
         "/other/password": "パスワード生成",
@@ -22,16 +23,17 @@
         "/other/unix-timestamp": "UNIX TIMESTAMP 変換",
         "/other/text-counter": "文字数カウンタ",
         "/other/counter": "カウンタ",
-        "/other/clock": "時計"
-    }
+        "/other/clock": "時計",
+        "/other/qrcode": "QRコード",
+    };
 
-    let sel = "..."
+    let sel = "...";
     function move() {
-        location.href = sel
+        location.href = sel;
     }
     afterNavigate(() => {
-        sel = $page.url.pathname
-    })
+        sel = $page.url.pathname;
+    });
 </script>
 
 <main>
@@ -40,7 +42,7 @@
             <img src="/favicon.png" alt="logo" />
             <a href="/" class:back={$page.url.pathname != "/"}>ToolBox</a>
             {#if $page.url.pathname != "/"}
-            <i class="bi bi-caret-right-fill"></i>
+                <i class="bi bi-caret-right-fill"></i>
                 <select bind:value={sel} on:change={move}>
                     {#each Object.entries(data) as [k, v]}
                         <option value={k}>{v}</option>
@@ -55,7 +57,9 @@
     </div>
 
     <footer>
-        <p>©{new Date().getFullYear()} マイクラコマンド研究所 | Created by ap12</p>
+        <p>
+            ©{new Date().getFullYear()} マイクラコマンド研究所 | Created by ap12
+        </p>
     </footer>
 </main>
 
