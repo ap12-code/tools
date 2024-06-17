@@ -25,7 +25,7 @@
         processing = true;
         has_result = false;
         error = false;
-        const resp = await fetch(`/network/mcsrvstat/lookup`, {
+        const resp = await fetch(`/tool/mcsrvstat/lookup`, {
             body: JSON.stringify({
                 address: ip,
             }),
@@ -37,6 +37,7 @@
 
         if (resp.ok) {
             result = await resp.json();
+            console.log(result);
             result.description = parseText(result.description);
             has_result = true;
         } else {
@@ -64,23 +65,37 @@
         f: "color: #fff",
     };
 
-    function parseText(text: string): string {
+    function parseText(text: any): string {
         if (!text) return "";
-        let a = "";
-        for (let str of text.split("§")) {
-            if (!str) continue;
-            a += str.replace(
-                str,
-                `<span style="${COLOR_MAPPING[str.at(0) || "f"] || ""};">${str.substring(1)}</span>`,
-            );
+        if (typeof text === "string") {
+            let a = "";
+            for (let str of text.split("§")) {
+                if (!str) continue;
+                a += str.replace(
+                    str,
+                    `<span style="${COLOR_MAPPING[str.at(0) || "f"] || ""};">${str.substring(1)}</span>`,
+                );
+            }
+            a = a.replaceAll("\n", "<br />");
+            return a;
         }
-        a = a.replaceAll("\n", "<br />");
-        return a;
+        if (text instanceof Object) {
+            let a = "";
+            a += `<span style="color: ${text.color || ""};">${text.text}</span>`;
+            for (let extra of [...text.extra, ...text.extra.flatMap((p: any) => p.extra)]) {
+                if (extra) {
+                    a += `<span style="color: ${extra.color};">${extra.text}</span>`;
+                }
+            }
+            return a;
+        }
+        return "";
     }
 </script>
 
 <Container>
     <h1>MCサーバーステータス</h1>
+    <p>TCPShieldとかCloudflareとか通ってるところは取得できないことがあります。ご了承ください</p>
     <hr />
     <div class="main">
         <div class="input">
@@ -103,10 +118,13 @@
     {#if has_result}
         <p>結果</p>
         <div class="result">
-            <img src={result.favicon} alt="NoLogo" class="logo" />
-            <p class="description">{@html result.description}</p>
+            <img src={result.favicon || "/unknown_server.png"} alt="NoLogo" class="logo" />
+            <div>
+                <span class="description">{@html result.description}</span>
+            </div>
             <div class="playercount">
-                <p>{result.players.online}/{result.players.max}</p>
+                <span>{result.version.name}</span><br />
+                <span>{result.players.online}/{result.players.max}</span>
             </div>
         </div>
     {/if}
@@ -119,10 +137,14 @@
     }
     .playercount {
         margin-left: auto;
+        text-align: right;
     }
     .result {
         display: flex;
         gap: 10px;
+        background-image: url("/light_dirt_background.png");
+        background-size: 40px;
+        padding: 10px;
     }
     .err {
         border-color: #d00;

@@ -3,10 +3,13 @@
     let ip = "";
     let result = "";
     let error = false;
+    let processing = false;
 
     async function run() {
+        processing = true;
+        result = "";
         error = false;
-        const resp = await fetch(`/network/whois/whois`, {
+        const resp = await fetch(`/tool/ping/ping`, {
             body: JSON.stringify({
                 address: ip,
             }),
@@ -21,11 +24,12 @@
         } else {
             error = true;
         }
+        processing = false;
     }
 </script>
 
 <Container>
-    <h1>whois</h1>
+    <h1>Ping</h1>
     <hr />
     <div class="main">
         <div class="input">
@@ -39,7 +43,9 @@
         </div>
         <div>
             <p>実行</p>
-            <button on:click={(_) => run()}>whois実行</button>
+            <button on:click={(_) => run()} disabled={processing}
+                >{!processing ? "ping実行" : "実行中..."}</button
+            >
         </div>
     </div>
     <hr />

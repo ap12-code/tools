@@ -10,85 +10,94 @@
         <div>
             <div class="tools">
                 <span>生成ツール</span>
-                <a class="tool" href="/other/random" style="border-left: 10px solid #993;">
+                <a class="tool" href="/tool/random" style="border-left: 10px solid #993;">
                     <span class="tool-title">ランダム数</span>
                 </a>
-                <a class="tool" href="/other/password" style="border-left: 10px solid #993;">
+                <a class="tool" href="/tool/password" style="border-left: 10px solid #993;">
                     <span class="tool-title">パスワード</span>
                 </a>
-                <a class="tool" href="/other/uuid" style="border-left: 10px solid #993;">
+                <a class="tool" href="/tool/uuid" style="border-left: 10px solid #993;">
                     <span class="tool-title">UUID</span>
                 </a>
-                <a class="tool" href="/json/pack-mcmeta" style="border-left: 10px solid #993;">
+                <a class="tool" href="/tool/pack-mcmeta" style="border-left: 10px solid #993;">
                     <span class="tool-title">pack.mcmeta</span>
                 </a>
-                <a class="tool" href="/json/manifests" style="border-left: 10px solid #993;">
+                <a class="tool" href="/tool/manifests" style="border-left: 10px solid #993;">
                     <span class="tool-title">manifest.json</span>
                 </a>
-                <a class="tool" href="/other/qrcode" style="border-left: 10px solid #993;">
+                <a class="tool" href="/tool/qrcode" style="border-left: 10px solid #993;">
                     <span class="tool-title">QRコード</span>
                 </a>
             </div>
             <hr />
             <div class="tools">
                 <span>ネットワークツール</span>
-                <a class="tool" href="/network/ip" style="border-left: 10px solid #939;">
+                <a class="tool" href="/tool/ip" style="border-left: 10px solid #939;">
                     <span class="tool-title">IPチェッカー</span>
                 </a>
-                <a class="tool" href="/network/lookup" style="border-left: 10px solid #939;">
+                <a class="tool" href="/tool/lookup" style="border-left: 10px solid #939;">
                     <span class="tool-title">dig / nslookup</span>
                 </a>
-                <a class="tool" href="/network/whois" style="border-left: 10px solid #939;">
+                <a class="tool" href="/tool/whois" style="border-left: 10px solid #939;">
                     <span class="tool-title">whois</span>
                 </a>
-                <a class="tool" href="/network/ping" style="border-left: 10px solid #939;">
+                <a class="tool" href="/tool/ping" style="border-left: 10px solid #939;">
                     <span class="tool-title">Ping</span>
                 </a>
-                <a class="tool" href="/network/mcsrvstat" style="border-left: 10px solid #939;">
+                <a class="tool" href="/tool/mcsrvstat" style="border-left: 10px solid #939;">
                     <span class="tool-title">MCサーバーステータス</span>
                 </a>
             </div>
             <hr />
             <div class="tools">
                 <span>変換ツール</span>
-                <a class="tool" href="/other/bases" style="border-left: 10px solid #393;">
+                <a class="tool" href="/tool/bases" style="border-left: 10px solid #393;">
                     <span class="tool-title">基数</span>
                 </a>
-                <a class="tool" href="/other/upper-lower" style="border-left: 10px solid #393;">
+                <a class="tool" href="/tool/upper-lower" style="border-left: 10px solid #393;">
                     <span class="tool-title">大文字/小文字</span>
                 </a>
-                <a class="tool" href="/other/unix-timestamp" style="border-left: 10px solid #393;">
+                <a class="tool" href="/tool/unix-timestamp" style="border-left: 10px solid #393;">
                     <span class="tool-title">Unix Timestamp</span>
+                </a>
+                <a class="tool" href="/tool/image" style="border-left: 10px solid #393;">
+                    <span class="tool-title">画像形式変換</span>
                 </a>
             </div>
             <hr />
             <div class="tools">
                 <span>エンコーダー/デコーダー</span>
-                <a class="tool" href="/other/base64" style="border-left: 10px solid #55b;">
-                    <span class="tool-title">Base64</span>
+                <a class="tool" href="/tool/base64" style="border-left: 10px solid #55b;">
+                    <span class="tool-title">Base64 (文字)</span>
                 </a>
-                <a class="tool" href="/other/url" style="border-left: 10px solid #55b;">
+                <a class="tool" href="/tool/url" style="border-left: 10px solid #55b;">
                     <span class="tool-title">URL</span>
                 </a>
-                <a class="tool" href="/other/unicode" style="border-left: 10px solid #55b;">
+                <a class="tool" href="/tool/unicode" style="border-left: 10px solid #55b;">
                     <span class="tool-title">Unicodeエスケープシーケンス</span>
+                </a>
+                <a class="tool" href="/tool/html" style="border-left: 10px solid #55b;">
+                    <span class="tool-title">HTML</span>
                 </a>
             </div>
             <hr />
             <div class="tools">
                 <span>その他</span>
-                <a class="tool" href="/other/text-counter" style="border-left: 10px solid #5bb;">
+                <a class="tool" href="/tool/text-counter" style="border-left: 10px solid #5bb;">
                     <span class="tool-title">文字数カウンタ</span>
                 </a>
-                <a class="tool" href="/other/counter" style="border-left: 10px solid #5bb;">
+                <a class="tool" href="/tool/counter" style="border-left: 10px solid #5bb;">
                     <span class="tool-title">カウンタ</span>
                 </a>
-                <a class="tool" href="/other/clock" style="border-left: 10px solid #5bb;">
+                <a class="tool" href="/tool/clock" style="border-left: 10px solid #5bb;">
                     <span class="tool-title">時計</span>
+                </a>
+                <a class="tool" href="/tool/stopwatch" style="border-left: 10px solid #5bb;">
+                    <span class="tool-title">ストップウォッチ</span>
                 </a>
             </div>
             <hr />
-            <p>あとで増えますYo</p>
+            <p>あとでもっと増えますYo</p>
         </div>
     </Container>
 </div>

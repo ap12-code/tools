@@ -8,10 +8,10 @@ export const POST: RequestHandler = async ({ request }) => {
     const body = await request.json()
     if (!body || !body.address) throw error(400)
     if (!verifyAddress(body.address)) throw error(403)
-    const url = new URL(`http://${body.address}`)
+    const url = new URL(`tcp://${body.address}`)
     const promise = await new Promise<mcping.PingResponse>((resolve, reject) => {
         const server = new mcping.MinecraftServer(url.hostname, parseInt(url.port) || 25565)
-        server.ping(3000, undefined, (err, res) => {
+        server.ping(3000, 47, (err, res) => {
             if (!res || err) return reject(err)
             resolve(res)
         })

@@ -1,49 +1,55 @@
 <script lang="ts">
     import Container from "$components/Container.svelte";
-    let ip = ""
-    let dig_param = "ANY"
-    let result = ""
-    let error = false
+    let ip = "";
+    let dig_param = "ANY";
+    let result = "";
+    let error = false;
 
     const dig_params = {
-        "A": "Aレコード - ホストアドレス",
-        "ANY": "ANY - 全て",
-        "CNAME": "CNAMEレコード - CNAMEレコード情報",
-        "MX": "MXレコード - メールサーバー",
-        "NS": "NSレコード - DNSサーバー",
-        "SOA": "SOAレコード - 管理情報",
-        "HINFO": "HINFO - ホスト情報",
-        "AXFR": "AXFR - ゾーン転送情報",
-        "TXT": "TXTレコード - TXTレコード情報"
-    }
+        A: "Aレコード - ホストアドレス",
+        ANY: "ANY - 全て",
+        CNAME: "CNAMEレコード - CNAMEレコード情報",
+        MX: "MXレコード - メールサーバー",
+        NS: "NSレコード - DNSサーバー",
+        SOA: "SOAレコード - 管理情報",
+        HINFO: "HINFO - ホスト情報",
+        AXFR: "AXFR - ゾーン転送情報",
+        TXT: "TXTレコード - TXTレコード情報",
+    };
 
     async function run(t: string) {
-        error = false
-        const resp = await fetch(`/network/lookup/${t}`, {
+        error = false;
+        const resp = await fetch(`/tool/lookup/${t}`, {
             body: JSON.stringify({
-                "address": ip,
-                "param": dig_param
+                address: ip,
+                param: dig_param,
             }),
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
-            }
-        })
+                "Content-Type": "application/json",
+            },
+        });
 
         if (resp.ok) {
-            result = await resp.text()
+            result = await resp.text();
         } else {
-            error = true
+            error = true;
         }
     }
 </script>
+
 <Container>
     <h1>dig / nslookup</h1>
     <hr />
     <div class="main">
         <div class="input">
             <span>IPアドレス / ドメイン</span>
-            <input type="text" placeholder="komaken.net, 1.1.1.1" bind:value={ip} class:err={error}>
+            <input
+                type="text"
+                placeholder="komaken.net, 1.1.1.1"
+                bind:value={ip}
+                class:err={error}
+            />
         </div>
         <div class="input">
             <p>DIGのパラメータ</p>
@@ -55,8 +61,8 @@
         </div>
         <div>
             <p>実行</p>
-            <button on:click={_ => run("dig")}>dig実行</button>
-            <button on:click={_ => run("nslookup")}>nslookup実行</button>
+            <button on:click={(_) => run("dig")}>dig実行</button>
+            <button on:click={(_) => run("nslookup")}>nslookup実行</button>
         </div>
     </div>
     <hr />
