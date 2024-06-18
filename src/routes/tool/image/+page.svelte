@@ -9,27 +9,25 @@
     let imgSrc = "";
 
     const IMG_FORMATS = [
-        "avif",
-        "dz",
-        "fits",
-        "gif",
+        "heic",
         "heif",
-        "input",
+        "avif",
         "jpeg",
         "jpg",
-        "jp2",
-        "jxl",
-        "magick",
-        "openslide",
-        "pdf",
+        "jpe",
+        "tile",
+        "dz",
         "png",
-        "ppm",
         "raw",
-        "svg",
         "tiff",
         "tif",
-        "v",
         "webp",
+        "gif",
+        "jp2",
+        "jpx",
+        "j2k",
+        "j2c",
+        "jxl",
     ];
 
     async function run() {
