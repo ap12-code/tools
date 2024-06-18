@@ -4,6 +4,8 @@
     import "bootstrap-icons/font/bootstrap-icons.css";
     import "./global.css";
 
+    let fs = false;
+
     const data: Record<string, string> = {
         "/": "ホーム",
         "/tool/manifests": "manifest.json",
@@ -41,7 +43,7 @@
 </script>
 
 <main>
-    <header>
+    <header class:pin={fs}>
         <div class="logo">
             <img src="/favicon.png" alt="logo" />
             <a href="/" class:back={$page.url.pathname != "/"}>ToolBox</a>
@@ -53,6 +55,9 @@
                     {/each}
                 </select>
             {/if}
+            <div class="fs">
+                <button on:click={(_) => (fs = !fs)}><i class="bi bi-fullscreen"></i></button>
+            </div>
         </div>
     </header>
 
@@ -60,7 +65,7 @@
         <slot></slot>
     </div>
 
-    <footer>
+    <footer class:pin={fs}>
         <p>
             ©{new Date().getFullYear()} マイクラコマンド研究所 | Created by ap12
         </p>
@@ -68,6 +73,16 @@
 </main>
 
 <style>
+    .fs {
+        margin-left: auto;
+    }
+    .fs > button {
+        border: none;
+        background-color: #222;
+        color: #fff;
+        cursor: pointer;
+        font-size: 20px;
+    }
     footer {
         text-align: center;
         margin-top: auto;
@@ -109,5 +124,13 @@
         padding: 5px;
         outline: none;
         width: 300px;
+    }
+    .pin {
+        opacity: 0;
+        transition: 0.3s all;
+    }
+    .pin:hover {
+        opacity: 1;
+        transition: 0.3s all;
     }
 </style>

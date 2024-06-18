@@ -14,10 +14,10 @@
         for (let w of stopwatches) {
             w.saved_at = new Date();
         }
-        localStorage.setItem("counter", JSON.stringify(stopwatches));
+        localStorage.setItem("stopwatch", JSON.stringify(stopwatches));
     }
     function load() {
-        const strCount = localStorage.getItem("counter");
+        const strCount = localStorage.getItem("stopwatch");
         if (!strCount) return;
         stopwatches = JSON.parse(strCount);
         for (let w of stopwatches) {
@@ -71,10 +71,7 @@
 <svelte:head>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap"
-        rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet" />
 </svelte:head>
 
 <Container>
@@ -85,12 +82,7 @@
         {#each stopwatches as stopwatch, index}
             <div class="counter border">
                 <div class="title">
-                    <input
-                        placeholder="タイトル"
-                        type="text"
-                        bind:value={stopwatch.name}
-                        on:input={save}
-                    />
+                    <input placeholder="タイトル" type="text" bind:value={stopwatch.name} on:input={save} />
                 </div>
                 <div class="cn">
                     <span class="count">{parse(stopwatch.time)}</span><br />

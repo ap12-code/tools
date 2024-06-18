@@ -1,14 +1,31 @@
 <script lang="ts">
     import Container from "$components/Container.svelte";
     import { onMount } from "svelte";
+    import moment, { type Moment } from "moment-timezone";
 
-    async function fetchTime(): Promise<Date> {
-        const fetched = await fetch("https://worldtimeapi.org/api/timezone/Asia/Tokyo");
+    let latency = -1;
+    let offset = 0;
+    let last_sync: Moment | null = null;
+    let last_sync_sec = 0;
+    let tz = "Asia/Tokyo";
+    let tzs: string[] = [];
+
+    let d: Moment | null = null;
+    let dtime: number | null = null;
+
+    async function fetchTime(): Promise<void> {
+        d = null;
+        const sendTime = moment();
+        const fetched = await fetch(`https://worldtimeapi.org/api/timezone/${tz}`);
         const json = await fetched.json();
-        return new Date(json.datetime);
+        const endTime = moment();
+        latency = endTime.diff(sendTime);
+        let fixedTime = Math.floor(json.unixtime * 1000 + latency / 2);
+        dtime = fixedTime;
+        d = moment.tz(dtime, tz);
+        offset = moment.now() - fixedTime;
+        last_sync = moment(fixedTime);
     }
-
-    let d: Date | null = null;
 
     function day(day: number) {
         switch (day) {
@@ -33,43 +50,63 @@
         return val.toString().padStart(2, "0");
     }
 
-    function getTimeStr(val: Date): string {
-        return `${pad(val.getHours())}:${pad(val.getMinutes())}:${pad(val.getSeconds())}`;
+    function getTimeStr(val: Moment): string {
+        return val.format("HH:mm:ss");
     }
 
-    function getDateStr(val: Date) {
-        return `${pad(val.getFullYear())}/${pad(val.getMonth() + 1)}/${pad(val.getDate())} (${day(val.getDay())})`;
+    function getDateStr(val: Moment) {
+        return `${val.format("YYYY/MM/DD")} (${day(val.day())})`;
     }
 
     onMount(async () => {
-        d = await fetchTime();
+        moment.locale("ja");
+        tzs = await (await fetch("https://worldtimeapi.org/api/timezone")).json();
+        await fetchTime();
+
         setInterval(() => {
-            if (!d) return;
-            d.setSeconds(d.getSeconds() + 1);
-            d = d;
+            if (!d || !dtime) return;
+            dtime += 1000;
+            d = moment.tz(dtime, tz);
+            last_sync_sec = d.diff(last_sync);
         }, 1000);
         setInterval(async () => {
-            d = await fetchTime();
-        }, 10000);
+            dtime = 0;
+            d = null;
+            await fetchTime();
+        }, 64000);
     });
+
+    async function updateTZ() {
+        await fetchTime();
+    }
 </script>
 
 <svelte:head>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap"
-        rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet" />
 </svelte:head>
 
 <Container>
     <h1>時計</h1>
     <hr />
     <div class="clock">
-        {#if d}
+        {#if d && dtime}
             <span class="time">{getTimeStr(d)}</span><br />
-            <span class="date">{getDateStr(d)}</span>
+            <span class="date">{getDateStr(d)}</span><br />
+            <div class="space"></div>
+            <select bind:value={tz} on:change={updateTZ}>
+                {#each tzs as tze}
+                    <option value={tze}>{tze.replace("Etc/", "")}</option>
+                {/each}
+            </select>
+            {#if last_sync}
+                <span class="debug">
+                    最終同期: {last_sync.format("YYYY/MM/DD HH:mm:ss")} ({Math.floor(last_sync_sec / 1000)}秒前)
+                </span>
+                <span>取得時間: {latency}ms / クライアントずれ: {offset}ms</span><br />
+                <span>サーバー: https://worldtimeapi.org</span>
+            {/if}
         {:else}
             <span>時刻取得中...</span>
         {/if}
@@ -78,6 +115,9 @@
 </Container>
 
 <style>
+    .space {
+        margin: 40px 0;
+    }
     .time {
         font-size: 100px;
         text-align: center;
@@ -90,5 +130,18 @@
     }
     .clock {
         text-align: center;
+    }
+
+    .debug {
+        margin-top: 100px;
+        display: block;
+    }
+    select {
+        background-color: #222;
+        color: #fff;
+        border-radius: 5px;
+        padding: 5px;
+        outline: none;
+        width: 300px;
     }
 </style>
