@@ -123,7 +123,7 @@
         padding: 10px;
         justify-content: center;
         align-items: center;
-        width: 85vw;
+        width: 100%;
     }
     .control {
         display: grid;

@@ -3,7 +3,7 @@
 </script>
 
 <div>
-    <Container>
+    <Container show_back={false}>
         <h1>AP12's ToolBox</h1>
         <p>なにかに使えそうなツールをいろいろ作ってます。要望あればdiscord(@ap12)まで。</p>
         <hr />

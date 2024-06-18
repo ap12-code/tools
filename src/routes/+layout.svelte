@@ -3,11 +3,12 @@
     import { page } from "$app/stores";
     import "bootstrap-icons/font/bootstrap-icons.css";
     import "./global.css";
+    import { onMount } from "svelte";
 
     let fs = false;
+    let shown_sidebar = false;
 
     const data: Record<string, string> = {
-        "/": "ホーム",
         "/tool/manifests": "manifest.json",
         "/tool/pack-mcmeta": "pack.mcmeta",
         "/tool/ip": "IPチェッカー",
@@ -37,93 +38,162 @@
     function move() {
         location.href = sel;
     }
+    function switchSidebar() {
+        shown_sidebar = !shown_sidebar;
+        save();
+    }
+    function save() {
+        window.localStorage.setItem("shown_sidebar", shown_sidebar.toString());
+    }
+    function load() {
+        shown_sidebar = window.localStorage.getItem("shown_sidebar") == "true";
+    }
+    onMount(load);
     afterNavigate(() => {
         sel = $page.url.pathname;
+        load();
     });
 </script>
 
 <main>
-    <header class:pin={fs}>
-        <div class="logo">
-            <img src="/favicon.png" alt="logo" />
-            <a href="/" class:back={$page.url.pathname != "/"}>ToolBox</a>
-            {#if $page.url.pathname != "/"}
-                <i class="bi bi-caret-right-fill"></i>
-                <select bind:value={sel} on:change={move} class="no-font">
-                    {#each Object.entries(data) as [k, v]}
-                        <option value={k}>{v}</option>
+    <div class="app">
+        {#if shown_sidebar}
+            <div class="sidebar">
+                <div class="sidebar-inner">
+                    <div class="button-collapse">
+                        <button on:click={switchSidebar}>
+                            <i class="bi bi-chevron-left"></i> 非表示
+                        </button>
+                    </div>
+                    <div class="sidebar-header">
+                        <img src="/favicon.png" alt="logo" class="sidebar-logo" />
+                        <a href="/" class:back={$page.url.pathname != "/"}>ToolBox</a>
+                    </div>
+                    <a class:selected={$page.url.pathname == "/"} class="sidebar-button" href="/">ホーム</a>
+                    <hr />
+                    {#each Object.keys(data).toSorted((a, b) => a.charCodeAt(6) - b.charCodeAt(6)) as d}
+                        <a class:selected={$page.url.pathname == d} class="sidebar-button" href={d}>{data[d]}</a>
                     {/each}
-                </select>
-            {/if}
-            <div class="fs">
-                <button on:click={(_) => (fs = !fs)}><i class="bi bi-fullscreen"></i></button>
+                </div>
             </div>
+        {:else}
+            <div class="sidebar-show-button">
+                <button on:click={switchSidebar}>
+                    <i class="bi bi-list"></i>
+                </button>
+            </div>
+        {/if}
+        <div class="main">
+            <slot></slot>
         </div>
-    </header>
-
-    <div>
-        <slot></slot>
     </div>
 
     <footer class:pin={fs}>
-        <p>
-            ©{new Date().getFullYear()} ap12
-        </p>
+        <span class="copyright">©{new Date().getFullYear()} ap12</span><br />
+        <a href="https://github.com/ap12-code" target="_blank">GitHub</a> | <a href="https://twitter.ap12.net" target="_blank">Twitter</a>
     </footer>
 </main>
 
 <style>
-    .fs {
-        margin-left: auto;
+    @keyframes sidebarAnimIn {
+        0% {
+            transform: translateX(-200px);
+        }
+        100% {
+            transform: translateX(0px);
+        }
     }
-    .fs > button {
-        border: none;
+    @keyframes sidebarAnimOut {
+        0% {
+            transform: translateX(0px);
+        }
+        100% {
+            transform: translateX(-200px);
+        }
+    }
+    .copyright {
+        font-size: 18px;
+    }
+    .button-collapse button {
+        cursor: pointer;
         background-color: #222;
         color: #fff;
+        border: none;
+    }
+    .sidebar-show-button {
+        position: fixed;
+    }
+    .sidebar-show-button button {
         cursor: pointer;
-        font-size: 20px;
+        background-color: #222;
+        color: #fff;
+        border: none;
+        margin: 5px;
+    }
+    .selected {
+        background-color: #666;
+    }
+    .sidebar-header {
+        display: flex;
+        align-items: center;
+    }
+    .sidebar-header a {
+        text-decoration: none;
+        color: #fff;
+    }
+    .sidebar-logo {
+        height: 30px;
+        margin: 10px;
+        border-radius: 5px;
+    }
+    hr {
+        margin: 5px;
+    }
+    .sidebar {
+        animation: sidebarAnimIn 0.3s ease-in-out;
+        background-color: #222;
+        min-width: 300px;
+        border-right: #000 1px solid;
+        position: relative;
+    }
+    .sidebar-inner {
+        position: sticky;
+        margin: 5px;
+        display: block;
+        top: 0px;
+    }
+    .app {
+        display: flex;
+    }
+    .sidebar-button {
+        text-decoration: none;
+        color: #fff;
+        padding: 5px 10px;
+        display: block;
+        border-radius: 5px;
+    }
+    .sidebar-button:hover {
+        background-color: #666;
+    }
+    .main {
+        flex: 1;
     }
     footer {
         text-align: center;
         margin-top: auto;
         background-color: #111;
     }
-    header a {
+    footer a {
         color: #fff;
-        text-decoration: none;
-    }
-    header {
-        border-bottom: 1px solid #000;
-        padding: 5px 20px;
     }
     main {
         display: flex;
         height: 100vh;
         flex-direction: column;
     }
-    .logo {
-        height: 30px;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        padding: 5px;
-    }
-    .logo > img {
-        height: 30px;
-        width: 30px;
-        border-radius: 5px;
-        border: #fff 1px solid;
-    }
+
     .back {
         text-decoration: underline;
-    }
-    select {
-        background-color: #222;
-        color: #fff;
-        border-radius: 5px;
-        padding: 5px;
-        outline: none;
-        width: 300px;
     }
     .pin {
         opacity: 0;
