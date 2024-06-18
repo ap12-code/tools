@@ -4,8 +4,8 @@
 
 <div>
     <Container>
-        <h1>マイクラコマンド研究所's ToolBox</h1>
-        <p>なにかに使えそうなツールをいろいろ作ってます。要望あればdiscordまで。</p>
+        <h1>AP12's ToolBox</h1>
+        <p>なにかに使えそうなツールをいろいろ作ってます。要望あればdiscord(@ap12)まで。</p>
         <hr />
         <div>
             <div class="tools">

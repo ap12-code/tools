@@ -49,7 +49,7 @@
             <a href="/" class:back={$page.url.pathname != "/"}>ToolBox</a>
             {#if $page.url.pathname != "/"}
                 <i class="bi bi-caret-right-fill"></i>
-                <select bind:value={sel} on:change={move}>
+                <select bind:value={sel} on:change={move} class="no-font">
                     {#each Object.entries(data) as [k, v]}
                         <option value={k}>{v}</option>
                     {/each}
@@ -67,7 +67,7 @@
 
     <footer class:pin={fs}>
         <p>
-            ©{new Date().getFullYear()} マイクラコマンド研究所 | Created by ap12
+            ©{new Date().getFullYear()} ap12
         </p>
     </footer>
 </main>
