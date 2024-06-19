@@ -1,29 +1,30 @@
 <script lang="ts">
     import Container from "$components/Container.svelte";
 
-    let amount = 4
-    let noph = false
-    let useupper = false
-    let uuids: string[] = []
+    let amount = 4;
+    let noph = false;
+    let useupper = false;
+    let uuids: string[] = [];
     function gen() {
-        if (amount <= 0) amount = 1
-        uuids = []
+        if (amount <= 0) amount = 1;
+        uuids = [];
         for (let i = 0; i < amount; i++) {
-            let uuid: string = crypto.randomUUID()
+            let uuid: string = crypto.randomUUID();
             if (noph) {
-                uuid = uuid.replace(/-/g, "")
+                uuid = uuid.replace(/-/g, "");
             }
             if (useupper) {
-                uuid = uuid.toUpperCase()
+                uuid = uuid.toUpperCase();
             }
-            uuids.push(uuid)
+            uuids.push(uuid);
         }
     }
     function copy(data: string) {
-        navigator.clipboard.writeText(data)
+        navigator.clipboard.writeText(data);
     }
-    gen()
+    gen();
 </script>
+
 <Container>
     <h1>UUIDジェネレーター</h1>
     <hr />
@@ -31,23 +32,23 @@
         <div>
             <div class="controls">
                 <div class="checks">
-                    <input bind:checked={noph} on:change={gen} type="checkbox" class="checkbox" id="no-ph">
+                    <input bind:checked={noph} on:change={gen} type="checkbox" class="checkbox" id="no-ph" />
                     <label for="no-ph">ハイフンなし</label>
                 </div>
                 <div class="checks">
-                    <input bind:checked={useupper} on:change={gen} type="checkbox" class="checkbox" id="use-upper">
+                    <input bind:checked={useupper} on:change={gen} type="checkbox" class="checkbox" id="use-upper" />
                     <label for="use-upper">大文字</label>
                 </div>
                 <div class="counts">
                     <label for="amount">生成数</label>
-                    <input bind:value={amount} on:change={gen} min={1} max={50} type="number" id="amount">
+                    <input bind:value={amount} on:change={gen} min={1} max={50} type="number" id="amount" />
                 </div>
                 <button on:click={gen}>再生成</button>
             </div>
             {#each uuids as uuid}
                 <div class="item">
-                    <textarea readonly bind:value={uuid}></textarea>
-                    <button on:click={_ => copy(uuid)}>コピー</button>
+                    <input type="text" readonly bind:value={uuid} />
+                    <button on:click={(_) => copy(uuid)}>コピー</button>
                 </div>
             {/each}
         </div>
@@ -108,16 +109,6 @@
         flex-direction: column;
         gap: 10px;
     }
-    textarea {
-        flex-grow: 1;
-        padding: 5px;
-        background-color: #222;
-        resize: none;
-        width: 100%;
-        border-radius: 5px;
-        color: #fff;
-        font-size: 14px;
-    }
     button {
         padding: 5px;
         background-color: #222;
@@ -141,5 +132,13 @@
     hr {
         margin: 20px 0;
         border-color: #666;
+    }
+    input[type="text"] {
+        width: 100%;
+        padding: 5px;
+        background-color: #222;
+        border: #666 1px solid;
+        border-radius: 5px;
+        color: #fff;
     }
 </style>

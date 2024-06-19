@@ -131,7 +131,7 @@
         margin: 5px;
     }
     .selected {
-        background-color: #666;
+        background-color: #444;
     }
     .sidebar-header {
         display: flex;
