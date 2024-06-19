@@ -4,6 +4,7 @@
     import "bootstrap-icons/font/bootstrap-icons.css";
     import "./global.css";
     import { onMount } from "svelte";
+    import { tools } from "$lib/tools.json";
     import _ from "lodash";
 
     let fs = false;
@@ -14,165 +15,8 @@
     type Category = { icon: string; collapsed: boolean; name: string; tools: Tools }[];
     type CategorySaved = { collapsed: boolean }[];
 
-    let data: Category = [
-        {
-            name: "変換ツール",
-            icon: "",
-            tools: [
-                {
-                    href: "/tool/bases",
-                    name: "基数",
-                    icon: "nut-fill",
-                },
-                {
-                    href: "/tool/upper-lower",
-                    name: "大文字小文字",
-                    icon: "type",
-                },
-                {
-                    href: "/tool/unix-timestamp",
-                    name: "UNIX TIMESTAMP",
-                    icon: "clock-fill",
-                },
-                {
-                    href: "/tool/image",
-                    name: "画像変換ツール",
-                    icon: "image-fill",
-                },
-            ],
-            collapsed: false,
-        },
-        {
-            name: "生成ツール",
-            icon: "",
-            tools: [
-                {
-                    href: "/tool/uuid",
-                    name: "UUID",
-                    icon: "info-lg",
-                },
-                {
-                    href: "/tool/password",
-                    name: "パスワード",
-                    icon: "asterisk",
-                },
-                {
-                    href: "/tool/random",
-                    name: "ランダム整数",
-                    icon: "123",
-                },
-                {
-                    href: "/tool/qrcode",
-                    name: "QRコード",
-                    icon: "qr-code",
-                },
-                {
-                    href: "/tool/pack-mcmeta",
-                    name: "pack.mcmeta",
-                    icon: "boxes",
-                },
-                {
-                    href: "/tool/manifest-json",
-                    name: "manifest.json",
-                    icon: "filetype-json",
-                },
-            ],
-            collapsed: false,
-        },
-        {
-            name: "エンコーダー/デコーダー",
-            icon: "",
-            tools: [
-                {
-                    href: "/tool/base64",
-                    name: "base64",
-                    icon: "file-text",
-                },
-                {
-                    href: "/tool/url",
-                    name: "URL",
-                    icon: "slash-lg",
-                },
-                {
-                    href: "/tool/unicode",
-                    name: "UNICODEエスケープシーケンス",
-                    icon: "card-text",
-                },
-                {
-                    href: "/tool/html",
-                    name: "HTML",
-                    icon: "code",
-                },
-            ],
-            collapsed: false,
-        },
-        {
-            name: "ネットワーク",
-            icon: "",
-            tools: [
-                {
-                    href: "/tool/ip",
-                    name: "IPチェッカー",
-                    icon: "globe2",
-                },
-                {
-                    href: "/tool/lookup",
-                    name: "dig&nslookup",
-                    icon: "wrench",
-                },
-                {
-                    href: "/tool/whois",
-                    name: "whois",
-                    icon: "bricks",
-                },
-                {
-                    href: "/tool/ping",
-                    name: "ping",
-                    icon: "activity",
-                },
-                {
-                    href: "/tool/mcsrvstat",
-                    name: "MCサーバーステータス",
-                    icon: "box-fill",
-                },
-            ],
-            collapsed: false,
-        },
-        {
-            name: "カウンタ",
-            icon: "",
-            tools: [
-                {
-                    href: "/tool/counter",
-                    name: "カウンタ",
-                    icon: "file-text-fill",
-                },
-                {
-                    href: "/tool/text-counter",
-                    name: "文字数カウンタ",
-                    icon: "file-text-fill",
-                },
-            ],
-            collapsed: false,
-        },
-        {
-            name: "時間",
-            icon: "",
-            tools: [
-                {
-                    href: "/tool/clock",
-                    name: "時計",
-                    icon: "clock",
-                },
-                {
-                    href: "/tool/stopwatch",
-                    name: "ストップウォッチ",
-                    icon: "stopwatch",
-                },
-            ],
-            collapsed: false,
-        },
-    ];
+    let data: Category = tools;
+    console.log(JSON.stringify(data));
     let favorites: Tools = [];
 
     let sel = "...";
@@ -311,7 +155,7 @@
 <style>
     @keyframes sidebarAnimIn {
         0% {
-            transform: translateX(-200px);
+            transform: translateX(-400px);
         }
         100% {
             transform: translateX(0px);
@@ -369,7 +213,7 @@
     .sidebar {
         animation: sidebarAnimIn 0.3s ease-in-out;
         background-color: #222;
-        min-width: 300px;
+        min-width: 350px;
         border-right: #000 1px solid;
         position: relative;
     }
