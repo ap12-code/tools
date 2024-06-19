@@ -26,3 +26,7 @@ body::-webkit-scrollbar {
 body::-webkit-scrollbar-thumb {
     background-color: #bbb;
 }
+
+a .bi {
+    margin-right: 5px;
+}
