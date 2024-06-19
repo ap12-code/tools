@@ -38,7 +38,7 @@
         processing = true;
         err = false;
         fd.append("uploadfile", file);
-        const resp = await fetch(`/tool/image/convert?from=auto&to=${to_ext}`, {
+        const resp = await fetch(`/tool/image/convert?to=${to_ext}`, {
             body: fd,
             method: "POST",
         });
