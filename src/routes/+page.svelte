@@ -4,7 +4,7 @@
 </script>
 
 <div>
-    <Container>
+    <Container show_back={false}>
         <h1>AP12's ToolBox</h1>
         <p>なにかに使えそうないろいろなツール群。</p>
         <hr />
