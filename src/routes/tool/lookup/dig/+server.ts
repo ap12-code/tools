@@ -12,7 +12,7 @@ export const POST: RequestHandler = async ({ request }) => {
     if (body.param.includes(" ")) throw error(403)
     try {
         const { stdout } = await execAsync(`dig @1.1.1.1 ${body.address} ${body.param}`)
-        return new Response(stdout)
+        return new Response(stdout, {headers: {"Access-Control-Allow-Origin": "*"}})
     } catch (e: any) {
         console.log(e)
         return new Response(e.stderr)

@@ -16,5 +16,5 @@ export const POST: RequestHandler = async ({ request }) => {
             resolve(res)
         })
     })
-    return new Response(JSON.stringify(promise))
+    return new Response(JSON.stringify(promise), {headers: {"Access-Control-Allow-Origin": "*"}})
 }
