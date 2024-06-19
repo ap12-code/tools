@@ -49,7 +49,7 @@
             </div>
             <div class="control-item">
                 <label for="type">種類</label>
-                <select id="type" bind:value={type}>
+                <select id="type" bind:value={type} on:change={gen}>
                     <option value="word">単語</option>
                     <option value="paragraph">段落</option>
                     <option value="sentence">文</option>
