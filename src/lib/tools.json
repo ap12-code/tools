@@ -180,6 +180,19 @@
             ],
             "collapsed": false,
             "color": "#bb9"
+        },
+        {
+            "name": "計算",
+            "icon": "",
+            "tools": [
+                {
+                    "href": "/tool/solver",
+                    "name": "数式計算機",
+                    "icon": "pen"
+                }
+            ],
+            "collapsed": false,
+            "color": "#b33"
         }
     ]
 }
