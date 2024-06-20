@@ -18,11 +18,6 @@
                     "href": "/tool/unix-timestamp",
                     "name": "UNIX TIMESTAMP",
                     "icon": "clock-fill"
-                },
-                {
-                    "href": "/tool/image",
-                    "name": "画像変換ツール",
-                    "icon": "image-fill"
                 }
             ],
             "collapsed": false,
@@ -35,7 +30,7 @@
                 {
                     "href": "/tool/uuid",
                     "name": "UUID",
-                    "icon": "info-lg"
+                    "icon": "bookmark"
                 },
                 {
                     "href": "/tool/password",
@@ -166,7 +161,25 @@
                 }
             ],
             "collapsed": false,
-            "color": "#bfb"
+            "color": "#9f9"
+        },
+        {
+            "name": "グラフィック",
+            "icon": "",
+            "tools": [
+                {
+                    "href": "/tool/image",
+                    "name": "画像形式変換",
+                    "icon": "image"
+                },
+                {
+                    "href": "/tool/color",
+                    "name": "カラーピッカー",
+                    "icon": "eyedropper"
+                }
+            ],
+            "collapsed": false,
+            "color": "#bb9"
         }
     ]
 }

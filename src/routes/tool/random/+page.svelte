@@ -1,47 +1,51 @@
 <script lang="ts">
     import Container from "$components/Container.svelte";
 
-    let amount = 4
-    let max = 5
-    let min = 1
-    let randoms: string[] = []
+    let amount = 4;
+    let max = 100;
+    let min = 1;
+    let randoms: string[] = [];
     function gen() {
-        if (amount <= 0) amount = 1
-        randoms = []
+        if (amount <= 0) amount = 1;
+        randoms = [];
         for (let i = 0; i < amount; i++) {
             let random: string = Math.floor(Math.random() * (max - min) + min).toString();
-            randoms.push(random)
+            randoms.push(random);
         }
     }
     function copy(data: string) {
-        navigator.clipboard.writeText(data)
+        navigator.clipboard.writeText(data);
     }
-    gen()
+    gen();
 </script>
+
 <Container>
     <h1>ランダム整数ジェネレーター</h1>
     <hr />
     <div class="main">
         <div>
             <div class="controls">
-                <div class="counts">
+                <div>
                     <label for="amount">生成数</label>
-                    <input bind:value={amount} on:change={gen} min={1} max={50} type="number" id="amount">
+                    <input bind:value={amount} on:change={gen} min={1} max={50} type="number" id="amount" />
                 </div>
-                <div class="counts">
+                <div>
                     <label for="max">最大</label>
-                    <input bind:value={max} on:change={gen} min={min} type="number" id="max">
+                    <input bind:value={max} on:change={gen} {min} type="number" id="max" />
                 </div>
-                <div class="counts">
+                <div>
                     <label for="min">最小</label>
-                    <input bind:value={min} on:change={gen} max={max} type="number" id="min">
+                    <input bind:value={min} on:change={gen} {max} type="number" id="min" />
                 </div>
-                <button on:click={gen}>再生成</button>
+                <div>
+                    <button class="regen" on:click={gen}>再生成</button>
+                </div>
             </div>
+            <hr />
             {#each randoms as random}
                 <div class="item">
-                    <textarea readonly bind:value={random}></textarea>
-                    <button on:click={_ => copy(random)}>コピー</button>
+                    <input type="number" class="out" readonly bind:value={random} />
+                    <button on:click={(_) => copy(random)}>コピー</button>
                 </div>
             {/each}
         </div>
@@ -49,33 +53,34 @@
 </Container>
 
 <style>
+    .regen {
+        width: 100%;
+    }
     .controls {
-        display: flex;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 20px;
+        flex-wrap: wrap;
         align-items: center;
     }
-    .counts > input {
-        background-color: #222;
-        padding: 5px;
-        border: #666 1px solid;
-        border-radius: 5px;
-        color: #fff;
-        height: 24px;
-    }
-    .counts {
-        height: 100%;
+    .controls > div {
+        display: flex;
+        gap: 10px;
+        align-items: center;
     }
     .main {
         display: flex;
         flex-direction: column;
         gap: 10px;
     }
-    textarea {
-        flex-grow: 1;
+    .out {
+        width: 100%;
+    }
+    input {
+        flex: 1;
         padding: 5px;
         background-color: #222;
-        resize: none;
-        width: 100%;
+        border: #666 1px solid;
         border-radius: 5px;
         color: #fff;
         font-size: 14px;
@@ -83,7 +88,6 @@
     button {
         padding: 5px;
         background-color: #222;
-        width: 20%;
         border: #666 1px solid;
         border-radius: 5px;
         color: #fff;
