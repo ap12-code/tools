@@ -12,7 +12,7 @@ export const POST: RequestHandler = async ({ request }) => {
     if (body.address.includes(" ")) throw error(403)
     try {
         const { stdout } = await execAsync(`nslookup ${body.address} 1.1.1.1`)
-        return new Response(stdout)
+        return new Response(stdout, {headers: {"Access-Control-Allow-Origin": "*"}})
     } catch (e: any) {
         return new Response(e.stdout)
     }

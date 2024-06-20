@@ -25,7 +25,8 @@
                     "icon": "image-fill"
                 }
             ],
-            "collapsed": false
+            "collapsed": false,
+            "color": "#bb0"
         },
         {
             "name": "生成ツール",
@@ -52,6 +53,11 @@
                     "icon": "qr-code"
                 },
                 {
+                    "href": "/tool/dummy-text",
+                    "name": "Lorem Ipsum",
+                    "icon": "paragraph"
+                },
+                {
                     "href": "/tool/pack-mcmeta",
                     "name": "pack.mcmeta",
                     "icon": "boxes"
@@ -62,7 +68,8 @@
                     "icon": "filetype-json"
                 }
             ],
-            "collapsed": false
+            "collapsed": false,
+            "color": "#0b0"
         },
         {
             "name": "エンコーダー/デコーダー",
@@ -89,7 +96,8 @@
                     "icon": "code"
                 }
             ],
-            "collapsed": false
+            "collapsed": false,
+            "color": "#0bb"
         },
         {
             "name": "ネットワーク",
@@ -121,7 +129,8 @@
                     "icon": "box-fill"
                 }
             ],
-            "collapsed": false
+            "collapsed": false,
+            "color": "#b0b"
         },
         {
             "name": "カウンタ",
@@ -138,7 +147,8 @@
                     "icon": "file-text-fill"
                 }
             ],
-            "collapsed": false
+            "collapsed": false,
+            "color": "#33b"
         },
         {
             "name": "時間",
@@ -155,7 +165,8 @@
                     "icon": "stopwatch"
                 }
             ],
-            "collapsed": false
+            "collapsed": false,
+            "color": "#bfb"
         }
     ]
 }

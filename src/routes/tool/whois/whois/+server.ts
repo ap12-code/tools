@@ -12,7 +12,7 @@ export const POST: RequestHandler = async ({ request }) => {
     if (!verifyAddress(body.address)) throw error(403)
     try {
         const { stdout } = await execAsync(`whois ${body.address}`)
-        return new Response(stdout.toString())
+        return new Response(stdout, {headers: {"Access-Control-Allow-Origin": "*"}})
     } catch (e: any) {
         return new Response(e.stderr)
     }
