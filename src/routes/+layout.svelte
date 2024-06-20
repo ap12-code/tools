@@ -16,7 +16,6 @@
     type CategorySaved = { collapsed: boolean }[];
 
     let data: Category = tools;
-    console.log(JSON.stringify(data));
     let favorites: Tools = [];
 
     let sel = "...";

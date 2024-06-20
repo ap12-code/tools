@@ -71,10 +71,7 @@
             let a = "";
             for (let str of text.split("§")) {
                 if (!str) continue;
-                a += str.replace(
-                    str,
-                    `<span style="${COLOR_MAPPING[str.at(0) || "f"] || ""};">${str.substring(1)}</span>`,
-                );
+                a += str.replace(str, `<span style="${COLOR_MAPPING[str.at(0) || "f"] || ""};">${str.substring(1)}</span>`);
             }
             a = a.replaceAll("\n", "<br />");
             return a;
@@ -100,12 +97,7 @@
     <div class="main">
         <div class="input">
             <span>IPアドレス / ドメイン</span>
-            <input
-                type="text"
-                placeholder="komaken.net, 1.1.1.1"
-                bind:value={ip}
-                class:err={error}
-            />
+            <input type="text" placeholder="ap12.net, 1.1.1.1" bind:value={ip} class:err={error} />
         </div>
         <div>
             <button on:click={(_) => run()}>実行</button>

@@ -30,12 +30,7 @@
     <div class="main">
         <div class="input">
             <span>IPアドレス / ドメイン</span>
-            <input
-                type="text"
-                placeholder="komaken.net, 1.1.1.1"
-                bind:value={ip}
-                class:err={error}
-            />
+            <input type="text" placeholder="ap12.net, 1.1.1.1" bind:value={ip} class:err={error} />
         </div>
         <div>
             <p>実行</p>
