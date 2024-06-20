@@ -147,7 +147,8 @@
 
     <footer class:pin={fs}>
         <span class="copyright">©{new Date().getFullYear()} ap12</span><br />
-        <a href="https://github.com/ap12-code" target="_blank">GitHub</a> | <a href="https://twitter.ap12.net" target="_blank">Twitter</a>
+        <a href="https://github.com/ap12-code" target="_blank">GitHub</a> | <a href="https://twitter.ap12.net" target="_blank">Twitter</a> |
+        <a href="/information">バージョン情報</a>
     </footer>
 </main>
 
