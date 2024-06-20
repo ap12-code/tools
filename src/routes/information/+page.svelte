@@ -8,7 +8,7 @@
     <h1>更新履歴</h1>
     <div>
         <div>
-            <span>2024/06/19 Version 1.1.0</span><br />
+            <span>2024/06/21 Version 1.1.0</span><br />
             <span>
                 新機能を追加<br />
                 <ul>
