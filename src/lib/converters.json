@@ -1,0 +1,14 @@
+{
+    "converters": [
+        {
+            "name": "データ容量",
+            "path": "/tool/converters/data",
+            "icon": "device-hdd-fill"
+        },
+        {
+            "name": "温度",
+            "path": "/tool/converters/temprature",
+            "icon": "thermometer-high"
+        }
+    ]
+}

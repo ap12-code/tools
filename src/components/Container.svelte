@@ -1,11 +1,12 @@
 <script lang="ts">
     export let show_back = true;
+    export let back_to = "/";
 </script>
 
 <div>
     {#if show_back}
-        <a class="back" href="/">
-            <i class="bi bi-chevron-left"></i>ホームに戻る
+        <a class="back" href={back_to}>
+            <i class="bi bi-chevron-left"></i>{back_to == "/" ? "ホームに戻る" : "戻る"}
         </a>
     {/if}
     <slot></slot>

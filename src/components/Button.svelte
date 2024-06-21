@@ -1,10 +1,4 @@
-<script lang="ts">
-    export const buttonProps = {
-        class: [$$restProps.class],
-    };
-</script>
-
-<button on:click>
+<button on:click class="button-component">
     <slot />
 </button>
 

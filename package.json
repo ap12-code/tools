@@ -31,6 +31,8 @@
 	"dependencies": {
 		"@sveltejs/adapter-node": "^5.1.0",
 		"bootstrap-icons": "^1.11.3",
+		"chart.js": "^4.4.3",
+		"decimal.js": "^10.4.3",
 		"katex": "^0.16.10",
 		"lodash": "^4.17.21",
 		"lorem-ipsum": "^2.0.8",

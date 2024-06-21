@@ -18,6 +18,11 @@
                     "href": "/tool/unix-timestamp",
                     "name": "UNIX TIMESTAMP",
                     "icon": "clock-fill"
+                },
+                {
+                    "href": "/tool/converters",
+                    "name": "換算ツール",
+                    "icon": "arrow-left-right"
                 }
             ],
             "collapsed": false,
@@ -185,6 +190,11 @@
             "name": "計算",
             "icon": "",
             "tools": [
+                {
+                    "href": "/tool/calc",
+                    "name": "電卓",
+                    "icon": "calculator"
+                },
                 {
                     "href": "/tool/solver",
                     "name": "数式計算機",

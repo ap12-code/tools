@@ -64,11 +64,11 @@
             <p>色</p>
             <div class="color">
                 <ColorPicker label="文字の色" bind:rgb={forecol} on:input={update} />
-                <Button click={randomfg}>ランダム</Button>
+                <Button on:click={randomfg}>ランダム</Button>
             </div>
             <div class="color">
                 <ColorPicker label="背景の色" bind:rgb={backcol} on:input={update} />
-                <Button click={randombg}>ランダム</Button>
+                <Button on:click={randombg}>ランダム</Button>
             </div>
         </div>
         <hr />
