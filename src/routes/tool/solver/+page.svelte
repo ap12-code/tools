@@ -1,6 +1,6 @@
 <script lang="ts">
     import Container from "$components/Container.svelte";
-    import nerdamer from "nerdamer";
+    import nerdamer from "nerdamer-prime";
     import katex from "katex";
     import "katex/dist/katex.css";
     import Button from "$components/Button.svelte";

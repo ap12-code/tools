@@ -12,7 +12,7 @@ hr {
     border-color: #666;
 }
 
-h1, p, span, label, button, a, select.no-font {
+h1, p, span, label, button, a, select.no-font, h2 {
     font-family: "Zen Maru Gothic", serif;
     font-weight: 400;
     font-style: normal;

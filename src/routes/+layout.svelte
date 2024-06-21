@@ -19,9 +19,6 @@
     let favorites: Tools = [];
 
     let sel = "...";
-    function move() {
-        location.href = sel;
-    }
     function switchSidebar() {
         shown_sidebar = !shown_sidebar;
         save();
@@ -228,6 +225,7 @@
     }
     .app {
         display: flex;
+        gap: 10px;
     }
     .sidebar-button {
         text-decoration: none;

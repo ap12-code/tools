@@ -2,7 +2,7 @@
     import { onMount } from "svelte";
     import Button from "$components/Button.svelte";
     import Container from "$components/Container.svelte";
-    import nerdamer from "nerdamer";
+    import nerdamer from "nerdamer-prime";
     import katex from "katex";
     import "katex/dist/katex.css";
     import _ from "lodash";
@@ -32,6 +32,15 @@
 
     function handleClick(btn: string) {
         switch (btn) {
+            case "sin":
+                output = `sin(${output})`;
+                break;
+            case "cos":
+                output = `cos(${output})`;
+                break;
+            case "tan":
+                output = `tan(${output})`;
+                break;
             case "C":
                 output = "0";
                 err = false;
@@ -55,8 +64,12 @@
                 if (output == "0" && expr) {
                     [expr, output] = ["", expr.substring(0, expr.length - 1)];
                 } else {
-                    output = output.substring(0, output.length - 1);
-                    output = parseInt(output || "0").toString();
+                    if (output.endsWith(")")) {
+                        output = output.replace(/(sin|cos|tan)\((.+)\)/, "$2");
+                    } else {
+                        output = output.substring(0, output.length - 1);
+                        output = parseInt(output || "0").toString();
+                    }
                 }
                 break;
             default:
@@ -134,6 +147,9 @@
             <Button on:click={(_) => handleClick("C")}>C</Button>
             <Button on:click={(_) => handleClick("=")}>=</Button>
             <Button on:click={(_) => handleClick("BS")}><i class="bi bi-backspace-fill"></i></Button>
+            <Button on:click={(_) => handleClick("sin")}>sin</Button>
+            <Button on:click={(_) => handleClick("cos")}>cos</Button>
+            <Button on:click={(_) => handleClick("tan")}>tan</Button>
         </div>
     </section>
 </Container>

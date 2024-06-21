@@ -6,7 +6,7 @@
     let has_result = false;
     let processing = false;
     let err = false;
-    let imgSrc = "";
+    let imgSrc: string[] = [];
 
     const IMG_FORMATS = [
         "heic",
@@ -31,31 +31,34 @@
     ];
 
     async function run() {
-        const file = files.item(0);
-        const fd = new FormData();
-        if (!file) return;
+        if (!files) return;
         has_result = false;
         processing = true;
         err = false;
-        fd.append("uploadfile", file);
-        const resp = await fetch(`/tool/image/convert?to=${to_ext}`, {
-            body: fd,
-            method: "POST",
-        });
-        if (resp.ok) {
-            imgSrc = URL.createObjectURL(await resp.blob());
-            has_result = true;
-        } else {
-            err = true;
+        for (let file of files) {
+            const fd = new FormData();
+            fd.append("uploadfile", file);
+            const resp = await fetch(`/tool/image/convert?to=${to_ext}`, {
+                body: fd,
+                method: "POST",
+            });
+            if (resp.ok) {
+                imgSrc.push(URL.createObjectURL(await resp.blob()));
+                has_result = true;
+            } else {
+                err = true;
+            }
         }
         processing = false;
     }
 
     function download() {
         const a = document.createElement("a");
-        a.href = imgSrc;
-        a.download = `${crypto.randomUUID()}.${to_ext}`;
-        a.click();
+        for (const imgSr of imgSrc) {
+            a.href = imgSr;
+            a.download = `${crypto.randomUUID()}.${to_ext}`;
+            a.click();
+        }
     }
 </script>
 
@@ -65,7 +68,7 @@
     <div class="main">
         <div>
             <p>入力</p>
-            <input class="file-input" type="file" bind:files on:input={run} />
+            <input class="file-input" type="file" bind:files multiple on:input={run} />
         </div>
         <hr />
         <div>
@@ -83,7 +86,9 @@
             {#if processing}
                 <p>変換中...</p>
             {:else if has_result}
-                <img alt="変換失敗" src={imgSrc} />
+                {#each imgSrc as imgS}
+                    <img alt="変換失敗" src={imgS} />
+                {/each}
                 <div class="out-control">
                     <button on:click={download}>ダウンロード</button>
                 </div>
@@ -147,6 +152,9 @@
         border-radius: 5px;
         padding: 5px;
         outline: none;
+        width: 300px;
+    }
+    img {
         width: 300px;
     }
 </style>
