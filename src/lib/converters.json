@@ -1,6 +1,11 @@
 {
     "converters": [
         {
+            "name": "為替",
+            "path": "/tool/converters/money",
+            "icon": "currency-exchange"
+        },
+        {
             "name": "データ容量",
             "path": "/tool/converters/data",
             "icon": "device-hdd-fill"
@@ -9,6 +14,11 @@
             "name": "温度",
             "path": "/tool/converters/temprature",
             "icon": "thermometer-high"
+        },
+        {
+            "name": "距離",
+            "path": "/tool/converters/length",
+            "icon": "rulers"
         }
     ]
 }

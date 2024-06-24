@@ -24,7 +24,7 @@
         const canv = document.getElementById("output");
         if (!canv || !(canv instanceof HTMLDivElement)) return;
         canv.style.backgroundColor = `rgb(${backcol.r} ${backcol.g} ${backcol.b} / ${backcol.a})`;
-        canv.style.color = `rgb(${forecol.r} ${forecol.g} ${forecol.b} / ${backcol.a})`;
+        canv.style.color = `rgb(${forecol.r} ${forecol.g} ${forecol.b} / ${forecol.a})`;
     }
     function randInt(): number {
         return Math.floor(Math.random() * (255 - 0) + 0);

@@ -41,6 +41,9 @@
             case "tan":
                 output = `tan(${output})`;
                 break;
+            case "sqrt":
+                output = `sqrt(${output})`;
+                break;
             case "C":
                 output = "0";
                 err = false;
@@ -65,7 +68,7 @@
                     [expr, output] = ["", expr.substring(0, expr.length - 1)];
                 } else {
                     if (output.endsWith(")")) {
-                        output = output.replace(/(sin|cos|tan)\((.+)\)/, "$2");
+                        output = output.replace(/(sin|cos|tan|sqrt)\((.+)\)/, "$2");
                     } else {
                         output = output.substring(0, output.length - 1);
                         output = parseInt(output || "0").toString();
@@ -150,6 +153,7 @@
             <Button on:click={(_) => handleClick("sin")}>sin</Button>
             <Button on:click={(_) => handleClick("cos")}>cos</Button>
             <Button on:click={(_) => handleClick("tan")}>tan</Button>
+            <Button on:click={(_) => handleClick("sqrt")}>√</Button>
         </div>
     </section>
 </Container>

@@ -1,5 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@100..900&display=swap');
+@font-face {
+    font-family: "Noto Sans Mono";
+    src: url("/NotoSansMono-Regular.ttf");
+}
+@font-face {
+    font-family: "Zen Maru Gothic";
+    src: url("/ZenMaruGothic-Regular.ttf");
+}
+@font-face {
+    font-family: "unifont";
+    src: url("/unifont_jp.otf");
+}
 
 textarea {
     box-sizing: border-box;

@@ -71,17 +71,17 @@
             let a = "";
             for (let str of text.split("§")) {
                 if (!str) continue;
-                a += str.replace(str, `<span style="${COLOR_MAPPING[str.at(0) || "f"] || ""};">${str.substring(1)}</span>`);
+                a += str.replace(str, `<span style="${COLOR_MAPPING[str.at(0) || "f"] || ""}; font-family: unifont;">${str.substring(1)}</span>`);
             }
             a = a.replaceAll("\n", "<br />");
             return a;
         }
         if (text instanceof Object) {
             let a = "";
-            a += `<span style="color: ${text.color || ""};">${text.text}</span>`;
+            a += `<span style="color: ${text.color || ""}; font-family: unifont;">${text.text}</span>`;
             for (let extra of [...text.extra, ...text.extra.flatMap((p: any) => p.extra)]) {
                 if (extra) {
-                    a += `<span style="color: ${extra.color};">${extra.text}</span>`;
+                    a += `<span style="color: ${extra.color}; font-family: unifont;">${extra.text}</span>`;
                 }
             }
             return a;
@@ -137,6 +137,9 @@
         background-image: url("/light_dirt_background.png");
         background-size: 40px;
         padding: 10px;
+    }
+    .result * {
+        font-family: "unifont";
     }
     .err {
         border-color: #d00;

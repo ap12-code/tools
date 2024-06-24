@@ -14,7 +14,7 @@
         ti: new Decimal(8).mul(1024).mul(1024).mul(1024).mul(1024),
         tb: new Decimal(8).mul(1000).mul(1000).mul(1000).mul(1000),
     };
-    let vaules: Record<string, string> = {
+    let values: Record<string, string> = {
         b: "0",
         bi: "0",
         ki: "0",
@@ -26,18 +26,39 @@
         ti: "0",
         tb: "0",
     };
+    const lang: Record<string, string> = {
+        b: "b",
+        bi: "B",
+        ki: "KiB",
+        kb: "KB",
+        mi: "MiB",
+        mb: "MB",
+        gi: "GiB",
+        gb: "GB",
+        ti: "TiB",
+        tb: "TB",
+    };
     let errs: Record<string, boolean> = {};
 
     function change(unit: string) {
+        if (values[unit].endsWith(".")) return;
+        if (values[unit].endsWith("-")) {
+            if (values[unit].startsWith("-")) {
+                values[unit] = `${values[unit].slice(1, -1)}`;
+            } else {
+                values[unit] = `-${values[unit].slice(0, -1)}`;
+            }
+            if (values[unit] == "0" || values[unit] == "-0") return;
+        }
         errs[unit] = false;
         if (!errs[unit]) {
-            if (!vaules[unit]) vaules[unit] = "0";
-            if (isNaN(parseInt(vaules[unit]))) return (errs[unit] = true);
-            vaules[unit] = parseInt(vaules[unit]).toString();
-            for (let v of Object.keys(vaules)) {
+            if (!values[unit]) values[unit] = "0";
+            if (isNaN(parseFloat(values[unit]))) return (errs[unit] = true);
+            values[unit] = parseFloat(values[unit]).toString();
+            for (let v of Object.keys(values)) {
                 if (v == unit) continue;
                 const c = new Decimal(mapping[v]).div(new Decimal(mapping[unit]));
-                vaules[v] = new Decimal(vaules[unit]).div(c).toString();
+                values[v] = new Decimal(values[unit]).div(c).toString();
             }
         }
     }
@@ -47,50 +68,12 @@
     <h1>データ容量換算</h1>
     <hr />
     <div class="main">
-        <div>
-            <input class:err={errs.b} bind:value={vaules.b} on:input={(_) => change("b")} />
-            <span>b</span>
-        </div>
-        <div>
-            <input class:err={errs.bi} bind:value={vaules.bi} on:input={(_) => change("bi")} />
-            <span>B</span>
-        </div>
-
-        <div>
-            <input class:err={errs.kb} bind:value={vaules.kb} on:input={(_) => change("kb")} />
-            <span>kB</span>
-        </div>
-        <div>
-            <input class:err={errs.ki} bind:value={vaules.ki} on:input={(_) => change("ki")} />
-            <span>KiB</span>
-        </div>
-
-        <div>
-            <input class:err={errs.mb} bind:value={vaules.mb} on:input={(_) => change("mb")} />
-            <span>MB</span>
-        </div>
-        <div>
-            <input class:err={errs.mi} bind:value={vaules.mi} on:input={(_) => change("mi")} />
-            <span>MiB</span>
-        </div>
-
-        <div>
-            <input class:err={errs.gb} bind:value={vaules.gb} on:input={(_) => change("gb")} />
-            <span>GB</span>
-        </div>
-        <div>
-            <input class:err={errs.gi} bind:value={vaules.gi} on:input={(_) => change("gi")} />
-            <span>GiB</span>
-        </div>
-
-        <div>
-            <input class:err={errs.tb} bind:value={vaules.tb} on:input={(_) => change("tb")} />
-            <span>TB</span>
-        </div>
-        <div>
-            <input class:err={errs.ti} bind:value={vaules.ti} on:input={(_) => change("ti")} />
-            <span>TiB</span>
-        </div>
+        {#each Object.keys(values) as k}
+            <div>
+                <input class:err={errs[k]} bind:value={values[k]} on:input={(_) => change(k)} />
+                <span>{lang[k]}</span>
+            </div>
+        {/each}
     </div>
 </Container>
 

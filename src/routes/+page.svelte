@@ -5,8 +5,7 @@
 
 <div>
     <Container show_back={false}>
-        <h1>AP12's ToolBox</h1>
-        <p>なにかに使えそうないろいろなツール群。</p>
+        <img src="/toolbox-logo.png" alt="AP12's ToolBox" />
         <hr />
         <div>
             {#each tools as d, i}
@@ -47,5 +46,8 @@
     hr {
         margin: 20px 0;
         border-color: #666;
+    }
+    img {
+        height: 100px;
     }
 </style>
