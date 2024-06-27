@@ -7,8 +7,7 @@
 		"build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"tauri": "tauri"
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.0.0",
@@ -46,6 +45,7 @@
 		"nerdamer-prime": "^1.1.19",
 		"qrcode": "^1.5.3",
 		"sharp": "^0.33.4",
-		"svelte-awesome-color-picker": "^3.1.0"
+		"svelte-awesome-color-picker": "^3.1.0",
+		"xml-js": "^1.6.11"
 	}
 }

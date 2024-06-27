@@ -15,6 +15,9 @@ const config = {
 		adapter: adapter(),
 		alias: {
 			"$components": "src/components/*"
+		},
+		csrf: {
+			checkOrigin: false
 		}
 	}
 };

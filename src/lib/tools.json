@@ -127,6 +127,11 @@
                     "href": "/tool/mcsrvstat",
                     "name": "MCサーバーステータス",
                     "icon": "box-fill"
+                },
+                {
+                    "href": "/tool/mcid",
+                    "name": "MCID to UUID",
+                    "icon": "person-fill"
                 }
             ],
             "collapsed": false,
