@@ -1,9 +1,8 @@
 import type { PageServerLoad } from "./$types";
-import minecraftData from 'minecraft-data';
+import itemsData from "$lib/data/1.21/items.json";
 
 export const load: PageServerLoad = async () => {
-    const data = minecraftData("1.20.4")
     return {
-        items: data.items
-    }
+        items: itemsData,
+    };
 };

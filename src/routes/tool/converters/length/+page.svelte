@@ -10,6 +10,10 @@
         mm: new Decimal(1000 * 1000),
         cm: new Decimal(1000 * 1000 * 10),
         m: new Decimal(1000 * 1000 * 10 * 100),
+        in: new Decimal(1000 * 1000 * 10 * 2.54),
+        ft: new Decimal(1000 * 1000 * 10 * 2.54 * 12),
+        mi: new Decimal((1000 * 1000 * 10 * 100) / 0.000621371),
+        yd: new Decimal(1000 * 1000 * 10 * 100 * 1.0936132983),
         km: new Decimal(1000 * 1000 * 10 * 100 * 1000),
     };
 
@@ -20,6 +24,10 @@
         cm: "0",
         m: "0",
         km: "0",
+        in: "0",
+        ft: "0",
+        yd: "0",
+        mi: "0",
     };
     let errs: Record<string, boolean> = {};
 

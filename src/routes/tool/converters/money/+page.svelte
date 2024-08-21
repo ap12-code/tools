@@ -22,7 +22,7 @@
     };
 
     async function load() {
-        const resp = await fetch(`https://exchange-rate-api.kuroneko6423.com/api/rate`);
+        const resp = await fetch(`https://exchange-rate-api.krnk.org/api/rate`);
         data = await resp.json();
     }
 

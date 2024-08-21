@@ -15,6 +15,7 @@
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@tauri-apps/cli": "^1.5.14",
 		"@types/archiver": "^6.0.2",
+		"@types/dom-to-image": "^2.6.7",
 		"@types/katex": "^0.16.7",
 		"@types/lodash": "^4.17.5",
 		"@types/mcping-js": "^1.5.4",
@@ -35,6 +36,7 @@
 		"bootstrap-icons": "^1.11.3",
 		"chart.js": "^4.4.3",
 		"decimal.js": "^10.4.3",
+		"dom-to-image": "^2.6.0",
 		"katex": "^0.16.10",
 		"lodash": "^4.17.21",
 		"lorem-ipsum": "^2.0.8",
@@ -46,6 +48,7 @@
 		"qrcode": "^1.5.3",
 		"sharp": "^0.33.4",
 		"svelte-awesome-color-picker": "^3.1.0",
+		"svelte-lexical": "^0.4.1",
 		"xml-js": "^1.6.11"
 	}
 }

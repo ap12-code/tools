@@ -203,7 +203,12 @@
                 {
                     "href": "/tool/solver",
                     "name": "数式計算機",
-                    "icon": "pen"
+                    "icon": "pen-fill"
+                },
+                {
+                    "href": "/tool/mathjax",
+                    "name": "数式表示",
+                    "icon": "triangle-fill"
                 }
             ],
             "collapsed": false,
