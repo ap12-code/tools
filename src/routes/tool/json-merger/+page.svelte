@@ -75,7 +75,7 @@
     }
 </script>
 <Container>
-    <h1>JSONフォーマッター</h1>
+    <h1>JSONのマージ</h1>
     <hr />
     <div class="main">
         <div>
