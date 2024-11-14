@@ -28,6 +28,11 @@
                     "href": "/tool/manifest-json",
                     "name": "manifest.json",
                     "icon": "filetype-json"
+                },
+                {
+                    "href": "/tool/mc-calc",
+                    "name": "スタック換算",
+                    "icon": "stack"
                 }
             ],
             "collapsed": false,

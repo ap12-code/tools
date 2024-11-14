@@ -18,7 +18,7 @@
 </div>
 
 <style>
-   .toggle-button {
+    .toggle-button {
         display: inline-block;
         position: relative;
         width: 50px;
