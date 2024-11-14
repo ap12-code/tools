@@ -25,15 +25,7 @@
         processing = true;
         has_result = false;
         error = false;
-        const resp = await fetch(`/tool/mcsrvstat/lookup`, {
-            body: JSON.stringify({
-                address: ip,
-            }),
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
+        const resp = await fetch(`/api/mcsrvstat?server=${ip}`);
 
         if (resp.ok) {
             result = await resp.json();
@@ -74,17 +66,17 @@
                 a += str.replace(str, `<span style="${COLOR_MAPPING[str.at(0) || "f"] || ""}; font-family: unifont;">${str.substring(1)}</span>`);
             }
             a = a.replaceAll("\n", "<br />");
-            return a;
+            return a || "";
         }
         if (text instanceof Object) {
             let a = "";
-            a += `<span style="color: ${text.color || ""}; font-family: unifont;">${text.text}</span>`;
+            a += `<span style="color: ${text.color || ""}; font-family: unifont;">${text.text || ""}</span>`;
             for (let extra of [...text.extra, ...text.extra.flatMap((p: any) => p.extra)]) {
                 if (extra) {
-                    a += `<span style="color: ${extra.color}; font-family: unifont;">${extra.text}</span>`;
+                    a += `<span style="color: ${extra.color}; font-family: unifont;">${extra.text || ""}</span>`;
                 }
             }
-            return a;
+            return a || "";
         }
         return "";
     }
@@ -97,7 +89,7 @@
     <div class="main">
         <div class="input">
             <span>IPアドレス / ドメイン</span>
-            <input type="text" placeholder="ap12.net, 1.1.1.1" bind:value={ip} class:err={error} />
+            <input type="text" placeholder="サーバーアドレス..." bind:value={ip} class:err={error} />
         </div>
         <div>
             <button on:click={(_) => run()}>実行</button>
@@ -119,6 +111,9 @@
                 <span>{result.players.online}/{result.players.max}</span>
             </div>
         </div>
+    {/if}
+    {#if error}
+        <p>サーバー情報取得中にエラーが発生しました</p>
     {/if}
 </Container>
 

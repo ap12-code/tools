@@ -1,0 +1,9 @@
+{
+    "commands": [
+        {
+            "name": "/give",
+            "path": "/commands/give",
+            "color": "#00bb00"
+        }
+    ]
+}

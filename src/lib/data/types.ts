@@ -1,32 +1,31 @@
-type Nullable<T> = T | null | undefined;
+import type { ComponentMap } from "./components";
 
-type ComponentMap = {
-    [k: string]: any;
-};
+export type Nullable<T> = T | null | undefined;
+export type TrueOrNull = undefined | null | {};
 
-type TextClickEvent = {
+export type TextClickEvent = {
     action: string;
     value: number | string;
 };
 
-type TextHoverEventItemContent = {
+export type TextHoverEventItemContent = {
     id: string;
     count: Nullable<number>;
     components?: Nullable<ComponentMap>;
 };
 
-type TextHoverEventEntityContent = {
+export type TextHoverEventEntityContent = {
     name: Nullable<string>;
     type: Nullable<string>;
     id: Nullable<string>;
 };
 
-type TextHoverEvent = {
+export type TextHoverEvent = {
     action: string;
     contents: string | TextHoverEventItemContent | TextHoverEventEntityContent;
 };
 
-type TextObject = {
+export type TextObject = {
     text: string;
     color?: Nullable<string>;
     font?: Nullable<string>;
@@ -39,12 +38,18 @@ type TextObject = {
     hover_event?: Nullable<TextHoverEvent>;
 };
 
-type TextData = TextObject[] | TextObject | string;
+export type TextData = TextObject[] | TextObject | string;
 
-type Item = {
+export type Item = {
     id: string;
     translation_key: string;
     max_stack_size: number;
     max_damage?: number;
     tags: string[];
+};
+
+export type ItemStack = {
+    item: Item;
+    count: number;
+    components: Nullable<ComponentMap>;
 };

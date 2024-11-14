@@ -18,7 +18,10 @@
     }
     function load() {
         const strCount = localStorage.getItem("stopwatch");
-        if (!strCount) return;
+        if (!strCount) {
+            save()
+            return
+        }
         stopwatches = JSON.parse(strCount);
         for (let w of stopwatches) {
             if (!w.started) continue;

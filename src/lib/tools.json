@@ -1,6 +1,39 @@
 {
     "tools": [
         {
+            "name": "Minecraft",
+            "icon": "",
+            "tools": [
+                {
+                    "href": "/commands",
+                    "name": "コマンドジェネレーター",
+                    "icon": "nut-fill"
+                },
+                {
+                    "href": "/tool/mcsrvstat",
+                    "name": "MCサーバーステータス",
+                    "icon": "box-fill"
+                },
+                {
+                    "href": "/tool/mcid",
+                    "name": "MCID to UUID",
+                    "icon": "person-fill"
+                },
+                {
+                    "href": "/tool/pack-mcmeta",
+                    "name": "pack.mcmeta",
+                    "icon": "boxes"
+                },
+                {
+                    "href": "/tool/manifest-json",
+                    "name": "manifest.json",
+                    "icon": "filetype-json"
+                }
+            ],
+            "collapsed": false,
+            "color": "#0d9"
+        },
+        {
             "name": "変換ツール",
             "icon": "",
             "tools": [
@@ -23,6 +56,16 @@
                     "href": "/tool/converters",
                     "name": "換算ツール",
                     "icon": "arrow-left-right"
+                },
+                {
+                    "href": "/tool/json-format",
+                    "name": "JSONフォーマッター",
+                    "icon": "code-square"
+                },
+                {
+                    "href": "/tool/json-merger",
+                    "name": "JSONの結合(マージ)",
+                    "icon": "code-square"
                 }
             ],
             "collapsed": false,
@@ -56,16 +99,6 @@
                     "href": "/tool/dummy-text",
                     "name": "Lorem Ipsum",
                     "icon": "paragraph"
-                },
-                {
-                    "href": "/tool/pack-mcmeta",
-                    "name": "pack.mcmeta",
-                    "icon": "boxes"
-                },
-                {
-                    "href": "/tool/manifest-json",
-                    "name": "manifest.json",
-                    "icon": "filetype-json"
                 }
             ],
             "collapsed": false,
@@ -122,16 +155,6 @@
                     "href": "/tool/ping",
                     "name": "ping",
                     "icon": "activity"
-                },
-                {
-                    "href": "/tool/mcsrvstat",
-                    "name": "MCサーバーステータス",
-                    "icon": "box-fill"
-                },
-                {
-                    "href": "/tool/mcid",
-                    "name": "MCID to UUID",
-                    "icon": "person-fill"
                 }
             ],
             "collapsed": false,
