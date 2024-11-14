@@ -1,6 +1,6 @@
 {
     "name": "tools.komaken.net",
-    "version": "0.0.1",
+    "version": "1.4.0",
     "private": true,
     "scripts": {
         "dev": "vite dev",
@@ -10,8 +10,8 @@
         "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
     },
     "devDependencies": {
-        "@sveltejs/adapter-node": "^5.1.0",
         "@sveltejs/adapter-auto": "^3.0.0",
+        "@sveltejs/adapter-node": "^5.1.0",
         "@sveltejs/kit": "^2.0.0",
         "@sveltejs/vite-plugin-svelte": "^3.0.0",
         "@tauri-apps/cli": "^1.5.14",
@@ -38,6 +38,7 @@
         "chart.js": "^4.4.3",
         "decimal.js": "^10.4.3",
         "dom-to-image": "^2.6.0",
+        "js-base64": "^3.7.7",
         "katex": "^0.16.10",
         "lodash": "^4.17.21",
         "lorem-ipsum": "^2.0.8",

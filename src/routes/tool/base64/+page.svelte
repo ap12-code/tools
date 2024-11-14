@@ -1,14 +1,15 @@
 <script>
     import Container from "$components/Container.svelte";
+    import { encode, decode } from "js-base64"
 
     let plain = ""
     let base64 = ""
 
     function changePlain() {
-        base64 = btoa(plain)
+        base64 = encode(plain)
     }
     function changeBase64() {
-        plain = atob(base64)
+        plain = decode(base64)
     }
     function exchange() {
         [base64, plain] = [plain, base64]

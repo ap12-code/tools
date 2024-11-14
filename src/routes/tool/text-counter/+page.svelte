@@ -4,13 +4,8 @@
     let output = ""
     let amount = 0
 
-    const LOWERS = "abcdefghijklmnopqrstuvwxyz"
-    const UPPERS = LOWERS.toUpperCase()
-    const DIGITS = "0123456789"
-    const SYMBOLS = "!@#$%^&*"
-
     function update() {
-        amount = output.length
+        amount = Array.from(output).length
     }
 </script>
 <Container>
