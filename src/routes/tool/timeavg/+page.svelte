@@ -1,6 +1,7 @@
 <script lang="ts">
     import Container from "$components/Container.svelte";
     import moment from "moment";
+    import { onMount } from "svelte";
 
     let texts: string[] = [""]
     let totalTimes: number = 0
@@ -19,11 +20,14 @@
         }
 
         if (i.split(":").length == 2) {
-            i = i + "00:"
+            i = "00:" + i
         }
 
         const ti = moment.duration(i, "seconds")
-        return ti.asSeconds()
+        if (ti.isValid()) {
+            return ti.asSeconds()
+        }
+        return NaN
     }
 
 
@@ -63,6 +67,14 @@
         return sum(times) / elmCount
     }
 
+    function clear() {
+        if (confirm("ローカルストレージに保存されたデータを削除し、入力値をクリアします。よろしいですか?")) {
+            localStorage.removeItem("timeavg_times")
+            texts = [""]
+            update()
+        }
+    }
+
     function update() {
         totalTimes = avg(texts.map(parse))
         texts = texts.filter((v, i) => !(i != 0 && v == ""))
@@ -70,7 +82,16 @@
             texts.push("")
         }
         totalTimesFormatted = format(totalTimes)
+
+        localStorage.setItem("timeavg_times", JSON.stringify(texts))
     }
+
+    onMount(() => {
+        const storage = localStorage.getItem("timeavg_times")
+        if (storage) {
+            texts = JSON.parse(storage)
+        }
+    })
     totalTimesFormatted = format(0)
 </script>
 <Container>
@@ -84,6 +105,7 @@
         </div>
         <div>
             <button on:click={update}>計算</button>
+            <button on:click={clear}>ストレージクリア</button>
             {#if Number.isNaN(totalTimes)}
                 <div class="totals">
                     <span class="desc">合計</span><br />

@@ -196,6 +196,11 @@
                     "href": "/tool/stopwatch",
                     "name": "ストップウォッチ",
                     "icon": "stopwatch"
+                },
+                {
+                    "href": "/tool/timeavg",
+                    "name": "平均時間",
+                    "icon": "clock-history"
                 }
             ],
             "collapsed": false,

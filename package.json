@@ -1,6 +1,6 @@
 {
-    "name": "tools.komaken.net",
-    "version": "1.4.0",
+    "name": "tools.ap12.net",
+    "version": "1.4.1",
     "private": true,
     "scripts": {
         "dev": "vite dev",
