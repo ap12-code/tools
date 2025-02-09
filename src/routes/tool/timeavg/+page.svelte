@@ -108,12 +108,12 @@
             <button on:click={clear}>ストレージクリア</button>
             {#if Number.isNaN(totalTimes)}
                 <div class="totals">
-                    <span class="desc">合計</span><br />
+                    <span class="desc">平均</span><br />
                     <span>入力エラー</span>
                 </div>
             {:else}
                 <div class="totals">
-                    <span class="desc">合計</span><br />
+                    <span class="desc">平均</span><br />
                     <span>{totalTimes} Seconds</span><br />
                     <span>{totalTimesFormatted}</span>
                 </div>
