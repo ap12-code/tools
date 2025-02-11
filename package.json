@@ -1,7 +1,6 @@
 {
     "name": "tools.ap12.net",
     "version": "1.4.1",
-    "private": true,
     "scripts": {
         "dev": "vite dev",
         "build": "vite build",
@@ -14,7 +13,6 @@
         "@sveltejs/adapter-node": "^5.1.0",
         "@sveltejs/kit": "^2.0.0",
         "@sveltejs/vite-plugin-svelte": "^3.0.0",
-        "@tauri-apps/cli": "^1.5.14",
         "@types/archiver": "^6.0.2",
         "@types/dom-to-image": "^2.6.7",
         "@types/katex": "^0.16.7",

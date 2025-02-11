@@ -7,7 +7,7 @@ on:
 
 env:
     REGISTRY: docker-registry.ap12.net
-    IMAGE_NAME: tools-komaken
+    IMAGE_NAME: tools-ap12
 
 jobs:
     docker:
