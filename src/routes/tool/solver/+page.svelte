@@ -37,7 +37,7 @@
             <textarea bind:value={plain} oninput={update}></textarea>
         </div>
         {#if output}
-            <Button on:click={() => solve()}>=</Button>
+            <Button onclick={solve}>=</Button>
         {/if}
     </div>
 </Container>

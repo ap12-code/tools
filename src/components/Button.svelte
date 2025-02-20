@@ -1,15 +1,15 @@
 <script lang="ts">
-    import { createBubbler } from 'svelte/legacy';
+    import type { Snippet } from "svelte";
 
-    const bubble = createBubbler();
     interface Props {
-        children?: import('svelte').Snippet;
+        children: Snippet;
+        onclick: () => void;
     }
 
-    let { children }: Props = $props();
+    let { children, onclick }: Props = $props();
 </script>
 
-<button onclick={bubble('click')} class="button-component">
+<button {onclick} class="button-component">
     {@render children?.()}
 </button>
 

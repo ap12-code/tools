@@ -1,20 +1,21 @@
 <script>
     import Container from "$components/Container.svelte";
 
-    let plain = $state("")
-    let urlEncoded = $state("")
+    let plain = $state("");
+    let urlEncoded = $state("");
 
     function changePlain() {
-        urlEncoded = encodeURIComponent(plain)
+        urlEncoded = encodeURIComponent(plain);
     }
     function changeURL() {
-        plain = decodeURIComponent(urlEncoded)
+        plain = decodeURIComponent(urlEncoded);
     }
     function exchange() {
-        [urlEncoded, plain] = [plain, urlEncoded]
-        changePlain()
+        [urlEncoded, plain] = [plain, urlEncoded];
+        changePlain();
     }
 </script>
+
 <Container>
     <h1>URL エンコーダー / デコーダー</h1>
     <hr />
@@ -24,7 +25,7 @@
             <textarea bind:value={plain} oninput={changePlain}></textarea>
         </div>
         <div>
-            <button onclick={exchange}><i class="bi bi-arrow-down-up"></i></button>
+            <button onclick={exchange} aria-label="入れ替え"><i class="bi bi-arrow-down-up"></i></button>
         </div>
         <div>
             <p>URL</p>

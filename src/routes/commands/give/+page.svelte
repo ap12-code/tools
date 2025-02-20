@@ -19,139 +19,141 @@
     let item: Nullable<Item> = $state(null);
     let count = $state(1);
     let itemId: Nullable<string> = $state(null);
-    let is_food = $state(false)
-    let components: ComponentMap = $state({food: {}});
+    let is_food = $state(false);
+    let components: ComponentMap = $state({ food: {} });
     let command = $state("アイテムを選択してください");
-    let copied = $state(false)
-    let auto_save = true
+    let copied = $state(false);
+    let auto_save = true;
 
     type GiveCommandData = {
-        components: ComponentMap,
-        count: number,
-        item: Nullable<Item>,
-        is_food: boolean
-    }
+        components: ComponentMap;
+        count: number;
+        item: Nullable<Item>;
+        is_food: boolean;
+    };
 
-    let old_command: Nullable<string> = null
-    let histories: GiveCommandData[] = []
-    let redoed: GiveCommandData[] = []
-    let history_cursor: number = -1
+    let old_command: Nullable<string> = null;
+    let histories: GiveCommandData[] = [];
+    let redoed: GiveCommandData[] = [];
+    let history_cursor: number = -1;
 
     function loadBrowser() {
-        const data = localStorage.getItem("data:commands/give")
-        if (!data) return
-        const parsed: GiveCommandData = JSON.parse(data)
-        components = parsed.components
-        count = parsed.count
-        if (parsed.item) item = parsed.item
-        if (parsed.item) itemId = parsed.item.id
-        is_food = parsed.is_food
+        const data = localStorage.getItem("data:commands/give");
+        if (!data) return;
+        const parsed: GiveCommandData = JSON.parse(data);
+        components = parsed.components;
+        count = parsed.count;
+        if (parsed.item) item = parsed.item;
+        if (parsed.item) itemId = parsed.item.id;
+        is_food = parsed.is_food;
     }
 
     function saveBrowser() {
-        if (!item) return
+        if (!item) return;
         const data: GiveCommandData = {
             components: components,
             count: count,
             is_food: is_food,
-            item: item
-        }
+            item: item,
+        };
 
-        localStorage.setItem("data:commands/give", JSON.stringify(data))
+        localStorage.setItem("data:commands/give", JSON.stringify(data));
     }
 
     function undo() {
-        if (history_cursor <= 0) return
-        history_cursor -= 1
-        const parsed = histories[history_cursor]
-        if (!parsed) return
-        console.log("UNDO ", parsed)
-        console.log(histories)
+        if (history_cursor <= 0) return;
+        history_cursor -= 1;
+        const parsed = histories[history_cursor];
+        if (!parsed) return;
+        console.log("UNDO ", parsed);
+        console.log(histories);
 
-        components = parsed.components
-        count = parsed.count
-        if (parsed.item) item = parsed.item
-        if (parsed.item) itemId = parsed.item.id
-        is_food = parsed.is_food
+        components = parsed.components;
+        count = parsed.count;
+        if (parsed.item) item = parsed.item;
+        if (parsed.item) itemId = parsed.item.id;
+        is_food = parsed.is_food;
 
-        _refreshOutput()
+        _refreshOutput();
     }
     function redo() {
-        if (history_cursor >= histories.length) return
-        history_cursor += 1
-        const parsed = histories[history_cursor]
-        console.log("REDO ", parsed)
-        console.log(histories)
-        if (!parsed) return
+        if (history_cursor >= histories.length) return;
+        history_cursor += 1;
+        const parsed = histories[history_cursor];
+        console.log("REDO ", parsed);
+        console.log(histories);
+        if (!parsed) return;
 
-        components = parsed.components
-        count = parsed.count
-        if (parsed.item) item = parsed.item
-        if (parsed.item) itemId = parsed.item.id
-        is_food = parsed.is_food
+        components = parsed.components;
+        count = parsed.count;
+        if (parsed.item) item = parsed.item;
+        if (parsed.item) itemId = parsed.item.id;
+        is_food = parsed.is_food;
 
-        _refreshOutput()
+        _refreshOutput();
     }
 
     function copyOutput() {
-        _refreshOutput()
+        _refreshOutput();
         if (!item) {
-            alert("先にアイテムを選択してください")
-            return
+            alert("先にアイテムを選択してください");
+            return;
         }
-        navigator.clipboard.writeText(command)
-        copied = true
+        navigator.clipboard.writeText(command);
+        copied = true;
         setTimeout(() => {
-            copied = false
-        }, 500)
+            copied = false;
+        }, 500);
     }
 
     function updateAutoSave() {
-        localStorage.setItem("data:commands/give/autosave", auto_save.toString())
+        localStorage.setItem("data:commands/give/autosave", auto_save.toString());
     }
 
     function loadAutoSave() {
-        const autosave = localStorage.getItem("data:commands/give/autosave")
-        if (!autosave) return
+        const autosave = localStorage.getItem("data:commands/give/autosave");
+        if (!autosave) return;
         auto_save = Boolean(autosave);
     }
 
     function saveHistory() {
         // TODO: history
-        return
+        return;
         const data: GiveCommandData = {
             components: components,
             count: count,
             is_food: is_food,
-            item: item
-        }
-        histories.push(data)
-        histories = histories
-        history_cursor = histories.length
-        redoed = []
+            item: item,
+        };
+        histories.push(data);
+        histories = histories;
+        history_cursor = histories.length;
+        redoed = [];
     }
 
     function deleteBrowser() {
-        const bl = confirm("確認\n\nブラウザに保存されているコマンドのデータを消去し、すべての項目をリセットします。よろしいですか?\n\nこの操作は元に戻せません!")
-        if (!bl) return
-        localStorage.removeItem("data:commands/give")
-        components = {}
-        count = 1
-        item = null
-        itemId = null
-        is_food = false
-        histories = []
-        history_cursor = 0
-        saveBrowser()
-        refreshOutput()
+        const bl = confirm(
+            "確認\n\nブラウザに保存されているコマンドのデータを消去し、すべての項目をリセットします。よろしいですか?\n\nこの操作は元に戻せません!",
+        );
+        if (!bl) return;
+        localStorage.removeItem("data:commands/give");
+        components = {};
+        count = 1;
+        item = null;
+        itemId = null;
+        is_food = false;
+        histories = [];
+        history_cursor = 0;
+        saveBrowser();
+        refreshOutput();
     }
 
     function updateItem() {
         const selItem = items.find((i) => i.id == itemId);
         if (!selItem || !itemId) {
-            item = null
+            item = null;
             _refreshOutput();
-            return
+            return;
         }
         item = selItem;
         saveHistory();
@@ -163,25 +165,25 @@
 
         if (!item) {
             command = "アイテムを選択してください";
-            return
+            return;
         }
         output.push("/give", "@s");
         let parsed_components: string[] = [];
 
         // food updates...
         if (!is_food) {
-            components.food = undefined
+            components.food = undefined;
         } else {
-            if (components.food == undefined) components.food = {}
+            if (components.food == undefined) components.food = {};
         }
 
         for (let [k, v] of Object.entries(components)) {
             if (!v) continue;
             if (isTextData(v)) {
                 if (v != "") {
-                    parsed_components.push(`minecraft:${k}='${JSON.stringify(v)}'`)
+                    parsed_components.push(`minecraft:${k}='${JSON.stringify(v)}'`);
                 }
-                continue
+                continue;
             }
             if (typeof v === "string") {
                 parsed_components.push(`minecraft:${k}="${v}"`);
@@ -201,15 +203,15 @@
         output.push(`${count}`);
 
         command = output.join(" ");
-        saveBrowser()
+        saveBrowser();
     }
 
     function refreshOutput() {
-        if (old_command == null) old_command = command
-        if (command != old_command) saveHistory()
-        old_command = command
+        if (old_command == null) old_command = command;
+        if (command != old_command) saveHistory();
+        old_command = command;
 
-        _refreshOutput()
+        _refreshOutput();
     }
 
     function refreshSearch() {
@@ -225,10 +227,11 @@
 
     onMount(() => {
         loadBrowser();
-        loadAutoSave()
+        loadAutoSave();
         refreshSearch();
-    })
+    });
 </script>
+
 <div>
     <Container back_to="/commands">
         <h1>/giveコマンドジェネレーター</h1>
@@ -239,9 +242,9 @@
             <div class="output-actions">
                 <span>出力 - {command.length}文字</span>
                 <div>
-                    <Button on:click={refreshOutput}><i class="bi bi-arrow-clockwise"></i> 出力を更新</Button>
-                    <Button on:click={copyOutput}><i class="bi bi-clipboard2"></i> {copied ? "コピーしました" : "コピー"}</Button>
-                    <Button on:click={deleteBrowser}><i class="bi bi-trash"></i> リセット</Button>
+                    <Button onclick={refreshOutput}><i class="bi bi-arrow-clockwise"></i> 出力を更新</Button>
+                    <Button onclick={copyOutput}><i class="bi bi-clipboard2"></i> {copied ? "コピーしました" : "コピー"}</Button>
+                    <Button onclick={deleteBrowser}><i class="bi bi-trash"></i> リセット</Button>
                 </div>
             </div>
             {#key command}
@@ -252,37 +255,18 @@
         <div class="main">
             <div class="item">
                 <label for="itemid">アイテム</label>
-                <select
-                    id="itemid"
-                    class="input-item select"
-                    placeholder="選択してください"
-                    bind:value={itemId}
-                    onchange={updateItem}
-                >
+                <select id="itemid" class="input-item select" placeholder="選択してください" bind:value={itemId} onchange={updateItem}>
                     <option value={null}>選択してください...</option>
                     {#each items as itemI}
                         <option value={itemI.id}>{itemI.id}</option>
                     {/each}
                 </select>
-                <input
-                    type="text"
-                    class="input-text"
-                    placeholder="検索..."
-                    bind:value={search}
-                    oninput={refreshSearch}
-                />
+                <input type="text" class="input-text" placeholder="検索..." bind:value={search} oninput={refreshSearch} />
             </div>
             {#if item}
                 <div class="item-count component">
                     <label for="count">数量</label>
-                    <input
-                        type="number"
-                        class="input-number"
-                        id="count"
-                        bind:value={count}
-                        min={0}
-                        oninput={refreshOutput}
-                    />
+                    <input type="number" class="input-number" id="count" bind:value={count} min={0} oninput={refreshOutput} />
                 </div>
                 <div class="custom-name component">
                     <span>カスタム名</span>
@@ -371,15 +355,33 @@
                         {#if components.food && is_food}
                             <div class="component">
                                 <label for="food-nutrition">満腹度</label>
-                                <input type="number" class="input-number" id="food-nutrition" bind:value={components.food.nutrition} oninput={refreshOutput}/>
+                                <input
+                                    type="number"
+                                    class="input-number"
+                                    id="food-nutrition"
+                                    bind:value={components.food.nutrition}
+                                    oninput={refreshOutput}
+                                />
                             </div>
                             <div class="component">
                                 <label for="food-saturation">隠し満腹度</label>
-                                <input type="number" class="input-number" id="food-saturation" bind:value={components.food.saturation} oninput={refreshOutput}/>
+                                <input
+                                    type="number"
+                                    class="input-number"
+                                    id="food-saturation"
+                                    bind:value={components.food.saturation}
+                                    oninput={refreshOutput}
+                                />
                             </div>
                             <div class="component">
                                 <label for="food-eat-seconds">必要時間</label>
-                                <input type="number" class="input-number" id="food-eat-seconds" bind:value={components.food.eat_seconds} oninput={refreshOutput}/>
+                                <input
+                                    type="number"
+                                    class="input-number"
+                                    id="food-eat-seconds"
+                                    bind:value={components.food.eat_seconds}
+                                    oninput={refreshOutput}
+                                />
                             </div>
                             <div class="component">
                                 <label for="food-eat-seconds">いつでも食べれる</label>
@@ -424,7 +426,8 @@
     .component {
         display: flex;
     }
-    .component label, .component span {
+    .component label,
+    .component span {
         width: 200px;
     }
     .main {
@@ -459,7 +462,8 @@
         padding: 5px;
         border: 1px solid #777;
     }
-    input, select:focus {
+    input,
+    select:focus {
         outline: none;
     }
     .outputs {

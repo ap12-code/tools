@@ -7,9 +7,9 @@ const execAsync = promisify(exec)
 
 export const POST: RequestHandler = async ({ request }) => {
     const body = await request.json()
-    if (!body || !body.address) throw error(400)
-    if (!verifyAddress(body.address)) throw error(403)
-    if (body.param.includes(" ")) throw error(403)
+    if (!body || !body.address) error(400);
+    if (!verifyAddress(body.address)) error(403);
+    if (body.param.includes(" ")) error(403);
     try {
         const { stdout } = await execAsync(`dig @1.1.1.1 ${body.address} ${body.param}`)
         return new Response(stdout, {headers: {"Access-Control-Allow-Origin": "*"}})

@@ -1,41 +1,42 @@
 <script>
     import Container from "$components/Container.svelte";
 
-    let plain = $state("")
-    let unicode = $state("")
+    let plain = $state("");
+    let unicode = $state("");
 
     function changePlain() {
-        unicode = ""
+        unicode = "";
         for (let c of plain.split("")) {
-            let cn = c.codePointAt(0)
+            let cn = c.codePointAt(0);
             if (cn) {
-                let cr = cn.toString(16).padStart(4, "0")
-                unicode += `\\u${cr}`
+                let cr = cn.toString(16).padStart(4, "0");
+                unicode += `\\u${cr}`;
             } else {
-                unicode = "変換エラー"
-                return
+                unicode = "変換エラー";
+                return;
             }
         }
     }
     function changeUnicode() {
-        plain = ""
+        plain = "";
         for (let c of unicode.split("\\u")) {
-            if (!c) continue
-            let cn = parseInt(c, 16)
+            if (!c) continue;
+            let cn = parseInt(c, 16);
             if (cn) {
-                let cr = String.fromCodePoint(cn)
-                plain += `${cr}`
+                let cr = String.fromCodePoint(cn);
+                plain += `${cr}`;
             } else {
-                plain = "変換エラー"
-                return
+                plain = "変換エラー";
+                return;
             }
         }
     }
     function exchange() {
-        [unicode, plain] = [plain, unicode]
-        changePlain()
+        [unicode, plain] = [plain, unicode];
+        changePlain();
     }
 </script>
+
 <Container>
     <h1>Unicode エンコーダー / デコーダー</h1>
     <hr />
@@ -45,7 +46,7 @@
             <textarea bind:value={plain} oninput={changePlain}></textarea>
         </div>
         <div>
-            <button onclick={exchange}><i class="bi bi-arrow-down-up"></i></button>
+            <button aria-label="入れ替え" onclick={exchange}><i class="bi bi-arrow-down-up"></i></button>
         </div>
         <div>
             <p>UNICODE</p>

@@ -1,15 +1,15 @@
 <script lang="ts">
     import Container from "$components/Container.svelte";
     import { onMount } from "svelte";
-    let dataVersion = ""
+    let dataVersion = "";
     type Module = {
-        description: string,
-        type: string,
-        uuid: string,
-        version: string
-    }
+        description: string;
+        type: string;
+        uuid: string;
+        version: string;
+    };
 
-    const MODULE_TYPES = ["resources", "data", "script", "world_template"]
+    const MODULE_TYPES = ["resources", "data", "script", "world_template"];
     const LICENSE_TYPES = {
         "The Unlicense": "",
         "MIT License": "MIT",
@@ -17,67 +17,70 @@
         "GNU GPLv3": "GPLv3",
         "GNU LGPLv3": "LGPLv3",
         "Mozilla Public License 2.0": "MPL2.0",
-        "Apache License 2.0": "Apache2.0"
-    }
+        "Apache License 2.0": "Apache2.0",
+    };
 
-    let modules: Module[] = $state([])
+    let modules: Module[] = $state([]);
     let output = $state({
-        "format_version": 2,
-        "header": {
-            "name": "",
-            "description": "",
-            "uuid": crypto.randomUUID(),
-            "version": "0.1.0",
-            "min_engine_version": "1.21.0"
+        format_version: 2,
+        header: {
+            name: "",
+            description: "",
+            uuid: crypto.randomUUID(),
+            version: "0.1.0",
+            min_engine_version: "1.21.0",
         },
-        "modules": modules,
-        "dependencies": [],
-        "capabilities": [],
-        "metadata":{
-            "authors": [],
-            "url": "",
-            "license": "v1.0"
-        }
-    })
-    let outJSON = $state("")
+        modules: [] as Module[],
+        dependencies: [],
+        capabilities: [],
+        metadata: {
+            authors: [],
+            url: "",
+            license: "v1.0",
+        },
+    });
+    let outJSON = $state("");
 
     function update() {
-        output.modules = modules
+        output.modules = modules;
         for (let mod of output.modules) {
-            mod.version = output.header.version
+            mod.version = output.header.version;
         }
-        outJSON = JSON.stringify(output, null, 4)
+        outJSON = JSON.stringify(output, null, 4);
     }
     function copy() {
-        navigator.clipboard.writeText(outJSON)
+        navigator.clipboard.writeText(outJSON);
     }
     function download() {
-        const url = URL.createObjectURL(new Blob([outJSON], {
-            type: "text/plain"
-        }))
-        const element = document.createElement("a")
-        element.href = url
-        element.download = "pack.mcmeta"
-        element.click()
+        const url = URL.createObjectURL(
+            new Blob([outJSON], {
+                type: "text/plain",
+            }),
+        );
+        const element = document.createElement("a");
+        element.href = url;
+        element.download = "pack.mcmeta";
+        element.click();
     }
     function add_module() {
         modules.push({
             description: output.header.description,
             type: "resources",
             uuid: crypto.randomUUID(),
-            version: ""
-        })
-        modules = modules
-        update()
+            version: "",
+        });
+        modules = modules;
+        update();
     }
 
     function del_module(id: string) {
-        modules = modules.filter(p => p.uuid != id)
-        update()
+        modules = modules.filter((p) => p.uuid != id);
+        update();
     }
 
-    onMount(update)
+    onMount(update);
 </script>
+
 <Container>
     <h1>manifest.jsonジェネレーター</h1>
     <hr />
@@ -137,7 +140,7 @@
                 </div>
                 <div class="control">
                     <span></span>
-                    <button class="delete-button" onclick={_ => del_module(module.uuid)}>削除</button>
+                    <button class="delete-button" onclick={(_) => del_module(module.uuid)}>削除</button>
                 </div>
             </div>
         {/each}

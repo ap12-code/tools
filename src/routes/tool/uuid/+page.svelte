@@ -45,9 +45,9 @@
                 </div>
                 <button onclick={gen}>再生成</button>
             </div>
-            {#each uuids as uuid}
+            {#each uuids as uuid, i}
                 <div class="item">
-                    <input type="text" readonly bind:value={uuid} />
+                    <input type="text" readonly={true} bind:value={uuids[i]} />
                     <button onclick={(_) => copy(uuid)}>コピー</button>
                 </div>
             {/each}

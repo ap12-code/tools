@@ -8,13 +8,15 @@
     import { onMount } from "svelte";
 
     let raw_expr = $state("y=x");
-    let expr = nerdamer(raw_expr);
+    let expr = nerdamer("y=x");
     let size = 500;
     let sc = $state(10);
     let center = size / 2;
 
-    let chartCanvas: HTMLCanvasElement = $state();
+    let chartCanvas: HTMLCanvasElement | undefined = $state();
     function renderGrid() {
+        if (!chartCanvas) return;
+
         chartCanvas.style.width = `${size}px`;
         chartCanvas.style.height = `${size}px`;
 
@@ -46,6 +48,8 @@
     }
 
     function renderChart() {
+        if (!chartCanvas) return;
+
         const ctx = chartCanvas.getContext("2d");
         if (!ctx) return;
         ctx.strokeStyle = "#fff";
@@ -64,6 +68,8 @@
         ctx.closePath();
     }
     function update() {
+        if (!chartCanvas) return;
+
         const ctx = chartCanvas.getContext("2d");
         if (!ctx) return;
         expr = nerdamer(raw_expr);

@@ -29,7 +29,7 @@
             <textarea bind:value={plain} oninput={changePlain}></textarea>
         </div>
         <div>
-            <button onclick={exchange}><i class="bi bi-arrow-down-up"></i></button>
+            <button onclick={exchange} aria-label="入れ替え"><i class="bi bi-arrow-down-up"></i></button>
         </div>
         <div>
             <p>HTML</p>

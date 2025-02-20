@@ -1,29 +1,40 @@
 <script lang="ts">
-    import { run } from 'svelte/legacy';
+    import { run } from "svelte/legacy";
 
     import Container from "$components/Container.svelte";
     import Text from "$components/Text.svelte";
     import { onMount } from "svelte";
 
     let ipv4 = $state("取得中...");
-    
+
     let ipv6 = $state("取得中...");
-    
-    let data;
-    run(() => {
-        data = {
-            ipv4: "取得中...",
-            ipv6: "取得中...",
-            hostname: "取得中...",
-            city: "取得中...",
-            region: "取得中...",
-            country: "取得中...",
-            loc: "取得中...",
-            org: "取得中...",
-            postal: "取得中...",
-            timezone: "取得中...",
-            readme: "取得中...",
-        };
+
+    type Data = {
+        ipv4: string;
+        ipv6: string;
+        hostname: string;
+        country: string;
+        region: string;
+        city: string;
+        org: string;
+        loc: string;
+        postal: string;
+        timezone: string;
+        readme: string;
+    };
+
+    let data: Data = $state({
+        ipv4: "取得中...",
+        ipv6: "取得中...",
+        hostname: "取得中...",
+        city: "取得中...",
+        region: "取得中...",
+        country: "取得中...",
+        loc: "取得中...",
+        org: "取得中...",
+        postal: "取得中...",
+        timezone: "取得中...",
+        readme: "取得中...",
     });
     onMount(async () => {
         data = await (await fetch("https://ipapi.co/json/")).json();

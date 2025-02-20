@@ -42,9 +42,9 @@
                 </div>
             </div>
             <hr />
-            {#each randoms as random}
+            {#each randoms as random, i}
                 <div class="item">
-                    <input type="number" class="out" readonly bind:value={random} />
+                    <input type="number" class="out" readonly bind:value={randoms[i]} />
                     <button onclick={(_) => copy(random)}>コピー</button>
                 </div>
             {/each}

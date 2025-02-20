@@ -8,7 +8,7 @@
     import _ from "lodash";
     import { dev } from "$app/environment";
     interface Props {
-        children?: import('svelte').Snippet;
+        children?: import("svelte").Snippet;
     }
 
     let { children }: Props = $props();
@@ -138,7 +138,7 @@
             </div>
         {:else}
             <div class="sidebar-show-button">
-                <button onclick={switchSidebar}>
+                <button onclick={switchSidebar} aria-label="サイドバーを表示">
                     <i class="bi bi-list"></i>
                 </button>
             </div>

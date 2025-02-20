@@ -3,7 +3,6 @@
     import Button from "$components/Button.svelte";
     import Container from "$components/Container.svelte";
     import nerdamer from "nerdamer-prime";
-    import katex from "katex";
     import "katex/dist/katex.css";
     import _ from "lodash";
 
@@ -126,34 +125,34 @@
         </div>
 
         <div class="buttons">
-            <Button on:click={(_) => handleClick("7")}>7</Button>
-            <Button on:click={(_) => handleClick("8")}>8</Button>
-            <Button on:click={(_) => handleClick("9")}>9</Button>
-            <Button on:click={(_) => handleClick("/")}>/</Button>
+            <Button onclick={() => handleClick("7")}>7</Button>
+            <Button onclick={() => handleClick("8")}>8</Button>
+            <Button onclick={() => handleClick("9")}>9</Button>
+            <Button onclick={() => handleClick("/")}>/</Button>
 
-            <Button on:click={(_) => handleClick("4")}>4</Button>
-            <Button on:click={(_) => handleClick("5")}>5</Button>
-            <Button on:click={(_) => handleClick("6")}>6</Button>
-            <Button on:click={(_) => handleClick("*")}>*</Button>
+            <Button onclick={() => handleClick("4")}>4</Button>
+            <Button onclick={() => handleClick("5")}>5</Button>
+            <Button onclick={() => handleClick("6")}>6</Button>
+            <Button onclick={() => handleClick("*")}>*</Button>
 
-            <Button on:click={(_) => handleClick("1")}>1</Button>
-            <Button on:click={(_) => handleClick("2")}>2</Button>
-            <Button on:click={(_) => handleClick("3")}>3</Button>
-            <Button on:click={(_) => handleClick("-")}>-</Button>
+            <Button onclick={() => handleClick("1")}>1</Button>
+            <Button onclick={() => handleClick("2")}>2</Button>
+            <Button onclick={() => handleClick("3")}>3</Button>
+            <Button onclick={() => handleClick("-")}>-</Button>
 
-            <Button on:click={(_) => handleClick(".")}>.</Button>
-            <Button on:click={(_) => handleClick("0")}>0</Button>
-            <Button on:click={(_) => handleClick("*-1")}>+/-</Button>
-            <Button on:click={(_) => handleClick("+")}>+</Button>
+            <Button onclick={() => handleClick(".")}>.</Button>
+            <Button onclick={() => handleClick("0")}>0</Button>
+            <Button onclick={() => handleClick("*-1")}>+/-</Button>
+            <Button onclick={() => handleClick("+")}>+</Button>
 
-            <Button on:click={(_) => handleClick("CA")}>CA</Button>
-            <Button on:click={(_) => handleClick("C")}>C</Button>
-            <Button on:click={(_) => handleClick("=")}>=</Button>
-            <Button on:click={(_) => handleClick("BS")}><i class="bi bi-backspace-fill"></i></Button>
-            <Button on:click={(_) => handleClick("sin")}>sin</Button>
-            <Button on:click={(_) => handleClick("cos")}>cos</Button>
-            <Button on:click={(_) => handleClick("tan")}>tan</Button>
-            <Button on:click={(_) => handleClick("sqrt")}>√</Button>
+            <Button onclick={() => handleClick("CA")}>CA</Button>
+            <Button onclick={() => handleClick("C")}>C</Button>
+            <Button onclick={() => handleClick("=")}>=</Button>
+            <Button onclick={() => handleClick("BS")}><i class="bi bi-backspace-fill"></i></Button>
+            <Button onclick={() => handleClick("sin")}>sin</Button>
+            <Button onclick={() => handleClick("cos")}>cos</Button>
+            <Button onclick={() => handleClick("tan")}>tan</Button>
+            <Button onclick={() => handleClick("sqrt")}>√</Button>
         </div>
     </section>
 </Container>

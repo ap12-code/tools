@@ -192,12 +192,12 @@
 
 <div>
     <div class="toolbar">
-        <button class="control" onclick={applyBold}><i class="bi bi-type-bold"></i></button>
-        <button class="control" onclick={applyItalic}><i class="bi bi-type-italic"></i></button>
-        <button class="control" onclick={applyStrikeThrough}><i class="bi bi-type-strikethrough"></i></button>
-        <button class="control" onclick={applyUnderline}><i class="bi bi-type-underline"></i></button>
+        <button aria-label="太字" class="control" onclick={applyBold}><i class="bi bi-type-bold"></i></button>
+        <button aria-label="斜体" class="control" onclick={applyItalic}><i class="bi bi-type-italic"></i></button>
+        <button aria-label="取り消し線" class="control" onclick={applyStrikeThrough}><i class="bi bi-type-strikethrough"></i></button>
+        <button aria-label="下線" class="control" onclick={applyUnderline}><i class="bi bi-type-underline"></i></button>
         {#each colors as color}
-            <button class="control" onclick={(_) => applyColor(color)}><i class={`bi bi-square-fill color-${color}`}></i></button>
+            <button aria-label="色" class="control" onclick={(_) => applyColor(color)}><i class={`bi bi-square-fill color-${color}`}></i></button>
         {/each}
     </div>
     <div contenteditable="true" role="textbox" spellcheck="false" class="main font-mc" id={elementId} oninput={onInput}></div>

@@ -2,12 +2,12 @@
     interface Props {
         show?: boolean;
         title?: string;
-        children?: import('svelte').Snippet;
+        children?: import("svelte").Snippet;
     }
 
     let { show = $bindable(false), title = "", children }: Props = $props();
     export function close() {
-        show = false
+        show = false;
     }
 </script>
 
@@ -17,7 +17,7 @@
         <div class="content">
             <div class="close-btn">
                 <span>{title}</span>
-                <button onclick={close}>
+                <button aria-label="閉じる" onclick={close}>
                     <i class="bi bi-x-lg"></i>
                 </button>
             </div>

@@ -1,7 +1,7 @@
 <script lang="ts">
     import Container from "$components/Container.svelte";
 
-    let files: FileList = $state();
+    let files: FileList | undefined = $state();
     let to_ext = $state("png");
     let has_result = $state(false);
     let processing = $state(false);

@@ -74,7 +74,7 @@ async function run_whois(address: string) {
 
 export const GET: RequestHandler = async ({ url }) => {
     const address = url.searchParams.get("domain");
-    if (!address) throw error(400);
+    if (!address) error(400);
     if (!verifyAddress(address))
         throw fail(422, {
             message: `query 'domain' is not available.`,
@@ -87,7 +87,7 @@ export const GET: RequestHandler = async ({ url }) => {
 export const POST: RequestHandler = async ({ request, fetch }) => {
     const body = await request.json();
 
-    if (!body || !body.address) throw error(400);
+    if (!body || !body.address) error(400);
     if (!verifyAddress(body.address))
         throw fail(422, {
             message: `body 'address' is not available.`,

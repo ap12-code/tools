@@ -38,7 +38,7 @@
             <textarea bind:value={plain} oninput={update}></textarea>
         </div>
     </div>
-    <Button on:click={save}>Save</Button>
+    <Button onclick={save}>Save</Button>
 </Container>
 
 <style>
