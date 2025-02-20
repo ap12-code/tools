@@ -6,6 +6,7 @@
 
     const kanji_digits = ["〇","一","二","三","四","五","六","七","八","九"]
     const kanji_units: Record<string, number> = {
+        "億": 100000000,
         "万": 10000,
         "千": 1000,
         "百": 100,

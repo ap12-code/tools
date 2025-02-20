@@ -4,15 +4,11 @@
     import { onMount } from "svelte";
 
     let texts: string[] = $state([""]);
+    let avgTimes: number = $state(0);
+    let avgTimesFormatted = $state("");
     let totalTimes: number = $state(0);
     let totalTimesFormatted = $state("");
 
-    function toNumber(i: string): number {
-        if (!Number.isNaN(i)) {
-            return Number.parseFloat(i);
-        }
-        return 0;
-    }
 
     function parse(i: string): number {
         if (i == "") {
@@ -74,12 +70,16 @@
     }
 
     function update() {
-        totalTimes = avg(texts.map(parse));
+        const parsed = texts.map(parse)
+        avgTimes = avg(parsed);
+        totalTimes = sum(parsed)
+
         texts = texts.filter((v, i) => !(i != 0 && v == ""));
         if (texts[texts.length - 1] != "") {
             texts.push("");
         }
-        totalTimesFormatted = format(totalTimes);
+        avgTimesFormatted = format(avgTimes);
+        totalTimesFormatted = format(totalTimes)
 
         localStorage.setItem("timeavg_times", JSON.stringify(texts));
     }
@@ -88,8 +88,10 @@
         const storage = localStorage.getItem("timeavg_times");
         if (storage) {
             texts = JSON.parse(storage);
+            update()
         }
     });
+    avgTimesFormatted = format(0);
     totalTimesFormatted = format(0);
 </script>
 
@@ -105,7 +107,7 @@
         <div>
             <button onclick={update}>計算</button>
             <button onclick={clear}>ストレージクリア</button>
-            {#if Number.isNaN(totalTimes)}
+            {#if Number.isNaN(avgTimes)}
                 <div class="totals">
                     <span class="desc">平均</span><br />
                     <span>入力エラー</span>
@@ -113,6 +115,11 @@
             {:else}
                 <div class="totals">
                     <span class="desc">平均</span><br />
+                    <span>{avgTimes} Seconds</span><br />
+                    <span>{avgTimesFormatted}</span>
+                </div>
+                <div class="totals">
+                    <span class="desc">合計</span><br />
                     <span>{totalTimes} Seconds</span><br />
                     <span>{totalTimesFormatted}</span>
                 </div>
