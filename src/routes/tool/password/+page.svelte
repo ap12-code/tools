@@ -1,5 +1,6 @@
 <script>
     import Container from "$components/Container.svelte";
+    import { onMount } from "svelte";
 
     let output = ""
     let amount = 40
@@ -24,9 +25,12 @@
             output += chars.charAt(Math.floor(Math.random() * chars.length))
         }
     }
+
     function copy() {
         navigator.clipboard.writeText(output)
     }
+
+    onMount(gen)
 </script>
 <Container>
     <h1>パスワードジェネレーター</h1>

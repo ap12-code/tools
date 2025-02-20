@@ -15,3 +15,29 @@ export function isTextArray(val: any): val is TextObject[] {
 export function isTextData(val: any): val is TextData {
     return isTextArray(val) || isTextObject(val);
 }
+
+const integer_pattern = /^[0-9]+$/;
+export function isInteger(val: string): boolean {
+    return integer_pattern.test(val);
+}
+
+export function enumerate<T>(data: T[]): [number, T][] {
+    return data.map((k, i) => [i, k]);
+}
+
+export function splitAll(text: string, sep: string[]): Record<string, string> {
+    let buf = "";
+    let ret: Record<string, string> = {};
+
+    for (const c of text.split("")) {
+        if (sep.includes(c)) {
+            ret[c] = buf;
+            buf = "";
+        } else {
+            buf += c;
+        }
+    }
+
+    ret["一"] = buf;
+    return ret;
+}

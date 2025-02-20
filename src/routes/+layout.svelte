@@ -6,6 +6,7 @@
     import { onMount } from "svelte";
     import { tools } from "$lib/tools.json";
     import _ from "lodash";
+    import { dev } from "$app/environment";
 
     let fs = false;
     let shown_sidebar = false;
@@ -143,6 +144,11 @@
     </div>
 
     <footer class:pin={fs}>
+        {#if dev}
+            <div>
+                <span class="dev-warn">注意: これは開発環境です。一般使用は保証されていません</span>
+            </div>
+        {/if}
         <span class="copyright">©{new Date().getFullYear()} ap12</span><br />
         <a href="https://github.com/ap12-code" target="_blank">GitHub</a> | <a href="https://twitter.ap12.net" target="_blank">Twitter</a> |
         <a href="/information">バージョン情報</a>
@@ -180,6 +186,9 @@
         background-color: #222;
         color: #fff;
         border: none;
+    }
+    .dev-warn {
+        color: #dd0;
     }
     .sidebar-show-button {
         position: fixed;

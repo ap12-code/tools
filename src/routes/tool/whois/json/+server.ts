@@ -1,4 +1,4 @@
-import { error, json, type RequestHandler } from "@sveltejs/kit";
+import { error, fail, json, type RequestHandler } from "@sveltejs/kit";
 import { promisify } from "util";
 import { exec } from "child_process";
 import { xml2json } from "xml-js";
@@ -26,21 +26,19 @@ const fix = (propName: string) => {
     return propName.toLowerCase().replaceAll(/[\s\/]/, "_");
 };
 
-export const POST: RequestHandler = async ({ request, fetch }) => {
-    const body = await request.json();
-    if (!body || !body.address) throw error(400);
-    if (body.address.includes(" ")) throw error(403);
-    if (!verifyAddress(body.address)) throw error(403);
-    const servers = JSON.parse(xml2json(await (await fetch("/whois-servers.xml")).text())).elements[0].elements;
+async function run_whois(address: string) {
+    const servers = JSON.parse(
+        xml2json(await (await fetch("https://whois-server-list.github.io/whois-server-list/3.0/whois-server-list.xml")).text()),
+    ).elements[0].elements;
     try {
         let whoisServer = "";
-        const tld = body.address.split(".")[1];
+        const tld = address.split(".")[1];
         servers.forEach((element: Domain) => {
             if (element.attributes && element.attributes.name == tld) {
-                whoisServer = element.elements.find((p: any) => p.name == "whoisServer")?.attributes.host ?? "";
+                whoisServer = element.elements.find((p) => p.name == "whoisServer")?.attributes.host ?? "";
             }
         });
-        const { stdout } = await execAsync(`whois ${body.address} ${whoisServer}`);
+        const { stdout } = await execAsync(`whois ${address} ${whoisServer}`);
         const splited = stdout.split("\n");
         let result: Record<string, any> = {};
 
@@ -65,8 +63,36 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
             }
         }
 
-        return json(result);
+        return result;
     } catch (e: any) {
-        return new Response(e.stderr);
+        console.log(e);
+        return {
+            error: e.stderr,
+        };
     }
+}
+
+export const GET: RequestHandler = async ({ url }) => {
+    const address = url.searchParams.get("domain");
+    if (!address) throw error(400);
+    if (!verifyAddress(address))
+        throw fail(422, {
+            message: `query 'domain' is not available.`,
+            domain: address,
+        });
+
+    return json(await run_whois(address));
+};
+
+export const POST: RequestHandler = async ({ request, fetch }) => {
+    const body = await request.json();
+
+    if (!body || !body.address) throw error(400);
+    if (!verifyAddress(body.address))
+        throw fail(422, {
+            message: `body 'address' is not available.`,
+            address: body.address,
+        });
+
+    return json(await run_whois(body.address));
 };
