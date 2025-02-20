@@ -5,8 +5,8 @@
     import "katex/dist/katex.css";
     import Button from "$components/Button.svelte";
 
-    let plain = "";
-    let output: nerdamer.Expression | null = null;
+    let plain = $state("");
+    let output: nerdamer.Expression | null = $state(null);
     let out2 = "";
 
     function update() {
@@ -34,7 +34,7 @@
     <div class="main">
         <span id="math"></span>
         <div>
-            <textarea bind:value={plain} on:input={update}></textarea>
+            <textarea bind:value={plain} oninput={update}></textarea>
         </div>
         {#if output}
             <Button on:click={() => solve()}>=</Button>

@@ -1,5 +1,16 @@
-<button on:click class="button-component">
-    <slot />
+<script lang="ts">
+    import { createBubbler } from 'svelte/legacy';
+
+    const bubble = createBubbler();
+    interface Props {
+        children?: import('svelte').Snippet;
+    }
+
+    let { children }: Props = $props();
+</script>
+
+<button onclick={bubble('click')} class="button-component">
+    {@render children?.()}
 </button>
 
 <style>

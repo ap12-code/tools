@@ -2,8 +2,8 @@
     import Container from "$components/Container.svelte";
     import { encode, decode } from "js-base64"
 
-    let plain = ""
-    let base64 = ""
+    let plain = $state("")
+    let base64 = $state("")
 
     function changePlain() {
         base64 = encode(plain)
@@ -22,14 +22,14 @@
     <div class="main">
         <div>
             <p>テキスト</p>
-            <textarea bind:value={plain} on:input={changePlain}></textarea>
+            <textarea bind:value={plain} oninput={changePlain}></textarea>
         </div>
         <div>
-            <button on:click={exchange}><i class="bi bi-arrow-down-up"></i></button>
+            <button onclick={exchange}><i class="bi bi-arrow-down-up"></i></button>
         </div>
         <div>
             <p>Base64</p>
-            <textarea bind:value={base64} on:input={changeBase64}></textarea>
+            <textarea bind:value={base64} oninput={changeBase64}></textarea>
         </div>
     </div>
 </Container>

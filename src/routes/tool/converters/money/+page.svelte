@@ -5,9 +5,13 @@
     import moment from "moment";
     import { onMount } from "svelte";
 
-    export let data: Record<string, number>;
-    let errs: Record<string, boolean> = {};
-    let vaules: Record<string, string> = {
+    interface Props {
+        data: Record<string, number>;
+    }
+
+    let { data = $bindable() }: Props = $props();
+    let errs: Record<string, boolean> = $state({});
+    let vaules: Record<string, string> = $state({
         JPY: "0",
         USD: "0",
         EUR: "0",
@@ -19,7 +23,7 @@
         TRY: "0",
         ZAR: "0",
         MXN: "0",
-    };
+    });
 
     async function load() {
         const resp = await fetch(`https://exchange-rate-api.krnk.org/api/rate`);
@@ -57,7 +61,7 @@
     <div class="main">
         {#each Object.keys(vaules) as k}
             <div>
-                <input class:err={errs[k]} bind:value={vaules[k]} on:input={(_) => change(k)} />
+                <input class:err={errs[k]} bind:value={vaules[k]} oninput={(_) => change(k)} />
                 <span>{k}</span>
             </div>
         {/each}

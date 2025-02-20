@@ -1,11 +1,11 @@
 <script lang="ts">
     import Button from "$components/Button.svelte";
     import Container from "$components/Container.svelte";
-    let n = 0
-    let use_lc = true
+    let n = $state(0)
+    let use_lc = $state(true)
     let mapping: Record<string, number> = {lc: 3456, sb: 1728, stack: 64, item: 1}
-    let vaules: Record<string, string> = {lc: "0", sb: "0", stack: "0", item: "0"}
-    let errs: Record<string, boolean> = {lc: false, sb: false, stack: false, item: false, n: false}
+    let vaules: Record<string, string> = $state({lc: "0", sb: "0", stack: "0", item: "0"})
+    let errs: Record<string, boolean> = $state({lc: false, sb: false, stack: false, item: false, n: false})
 
     function isInteger(n: string): boolean {
         if (n == "") return false
@@ -79,12 +79,12 @@
         <div>
             {#if use_lc}
                 <div class="field">
-                    <input type="number" class:err={errs.lc} min="0" bind:value={vaules.lc} on:input={_ => change("lc")}>
+                    <input type="number" class:err={errs.lc} min="0" bind:value={vaules.lc} oninput={_ => change("lc")}>
                     <span>LC</span>
                 </div>
             {/if}
             <div class="field">
-                <input type="number" class:err={errs.sb} min="0" bind:value={vaules.sb} on:input={_ => change("sb")}>
+                <input type="number" class:err={errs.sb} min="0" bind:value={vaules.sb} oninput={_ => change("sb")}>
                 {#if use_lc}
                     <span>チェスト</span>
                 {:else}
@@ -92,18 +92,18 @@
                 {/if}
             </div>
             <div class="field">
-                <input type="number" class:err={errs.stack} min="0" bind:value={vaules.stack} on:input={_ => change("stack")}>
+                <input type="number" class:err={errs.stack} min="0" bind:value={vaules.stack} oninput={_ => change("stack")}>
                 <span>スタック</span>
             </div>
             <div class="field">
-                <input type="number" class:err={errs.item} min="0" bind:value={vaules.item} on:input={_ => change("item")}>
+                <input type="number" class:err={errs.item} min="0" bind:value={vaules.item} oninput={_ => change("item")}>
                 <span>個</span>
             </div>
         </div>
 
         <div>
             <div class="field2">
-                <input type="checkbox" id="cb-0" bind:checked={use_lc} on:input={changeUseLC}>
+                <input type="checkbox" id="cb-0" bind:checked={use_lc} oninput={changeUseLC}>
                 <label for="cb-0">LCを使用する</label>
             </div>
         </div>
@@ -111,7 +111,7 @@
         <div>
             <p>合計</p>
             <div class="field">
-                <input type="number" class:err={errs.n} min="0" bind:value={n} on:input={changeInput}>
+                <input type="number" class:err={errs.n} min="0" bind:value={n} oninput={changeInput}>
                 <span>アイテム</span>
             </div>
         </div>

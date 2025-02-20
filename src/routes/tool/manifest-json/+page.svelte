@@ -20,8 +20,8 @@
         "Apache License 2.0": "Apache2.0"
     }
 
-    let modules: Module[] = []
-    let output = {
+    let modules: Module[] = $state([])
+    let output = $state({
         "format_version": 2,
         "header": {
             "name": "",
@@ -38,8 +38,8 @@
             "url": "",
             "license": "v1.0"
         }
-    }
-    let outJSON = ""
+    })
+    let outJSON = $state("")
 
     function update() {
         output.modules = modules
@@ -85,33 +85,33 @@
         <p>ヘッダー</p>
         <div class="control">
             <span>パック名</span>
-            <input type="text" bind:value={output.header.name} on:input={update} />
+            <input type="text" bind:value={output.header.name} oninput={update} />
         </div>
         <div class="control">
             <span>説明</span>
-            <input type="text" bind:value={output.header.description} on:input={update} />
+            <input type="text" bind:value={output.header.description} oninput={update} />
         </div>
         <div class="control">
             <span>バージョン</span>
-            <input type="text" bind:value={output.header.version} on:input={update} />
+            <input type="text" bind:value={output.header.version} oninput={update} />
         </div>
         <div class="control">
             <span>ゲームバージョン</span>
-            <input type="text" bind:value={output.header.min_engine_version} on:input={update} />
+            <input type="text" bind:value={output.header.min_engine_version} oninput={update} />
         </div>
         <hr />
         <p>メタデータ</p>
         <div class="control">
             <span>制作者</span>
-            <input type="text" bind:value={output.metadata.authors[0]} on:input={update} />
+            <input type="text" bind:value={output.metadata.authors[0]} oninput={update} />
         </div>
         <div class="control">
             <span>URL</span>
-            <input type="text" bind:value={output.metadata.url} on:input={update} />
+            <input type="text" bind:value={output.metadata.url} oninput={update} />
         </div>
         <div class="control">
             <span>ライセンス</span>
-            <select bind:value={output.metadata.license} on:change={update}>
+            <select bind:value={output.metadata.license} onchange={update}>
                 {#each Object.entries(LICENSE_TYPES) as [k, v]}
                     <option value={v}>{k}</option>
                 {/each}
@@ -125,11 +125,11 @@
             <div class="module">
                 <div class="control">
                     <span>説明</span>
-                    <input type="text" bind:value={module.description} on:input={update} />
+                    <input type="text" bind:value={module.description} oninput={update} />
                 </div>
                 <div class="control">
                     <span>種別</span>
-                    <select bind:value={module.type} on:change={update}>
+                    <select bind:value={module.type} onchange={update}>
                         {#each MODULE_TYPES as type}
                             <option value={type}>{type}</option>
                         {/each}
@@ -137,13 +137,13 @@
                 </div>
                 <div class="control">
                     <span></span>
-                    <button class="delete-button" on:click={_ => del_module(module.uuid)}>削除</button>
+                    <button class="delete-button" onclick={_ => del_module(module.uuid)}>削除</button>
                 </div>
             </div>
         {/each}
         <div class="control">
             <span></span>
-            <button on:click={add_module}><i class="bi bi-plus-lg"></i> 追加</button>
+            <button onclick={add_module}><i class="bi bi-plus-lg"></i> 追加</button>
         </div>
     </div>
     <hr />
@@ -152,8 +152,8 @@
         {#key dataVersion}
             <textarea class="output" value={outJSON} readonly></textarea>
         {/key}
-        <button on:click={download}>ダウンロード</button>
-        <button on:click={copy}>コピー</button>
+        <button onclick={download}>ダウンロード</button>
+        <button onclick={copy}>コピー</button>
     </div>
 </Container>
 

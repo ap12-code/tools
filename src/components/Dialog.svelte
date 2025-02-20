@@ -1,6 +1,11 @@
 <script lang="ts">
-    export let show = false
-    export let title = ""
+    interface Props {
+        show?: boolean;
+        title?: string;
+        children?: import('svelte').Snippet;
+    }
+
+    let { show = $bindable(false), title = "", children }: Props = $props();
     export function close() {
         show = false
     }
@@ -12,13 +17,13 @@
         <div class="content">
             <div class="close-btn">
                 <span>{title}</span>
-                <button on:click={close}>
+                <button onclick={close}>
                     <i class="bi bi-x-lg"></i>
                 </button>
             </div>
             <hr />
             <div class="content-inner">
-                <slot />
+                {@render children?.()}
             </div>
         </div>
     </div>

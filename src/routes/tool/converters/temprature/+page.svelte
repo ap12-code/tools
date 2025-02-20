@@ -4,12 +4,12 @@
     import _ from "lodash";
     import { onMount } from "svelte";
 
-    let values: Record<string, string> = {
+    let values: Record<string, string> = $state({
         c: "25",
         f: "0",
         k: "0",
-    };
-    let errs: Record<string, boolean> = {};
+    });
+    let errs: Record<string, boolean> = $state({});
 
     function change(unit: string) {
         errs[unit] = false;
@@ -48,15 +48,15 @@
     <hr />
     <div class="main">
         <div>
-            <input class:err={errs.c} bind:value={values.c} on:input={(_) => change("c")} />
+            <input class:err={errs.c} bind:value={values.c} oninput={(_) => change("c")} />
             <span>℃(摂氏)</span>
         </div>
         <div>
-            <input class:err={errs.f} bind:value={values.f} on:input={(_) => change("f")} />
+            <input class:err={errs.f} bind:value={values.f} oninput={(_) => change("f")} />
             <span>℉(華氏)</span>
         </div>
         <div>
-            <input class:err={errs.k} bind:value={values.k} on:input={(_) => change("k")} />
+            <input class:err={errs.k} bind:value={values.k} oninput={(_) => change("k")} />
             <span>K(ケルビン)</span>
         </div>
     </div>

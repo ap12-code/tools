@@ -1,8 +1,8 @@
 <script lang="ts">
     import Container from "$components/Container.svelte";
-    let ip = "";
-    let result = "";
-    let error = false;
+    let ip = $state("");
+    let result = $state("");
+    let error = $state(false);
 
     async function run() {
         error = false;
@@ -34,7 +34,7 @@
         </div>
         <div>
             <p>実行</p>
-            <button on:click={(_) => run()}>whois実行</button>
+            <button onclick={(_) => run()}>whois実行</button>
         </div>
     </div>
     <hr />

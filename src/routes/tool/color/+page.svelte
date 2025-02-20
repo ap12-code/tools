@@ -7,18 +7,18 @@
 
     let input = "https://komaken.net";
     let err: string = "";
-    let forecol = {
+    let forecol = $state({
         r: 255,
         g: 255,
         b: 255,
         a: 1,
-    };
-    let backcol = {
+    });
+    let backcol = $state({
         r: 0,
         g: 0,
         b: 0,
         a: 1,
-    };
+    });
     function update() {
         err = "";
         const canv = document.getElementById("output");

@@ -1,7 +1,11 @@
 <script lang="ts">
-    export let value = ""
-    export let err = false
-    export let readonly = true
+    interface Props {
+        value?: string;
+        err?: boolean;
+        readonly?: boolean;
+    }
+
+    let { value = $bindable(""), err = false, readonly = true }: Props = $props();
 
     function copy() {
         navigator.clipboard.writeText(value)
@@ -10,7 +14,7 @@
 
 <div>
     <textarea bind:value={value} readonly={readonly} class:err={err}></textarea>
-    <button on:click={copy}>コピー</button>
+    <button onclick={copy}>コピー</button>
 </div>
 
 <style>

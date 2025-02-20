@@ -6,7 +6,7 @@
     import domtoimage from "dom-to-image";
     import Button from "$components/Button.svelte";
 
-    let plain = "y = 2x";
+    let plain = $state("y = 2x");
 
     function update() {
         const element = document.getElementById("math");
@@ -35,7 +35,7 @@
     <div class="main">
         <span id="math"></span>
         <div>
-            <textarea bind:value={plain} on:input={update}></textarea>
+            <textarea bind:value={plain} oninput={update}></textarea>
         </div>
     </div>
     <Button on:click={save}>Save</Button>

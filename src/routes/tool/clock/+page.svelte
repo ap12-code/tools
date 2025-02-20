@@ -3,15 +3,15 @@
     import { onMount } from "svelte";
     import moment, { type Moment } from "moment-timezone";
 
-    let latency = -1;
-    let offset = 0;
-    let last_sync: Moment | null = null;
-    let last_sync_sec = 0;
-    let tz = "Asia/Tokyo";
-    let tzs: string[] = [];
+    let latency = $state(-1);
+    let offset = $state(0);
+    let last_sync: Moment | null = $state(null);
+    let last_sync_sec = $state(0);
+    let tz = $state("Asia/Tokyo");
+    let tzs: string[] = $state([]);
 
-    let d: Moment | null = null;
-    let dtime: number | null = null;
+    let d: Moment | null = $state(null);
+    let dtime: number | null = $state(null);
 
     async function fetchTime(): Promise<void> {
         d = null;
@@ -95,7 +95,7 @@
             <span class="time">{getTimeStr(d)}</span><br />
             <span class="date">{getDateStr(d)}</span><br />
             <div class="space"></div>
-            <select bind:value={tz} on:change={updateTZ}>
+            <select bind:value={tz} onchange={updateTZ}>
                 {#each tzs as tze}
                     <option value={tze}>{tze.replace("Etc/", "")}</option>
                 {/each}

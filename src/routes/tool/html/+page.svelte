@@ -1,8 +1,8 @@
 <script>
     import Container from "$components/Container.svelte";
 
-    let plain = "";
-    let html = "";
+    let plain = $state("");
+    let html = $state("");
 
     function changePlain() {
         const textArea = document.createElement("textarea");
@@ -26,14 +26,14 @@
     <div class="main">
         <div>
             <p>テキスト</p>
-            <textarea bind:value={plain} on:input={changePlain}></textarea>
+            <textarea bind:value={plain} oninput={changePlain}></textarea>
         </div>
         <div>
-            <button on:click={exchange}><i class="bi bi-arrow-down-up"></i></button>
+            <button onclick={exchange}><i class="bi bi-arrow-down-up"></i></button>
         </div>
         <div>
             <p>HTML</p>
-            <textarea bind:value={html} on:input={changeHTML}></textarea>
+            <textarea bind:value={html} oninput={changeHTML}></textarea>
         </div>
     </div>
 </Container>

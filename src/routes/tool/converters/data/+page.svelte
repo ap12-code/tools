@@ -14,7 +14,7 @@
         ti: new Decimal(8).mul(1024).mul(1024).mul(1024).mul(1024),
         tb: new Decimal(8).mul(1000).mul(1000).mul(1000).mul(1000),
     };
-    let values: Record<string, string> = {
+    let values: Record<string, string> = $state({
         b: "0",
         bi: "0",
         ki: "0",
@@ -25,7 +25,7 @@
         gb: "0",
         ti: "0",
         tb: "0",
-    };
+    });
     const lang: Record<string, string> = {
         b: "b",
         bi: "B",
@@ -38,7 +38,7 @@
         ti: "TiB",
         tb: "TB",
     };
-    let errs: Record<string, boolean> = {};
+    let errs: Record<string, boolean> = $state({});
 
     function change(unit: string) {
         if (values[unit].endsWith(".")) return;
@@ -70,7 +70,7 @@
     <div class="main">
         {#each Object.keys(values) as k}
             <div>
-                <input class:err={errs[k]} bind:value={values[k]} on:input={(_) => change(k)} />
+                <input class:err={errs[k]} bind:value={values[k]} oninput={(_) => change(k)} />
                 <span>{lang[k]}</span>
             </div>
         {/each}

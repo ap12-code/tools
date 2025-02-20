@@ -1,6 +1,11 @@
 <script lang="ts">
-    export let show_back = true;
-    export let back_to = "/";
+    interface Props {
+        show_back?: boolean;
+        back_to?: string;
+        children?: import('svelte').Snippet;
+    }
+
+    let { show_back = true, back_to = "/", children }: Props = $props();
 </script>
 
 <div>
@@ -9,7 +14,7 @@
             <i class="bi bi-chevron-left"></i>{back_to == "/" ? "ホームに戻る" : "戻る"}
         </a>
     {/if}
-    <slot></slot>
+    {@render children?.()}
 </div>
 
 <style>

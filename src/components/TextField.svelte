@@ -2,15 +2,26 @@
     import type { ActionResult } from "$lib/types";
     import { createEventDispatcher } from "svelte";
 
-    export let value = ""
-    export let placeholder = ""
 
     type Validator<T> = (val: string) => ActionResult<T>
-    export let validator: Validator<any> | null = null
-    export let copyable = false
-    export let error = false
 
-    export let error_message = ""
+    interface Props {
+        value?: string;
+        placeholder?: string;
+        validator?: Validator<any> | null;
+        copyable?: boolean;
+        error?: boolean;
+        error_message?: string;
+    }
+
+    let {
+        value = $bindable(""),
+        placeholder = "",
+        validator = null,
+        copyable = false,
+        error = $bindable(false),
+        error_message = $bindable("")
+    }: Props = $props();
     
     const dispatch = createEventDispatcher()
 
@@ -33,9 +44,9 @@
 </script>
 
 <div>
-    <input type="text" bind:value={value} {placeholder} class:error={error} on:input={update}>
+    <input type="text" bind:value={value} {placeholder} class:error={error} oninput={update}>
     {#if copyable}
-        <button on:click={copy}>コピー</button>
+        <button onclick={copy}>コピー</button>
     {/if}
 </div>
 <span>{error_message}</span>

@@ -3,9 +3,9 @@
     import { LoremIpsum } from "lorem-ipsum";
     import { onMount } from "svelte";
 
-    let output = "";
-    let amount = 1;
-    let type = "paragraph";
+    let output = $state("");
+    let amount = $state(1);
+    let type = $state("paragraph");
     const lorem = new LoremIpsum({
         sentencesPerParagraph: {
             max: 8,
@@ -45,21 +45,21 @@
         <div class="controls">
             <div class="control-item">
                 <label for="amount">長さ</label>
-                <input bind:value={amount} min={1} on:input={gen} type="number" id="amount" />
+                <input bind:value={amount} min={1} oninput={gen} type="number" id="amount" />
             </div>
             <div class="control-item">
                 <label for="type">種類</label>
-                <select id="type" bind:value={type} on:change={gen}>
+                <select id="type" bind:value={type} onchange={gen}>
                     <option value="word">単語</option>
                     <option value="paragraph">段落</option>
                     <option value="sentence">文</option>
                 </select>
             </div>
-            <button on:click={gen}>再生成</button>
+            <button onclick={gen}>再生成</button>
         </div>
         <div>
             <textarea bind:value={output}></textarea>
-            <button on:click={copy}>コピー</button>
+            <button onclick={copy}>コピー</button>
         </div>
     </div>
 </Container>

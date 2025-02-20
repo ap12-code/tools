@@ -3,9 +3,9 @@
     import moment from "moment";
     import { onMount } from "svelte";
 
-    let texts: string[] = [""]
-    let totalTimes: number = 0
-    let totalTimesFormatted = ""
+    let texts: string[] = $state([""])
+    let totalTimes: number = $state(0)
+    let totalTimesFormatted = $state("")
 
     function toNumber(i: string): number {
         if (!Number.isNaN(i)) {
@@ -100,12 +100,12 @@
     <div class="main">
         <div class="times">
             {#each texts as txt}
-                <input type="text" bind:value={txt} placeholder="HH:mm:ss.nnn または 秒数" on:input={update}>
+                <input type="text" bind:value={txt} placeholder="HH:mm:ss.nnn または 秒数" oninput={update}>
             {/each}
         </div>
         <div>
-            <button on:click={update}>計算</button>
-            <button on:click={clear}>ストレージクリア</button>
+            <button onclick={update}>計算</button>
+            <button onclick={clear}>ストレージクリア</button>
             {#if Number.isNaN(totalTimes)}
                 <div class="totals">
                     <span class="desc">平均</span><br />

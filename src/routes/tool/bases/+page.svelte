@@ -3,8 +3,8 @@
 
     let mapping: Record<string, number> = {hex: 16, dec: 10, oct: 8, bin: 2}
     let tests: Record<string, RegExp> = {hex: /^[0-9a-f]+$/, dec: /^[0-9]+$/, oct: /^[0-7]+$/, bin: /^[01]+$/}
-    let vaules: Record<string, string> = {hex: "0", dec: "0", oct: "0", bin: "0"}
-    let errs: Record<string, boolean> = {hex: false, dec: false, oct: false, bin: false}
+    let vaules: Record<string, string> = $state({hex: "0", dec: "0", oct: "0", bin: "0"})
+    let errs: Record<string, boolean> = $state({hex: false, dec: false, oct: false, bin: false})
 
     function verify() {
         Object.keys(errs).forEach(elm => {
@@ -31,19 +31,19 @@
     <div class="main">
         <div>
             <p>16進数</p>
-            <input class:err={errs.hex} bind:value={vaules.hex} on:input={_ => change("hex")}>
+            <input class:err={errs.hex} bind:value={vaules.hex} oninput={_ => change("hex")}>
         </div>
         <div>
             <p>10進数</p>
-            <input class:err={errs.dec} bind:value={vaules.dec} on:input={_ => change("dec")}>
+            <input class:err={errs.dec} bind:value={vaules.dec} oninput={_ => change("dec")}>
         </div>
         <div>
             <p>8進数</p>
-            <input class:err={errs.oct} bind:value={vaules.oct} on:input={_ => change("oct")}>
+            <input class:err={errs.oct} bind:value={vaules.oct} oninput={_ => change("oct")}>
         </div>
         <div>
             <p>2進数</p>
-            <input class:err={errs.bin} bind:value={vaules.bin} on:input={_ => change("bin")}>
+            <input class:err={errs.bin} bind:value={vaules.bin} oninput={_ => change("bin")}>
         </div>
     </div>
 </Container>

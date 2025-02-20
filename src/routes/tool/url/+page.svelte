@@ -1,8 +1,8 @@
 <script>
     import Container from "$components/Container.svelte";
 
-    let plain = ""
-    let urlEncoded = ""
+    let plain = $state("")
+    let urlEncoded = $state("")
 
     function changePlain() {
         urlEncoded = encodeURIComponent(plain)
@@ -21,14 +21,14 @@
     <div class="main">
         <div>
             <p>テキスト</p>
-            <textarea bind:value={plain} on:input={changePlain}></textarea>
+            <textarea bind:value={plain} oninput={changePlain}></textarea>
         </div>
         <div>
-            <button on:click={exchange}><i class="bi bi-arrow-down-up"></i></button>
+            <button onclick={exchange}><i class="bi bi-arrow-down-up"></i></button>
         </div>
         <div>
             <p>URL</p>
-            <textarea bind:value={urlEncoded} on:input={changeURL}></textarea>
+            <textarea bind:value={urlEncoded} oninput={changeURL}></textarea>
         </div>
     </div>
 </Container>

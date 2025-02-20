@@ -5,10 +5,10 @@
     import { onMount } from "svelte";
     import ColorPicker from "svelte-awesome-color-picker";
 
-    let input = "https://komaken.net";
-    let err: string = "";
-    let backcol = "#ffffffff";
-    let forecol = "#00000000";
+    let input = $state("https://komaken.net");
+    let err: string = $state("");
+    let backcol = $state("#ffffffff");
+    let forecol = $state("#00000000");
     function update() {
         err = "";
         backcol = backcol.substring(0, 7);
@@ -73,7 +73,7 @@
     <div class="main">
         <div>
             <span>データ</span>
-            <input type="text" bind:value={input} on:input={update} />
+            <input type="text" bind:value={input} oninput={update} />
         </div>
         <div class="colors">
             <p>色</p>
@@ -86,8 +86,8 @@
         {#if err}
             <p>{err}</p>
         {/if}
-        <button on:click={copy}>コピー</button>
-        <button on:click={download}>ダウンロード</button>
+        <button onclick={copy}>コピー</button>
+        <button onclick={download}>ダウンロード</button>
     </div>
 </Container>
 

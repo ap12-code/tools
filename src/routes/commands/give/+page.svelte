@@ -9,16 +9,20 @@
     import type { ComponentMap } from "$lib/data/components";
     import { SNBT } from "$lib/snbt";
     import Button from "$components/Button.svelte";
-    export let data: PageServerData;
-    let search = "";
-    let items: Item[] = [];
-    let item: Nullable<Item> = null;
-    let count = 1;
-    let itemId: Nullable<string> = null;
-    let is_food = false
-    let components: ComponentMap = {food: {}};
-    let command = "アイテムを選択してください";
-    let copied = false
+    interface Props {
+        data: PageServerData;
+    }
+
+    let { data }: Props = $props();
+    let search = $state("");
+    let items: Item[] = $state([]);
+    let item: Nullable<Item> = $state(null);
+    let count = $state(1);
+    let itemId: Nullable<string> = $state(null);
+    let is_food = $state(false)
+    let components: ComponentMap = $state({food: {}});
+    let command = $state("アイテムを選択してください");
+    let copied = $state(false)
     let auto_save = true
 
     type GiveCommandData = {
@@ -253,7 +257,7 @@
                     class="input-item select"
                     placeholder="選択してください"
                     bind:value={itemId}
-                    on:change={updateItem}
+                    onchange={updateItem}
                 >
                     <option value={null}>選択してください...</option>
                     {#each items as itemI}
@@ -265,7 +269,7 @@
                     class="input-text"
                     placeholder="検索..."
                     bind:value={search}
-                    on:input={refreshSearch}
+                    oninput={refreshSearch}
                 />
             </div>
             {#if item}
@@ -277,7 +281,7 @@
                         id="count"
                         bind:value={count}
                         min={0}
-                        on:input={refreshOutput}
+                        oninput={refreshOutput}
                     />
                 </div>
                 <div class="custom-name component">
@@ -296,7 +300,7 @@
                         id="max_stack_size"
                         bind:value={components.max_stack_size}
                         min={1}
-                        on:input={refreshOutput}
+                        oninput={refreshOutput}
                     />
                 </div>
                 <div class="item-ctm component">
@@ -308,7 +312,7 @@
                         bind:value={components.custom_model_data}
                         max={65535}
                         min={0}
-                        on:input={refreshOutput}
+                        oninput={refreshOutput}
                     />
                 </div>
                 {#if item.max_damage}
@@ -321,14 +325,14 @@
                             bind:value={components.damage}
                             max={item.max_damage}
                             min={0}
-                            on:input={refreshOutput}
+                            oninput={refreshOutput}
                         />
                         <span>/{item.max_damage}</span>
                     </div>
                 {/if}
                 <div class="item-ctm component">
                     <label for="rarity">レアリティ</label>
-                    <select class="select" id="rarity" bind:value={components.rarity} on:change={refreshOutput}>
+                    <select class="select" id="rarity" bind:value={components.rarity} onchange={refreshOutput}>
                         <option value={null}>設定しない</option>
                         <option value="common">Common</option>
                         <option value="uncommon">Uncommon</option>
@@ -338,21 +342,21 @@
                 </div>
                 <div class="item-ctm component">
                     <label for="rarity">ツールチップの表示</label>
-                    <select class="select" id="rarity" bind:value={components.hide_tooltip} on:change={refreshOutput}>
+                    <select class="select" id="rarity" bind:value={components.hide_tooltip} onchange={refreshOutput}>
                         <option value={null}>表示</option>
                         <option value={true}>非表示</option>
                     </select>
                 </div>
                 <div class="item-ctm component">
                     <label for="rarity">追加のツールチップの表示</label>
-                    <select class="select" id="rarity" bind:value={components.hide_additional_tooltip} on:change={refreshOutput}>
+                    <select class="select" id="rarity" bind:value={components.hide_additional_tooltip} onchange={refreshOutput}>
                         <option value={null}>表示</option>
                         <option value={true}>非表示</option>
                     </select>
                 </div>
                 <div class="item-ctm component">
                     <label for="rarity">炎への耐性</label>
-                    <select class="select" id="rarity" bind:value={components.fire_resistant} on:change={refreshOutput}>
+                    <select class="select" id="rarity" bind:value={components.fire_resistant} onchange={refreshOutput}>
                         <option value={null}>なし</option>
                         <option value={true}>あり</option>
                     </select>
@@ -360,26 +364,26 @@
                 <div class="item-food component">
                     <label for="food">食料</label>
                     <div class="child-components">
-                        <select class="select" bind:value={is_food} on:change={refreshOutput}>
+                        <select class="select" bind:value={is_food} onchange={refreshOutput}>
                             <option value={true}>はい</option>
                             <option value={false}>いいえ</option>
                         </select>
                         {#if components.food && is_food}
                             <div class="component">
                                 <label for="food-nutrition">満腹度</label>
-                                <input type="number" class="input-number" id="food-nutrition" bind:value={components.food.nutrition} on:input={refreshOutput}/>
+                                <input type="number" class="input-number" id="food-nutrition" bind:value={components.food.nutrition} oninput={refreshOutput}/>
                             </div>
                             <div class="component">
                                 <label for="food-saturation">隠し満腹度</label>
-                                <input type="number" class="input-number" id="food-saturation" bind:value={components.food.saturation} on:input={refreshOutput}/>
+                                <input type="number" class="input-number" id="food-saturation" bind:value={components.food.saturation} oninput={refreshOutput}/>
                             </div>
                             <div class="component">
                                 <label for="food-eat-seconds">必要時間</label>
-                                <input type="number" class="input-number" id="food-eat-seconds" bind:value={components.food.eat_seconds} on:input={refreshOutput}/>
+                                <input type="number" class="input-number" id="food-eat-seconds" bind:value={components.food.eat_seconds} oninput={refreshOutput}/>
                             </div>
                             <div class="component">
                                 <label for="food-eat-seconds">いつでも食べれる</label>
-                                <select class="select" id="rarity" bind:value={components.food.can_always_eat} on:change={refreshOutput}>
+                                <select class="select" id="rarity" bind:value={components.food.can_always_eat} onchange={refreshOutput}>
                                     <option value={null}>いいえ</option>
                                     <option value={true}>はい</option>
                                 </select>

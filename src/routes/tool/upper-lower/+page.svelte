@@ -1,8 +1,8 @@
 <script>
     import Container from "$components/Container.svelte";
 
-    let lowerCase = ""
-    let upperCase = ""
+    let lowerCase = $state("")
+    let upperCase = $state("")
 
     function updateLower() {
         lowerCase = lowerCase.toLowerCase()
@@ -19,11 +19,11 @@
     <div class="main">
         <div>
             <p>小文字</p>
-            <textarea bind:value={lowerCase} on:input={updateLower}></textarea>
+            <textarea bind:value={lowerCase} oninput={updateLower}></textarea>
         </div>
         <div>
             <p>大文字</p>
-            <textarea bind:value={upperCase} on:input={updateUpper}></textarea>
+            <textarea bind:value={upperCase} oninput={updateUpper}></textarea>
         </div>
     </div>
 </Container>

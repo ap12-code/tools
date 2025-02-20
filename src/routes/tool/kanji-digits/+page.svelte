@@ -12,8 +12,8 @@
         "十": 10
     }
 
-    let kanji = "〇"
-    let arabic = "0"
+    let kanji = $state("〇")
+    let arabic = $state("0")
 
     function convertKanjiToArabic(val: string): ActionResult<number> {
         if (val == "") {

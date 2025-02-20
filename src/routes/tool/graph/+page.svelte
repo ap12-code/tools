@@ -7,13 +7,13 @@
     import Button from "$components/Button.svelte";
     import { onMount } from "svelte";
 
-    let raw_expr = "y=x";
+    let raw_expr = $state("y=x");
     let expr = nerdamer(raw_expr);
     let size = 500;
-    let sc = 10;
+    let sc = $state(10);
     let center = size / 2;
 
-    let chartCanvas: HTMLCanvasElement;
+    let chartCanvas: HTMLCanvasElement = $state();
     function renderGrid() {
         chartCanvas.style.width = `${size}px`;
         chartCanvas.style.height = `${size}px`;
@@ -83,18 +83,18 @@
     </div>
     <div>
         <button
-            on:click={(_) => {
+            onclick={(_) => {
                 sc += 10;
                 update();
             }}>+</button
         >
         <button
-            on:click={(_) => {
+            onclick={(_) => {
                 sc -= 10;
                 update();
             }}>-</button
         >
-        <textarea bind:value={raw_expr} on:input={update}></textarea>
+        <textarea bind:value={raw_expr} oninput={update}></textarea>
     </div>
 </Container>
 

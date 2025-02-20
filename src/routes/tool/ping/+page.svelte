@@ -1,9 +1,9 @@
 <script lang="ts">
     import Container from "$components/Container.svelte";
-    let ip = "";
-    let result = "";
-    let error = false;
-    let processing = false;
+    let ip = $state("");
+    let result = $state("");
+    let error = $state(false);
+    let processing = $state(false);
 
     async function run() {
         processing = true;
@@ -38,7 +38,7 @@
         </div>
         <div>
             <p>実行</p>
-            <button on:click={(_) => run()} disabled={processing}>{!processing ? "ping実行" : "実行中..."}</button>
+            <button onclick={(_) => run()} disabled={processing}>{!processing ? "ping実行" : "実行中..."}</button>
         </div>
     </div>
     <hr />

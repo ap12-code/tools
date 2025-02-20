@@ -4,9 +4,13 @@
     import type { Function0 } from "lodash";
     import type { Nullable, TextData, TextObject } from "$lib/data/types";
     let serialized: string = "";
-    export let data: Nullable<TextData> = null;
-    export let ok: Nullable<Function0<void>> = null;
-    export let update: Nullable<Function0<void>> = null;
+    interface Props {
+        data?: Nullable<TextData>;
+        ok?: Nullable<Function0<void>>;
+        update?: Nullable<Function0<void>>;
+    }
+
+    let { data = $bindable(null), ok = null, update = null }: Props = $props();
     const elementId = crypto.randomUUID();
 
     function onInput() {
@@ -188,18 +192,18 @@
 
 <div>
     <div class="toolbar">
-        <button class="control" on:click={applyBold}><i class="bi bi-type-bold"></i></button>
-        <button class="control" on:click={applyItalic}><i class="bi bi-type-italic"></i></button>
-        <button class="control" on:click={applyStrikeThrough}><i class="bi bi-type-strikethrough"></i></button>
-        <button class="control" on:click={applyUnderline}><i class="bi bi-type-underline"></i></button>
+        <button class="control" onclick={applyBold}><i class="bi bi-type-bold"></i></button>
+        <button class="control" onclick={applyItalic}><i class="bi bi-type-italic"></i></button>
+        <button class="control" onclick={applyStrikeThrough}><i class="bi bi-type-strikethrough"></i></button>
+        <button class="control" onclick={applyUnderline}><i class="bi bi-type-underline"></i></button>
         {#each colors as color}
-            <button class="control" on:click={(_) => applyColor(color)}><i class={`bi bi-square-fill color-${color}`}></i></button>
+            <button class="control" onclick={(_) => applyColor(color)}><i class={`bi bi-square-fill color-${color}`}></i></button>
         {/each}
     </div>
-    <div contenteditable="true" role="textbox" spellcheck="false" class="main font-mc" id={elementId} on:input={onInput}></div>
+    <div contenteditable="true" role="textbox" spellcheck="false" class="main font-mc" id={elementId} oninput={onInput}></div>
     <div class="actions">
         {#if ok}
-            <button on:click={ok} class="btn-confirm">閉じる</button>
+            <button onclick={ok} class="btn-confirm">閉じる</button>
         {/if}
     </div>
 </div>

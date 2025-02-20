@@ -3,19 +3,23 @@
   import { onMount } from "svelte";
     import type { PageServerData } from "./$types";
 
-    export let data: PageServerData
-    let description = ""
-    let types = "dp"
-    let dataVersion = ""
-    let search = ""
+  interface Props {
+    data: PageServerData;
+  }
+
+  let { data }: Props = $props();
+    let description = $state("")
+    let types = $state("dp")
+    let dataVersion = $state("")
+    let search = $state("")
     let output = {
         pack: {
             pack_format: 0,
             description: description
         }
     }
-    let outJSON = ""
-    let versions: [string, number][] = []
+    let outJSON = $state("")
+    let versions: [string, number][] = $state([])
 
     function update() {
         output.pack.pack_format = data.versions[types][dataVersion]
@@ -60,25 +64,25 @@
     <div class="main">
         <div class="type control">
             <span>種別</span>
-            <select bind:value={types} on:change={updateType}>
+            <select bind:value={types} onchange={updateType}>
                 <option value="dp">データパック</option>
                 <option value="rp">リソースパック</option>
             </select>
         </div>
         <div class="version control">
             <span>バージョン</span>
-            <select bind:value={dataVersion} on:change={update}>
+            <select bind:value={dataVersion} onchange={update}>
                 {#key versions}
                     {#each versions as [k, v]}
                         <option value={k}>{k}</option>
                     {/each}
                 {/key}
             </select>
-            <input type="text" placeholder="検索" bind:value={search} on:input={updateSearch}>
+            <input type="text" placeholder="検索" bind:value={search} oninput={updateSearch}>
         </div>
         <div class="description control">
             <span>説明</span>
-            <input type="text" bind:value={description} on:input={update} />
+            <input type="text" bind:value={description} oninput={update} />
         </div>
     </div>
     <hr />
@@ -87,8 +91,8 @@
         {#key dataVersion}
             <textarea class="output" bind:value={outJSON} readonly></textarea>
         {/key}
-        <button on:click={download}>ダウンロード</button>
-        <button on:click={copy}>コピー</button>
+        <button onclick={download}>ダウンロード</button>
+        <button onclick={copy}>コピー</button>
     </div>
 </Container>
 

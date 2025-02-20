@@ -2,12 +2,12 @@
     import Container from "$components/Container.svelte";
     import { onMount } from "svelte";
 
-    let output = ""
-    let amount = 40
-    let use_lower = true
-    let use_upper = true
-    let use_digits = true
-    let use_symbols = false
+    let output = $state("")
+    let amount = $state(40)
+    let use_lower = $state(true)
+    let use_upper = $state(true)
+    let use_digits = $state(true)
+    let use_symbols = $state(false)
 
     const LOWERS = "abcdefghijklmnopqrstuvwxyz"
     const UPPERS = LOWERS.toUpperCase()
@@ -39,29 +39,29 @@
         <div class="controls">
             <div class="control-item">
                 <label for="amount">文字数</label>
-                <input bind:value={amount} on:input={gen} type="number" id="amount">
+                <input bind:value={amount} oninput={gen} type="number" id="amount">
             </div>
             <div class="control-item">
                 <label for="use-lower">小文字を使用する</label>
-                <input bind:checked={use_lower} on:change={gen} type="checkbox" class="checkbox" id="use-lower">
+                <input bind:checked={use_lower} onchange={gen} type="checkbox" class="checkbox" id="use-lower">
             </div>
             <div class="control-item">
                 <label for="use-lower">大文字を使用する</label>
-                <input bind:checked={use_upper} on:change={gen} type="checkbox" class="checkbox" id="use-lower">
+                <input bind:checked={use_upper} onchange={gen} type="checkbox" class="checkbox" id="use-lower">
             </div>
             <div class="control-item">
                 <label for="use-lower">数字を使用する</label>
-                <input bind:checked={use_digits} on:change={gen} type="checkbox" class="checkbox" id="use-lower">
+                <input bind:checked={use_digits} onchange={gen} type="checkbox" class="checkbox" id="use-lower">
             </div>
             <div class="control-item">
                 <label for="use-lower">記号を使用する</label>
-                <input bind:checked={use_symbols} on:change={gen} type="checkbox" class="checkbox" id="use-lower">
+                <input bind:checked={use_symbols} onchange={gen} type="checkbox" class="checkbox" id="use-lower">
             </div>
-            <button on:click={gen}>再生成</button>
+            <button onclick={gen}>再生成</button>
         </div>
         <div>
             <textarea bind:value={output} readonly></textarea>
-            <button on:click={copy}>コピー</button>
+            <button onclick={copy}>コピー</button>
         </div>
     </div>
 </Container>

@@ -1,10 +1,10 @@
 <script lang="ts">
     import Container from "$components/Container.svelte";
 
-    let amount = 4;
-    let noph = false;
-    let useupper = false;
-    let uuids: string[] = [];
+    let amount = $state(4);
+    let noph = $state(false);
+    let useupper = $state(false);
+    let uuids: string[] = $state([]);
     function gen() {
         if (amount <= 0) amount = 1;
         uuids = [];
@@ -32,23 +32,23 @@
         <div>
             <div class="controls">
                 <div class="checks">
-                    <input bind:checked={noph} on:change={gen} type="checkbox" class="checkbox" id="no-ph" />
+                    <input bind:checked={noph} onchange={gen} type="checkbox" class="checkbox" id="no-ph" />
                     <label for="no-ph">ハイフンなし</label>
                 </div>
                 <div class="checks">
-                    <input bind:checked={useupper} on:change={gen} type="checkbox" class="checkbox" id="use-upper" />
+                    <input bind:checked={useupper} onchange={gen} type="checkbox" class="checkbox" id="use-upper" />
                     <label for="use-upper">大文字</label>
                 </div>
                 <div class="counts">
                     <label for="amount">生成数</label>
-                    <input bind:value={amount} on:change={gen} min={1} max={50} type="number" id="amount" />
+                    <input bind:value={amount} onchange={gen} min={1} max={50} type="number" id="amount" />
                 </div>
-                <button on:click={gen}>再生成</button>
+                <button onclick={gen}>再生成</button>
             </div>
             {#each uuids as uuid}
                 <div class="item">
                     <input type="text" readonly bind:value={uuid} />
-                    <button on:click={(_) => copy(uuid)}>コピー</button>
+                    <button onclick={(_) => copy(uuid)}>コピー</button>
                 </div>
             {/each}
         </div>

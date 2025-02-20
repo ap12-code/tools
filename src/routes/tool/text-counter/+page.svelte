@@ -1,8 +1,8 @@
 <script>
     import Container from "$components/Container.svelte";
 
-    let output = ""
-    let amount = 0
+    let output = $state("")
+    let amount = $state(0)
 
     function update() {
         amount = Array.from(output).length
@@ -19,7 +19,7 @@
             </div>
         </div>
         <div>
-            <textarea bind:value={output} on:input={update}></textarea>
+            <textarea bind:value={output} oninput={update}></textarea>
         </div>
     </div>
 </Container>

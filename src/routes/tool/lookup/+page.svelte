@@ -1,9 +1,9 @@
 <script lang="ts">
     import Container from "$components/Container.svelte";
-    let ip = "";
-    let dig_param = "ANY";
-    let result = "";
-    let error = false;
+    let ip = $state("");
+    let dig_param = $state("ANY");
+    let result = $state("");
+    let error = $state(false);
 
     const dig_params = {
         A: "Aレコード - ホストアドレス",
@@ -56,8 +56,8 @@
         </div>
         <div>
             <p>実行</p>
-            <button on:click={(_) => run("dig")}>dig実行</button>
-            <button on:click={(_) => run("nslookup")}>nslookup実行</button>
+            <button onclick={(_) => run("dig")}>dig実行</button>
+            <button onclick={(_) => run("nslookup")}>nslookup実行</button>
         </div>
     </div>
     <hr />

@@ -8,7 +8,7 @@
         saved_at: Date;
     };
 
-    let stopwatches: Stopwatch[] = [];
+    let stopwatches: Stopwatch[] = $state([]);
 
     function save() {
         for (let w of stopwatches) {
@@ -85,25 +85,25 @@
         {#each stopwatches as stopwatch, index}
             <div class="counter border">
                 <div class="title">
-                    <input placeholder="タイトル" type="text" bind:value={stopwatch.name} on:input={save} />
+                    <input placeholder="タイトル" type="text" bind:value={stopwatch.name} oninput={save} />
                 </div>
                 <div class="cn">
                     <span class="count">{parse(stopwatch.time)}</span><br />
                 </div>
                 <div class="control">
                     {#if stopwatch.started}
-                        <button on:click={(_) => pause(index)}>停止</button>
+                        <button onclick={(_) => pause(index)}>停止</button>
                     {:else}
-                        <button on:click={(_) => start(index)}>開始</button>
+                        <button onclick={(_) => start(index)}>開始</button>
                     {/if}
-                    <button on:click={(_) => reset(index)}>リセット</button>
-                    <button on:click={(_) => del(index)}>削除</button>
+                    <button onclick={(_) => reset(index)}>リセット</button>
+                    <button onclick={(_) => del(index)}>削除</button>
                 </div>
             </div>
         {/each}
         <div class="counter">
             <div>
-                <button on:click={create}><i class="bi bi-plus-lg" /> 作成</button>
+                <button onclick={create}><i class="bi bi-plus-lg"></i> 作成</button>
             </div>
         </div>
     </div>

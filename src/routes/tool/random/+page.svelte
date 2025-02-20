@@ -1,10 +1,10 @@
 <script lang="ts">
     import Container from "$components/Container.svelte";
 
-    let amount = 4;
-    let max = 100;
-    let min = 1;
-    let randoms: string[] = [];
+    let amount = $state(4);
+    let max = $state(100);
+    let min = $state(1);
+    let randoms: string[] = $state([]);
     function gen() {
         if (amount <= 0) amount = 1;
         randoms = [];
@@ -27,25 +27,25 @@
             <div class="controls">
                 <div>
                     <label for="amount">生成数</label>
-                    <input bind:value={amount} on:change={gen} min={1} max={50} type="number" id="amount" />
+                    <input bind:value={amount} onchange={gen} min={1} max={50} type="number" id="amount" />
                 </div>
                 <div>
                     <label for="max">最大</label>
-                    <input bind:value={max} on:change={gen} {min} type="number" id="max" />
+                    <input bind:value={max} onchange={gen} {min} type="number" id="max" />
                 </div>
                 <div>
                     <label for="min">最小</label>
-                    <input bind:value={min} on:change={gen} {max} type="number" id="min" />
+                    <input bind:value={min} onchange={gen} {max} type="number" id="min" />
                 </div>
                 <div>
-                    <button class="regen" on:click={gen}>再生成</button>
+                    <button class="regen" onclick={gen}>再生成</button>
                 </div>
             </div>
             <hr />
             {#each randoms as random}
                 <div class="item">
                     <input type="number" class="out" readonly bind:value={random} />
-                    <button on:click={(_) => copy(random)}>コピー</button>
+                    <button onclick={(_) => copy(random)}>コピー</button>
                 </div>
             {/each}
         </div>

@@ -7,17 +7,22 @@
     import { tools } from "$lib/tools.json";
     import _ from "lodash";
     import { dev } from "$app/environment";
+    interface Props {
+        children?: import('svelte').Snippet;
+    }
+
+    let { children }: Props = $props();
 
     let fs = false;
-    let shown_sidebar = false;
+    let shown_sidebar = $state(false);
 
     type Tool = { href: string; name: string; icon: string };
     type Tools = Tool[];
     type Category = { icon: string; collapsed: boolean; name: string; tools: Tools }[];
     type CategorySaved = { collapsed: boolean }[];
 
-    let data: Category = tools;
-    let favorites: Tools = [];
+    let data: Category = $state(tools);
+    let favorites: Tools = $state([]);
 
     let sel = "...";
     function switchSidebar() {
@@ -76,7 +81,7 @@
             <div class="sidebar">
                 <div class="sidebar-inner">
                     <div class="button-collapse">
-                        <button on:click={switchSidebar}>
+                        <button onclick={switchSidebar}>
                             <i class="bi bi-chevron-left"></i> 非表示
                         </button>
                     </div>
@@ -91,7 +96,7 @@
                                 <i class="bi bi-{t.icon}"></i>
                                 {t.name}
                             </a>
-                            <button class="favorite-button" on:click={(_) => switchFavorite(t)}>
+                            <button class="favorite-button" onclick={(_) => switchFavorite(t)}>
                                 {#if favorites.find((p) => p.name == t.name)}
                                     <i class="bi bi-star-fill"></i>
                                 {:else}
@@ -103,7 +108,7 @@
                     <hr />
                     {#each data as d, i}
                         {#if !d.collapsed}
-                            <button on:click={(_) => switchCategory(i)} class="sidebar-button">
+                            <button onclick={(_) => switchCategory(i)} class="sidebar-button">
                                 <i class="bi bi-caret-up-fill"></i>
                                 {d.name}
                             </button>
@@ -113,7 +118,7 @@
                                         <i class="bi bi-{t.icon}"></i>
                                         {t.name}
                                     </a>
-                                    <button class="favorite-button" on:click={(_) => switchFavorite(t)}>
+                                    <button class="favorite-button" onclick={(_) => switchFavorite(t)}>
                                         {#if favorites.find((p) => p.name == t.name)}
                                             <i class="bi bi-star-fill"></i>
                                         {:else}
@@ -123,7 +128,7 @@
                                 </div>
                             {/each}
                         {:else}
-                            <button on:click={(_) => switchCategory(i)} class="sidebar-button">
+                            <button onclick={(_) => switchCategory(i)} class="sidebar-button">
                                 <i class="bi bi-caret-down-fill"></i>
                                 {d.name}
                             </button>
@@ -133,13 +138,13 @@
             </div>
         {:else}
             <div class="sidebar-show-button">
-                <button on:click={switchSidebar}>
+                <button onclick={switchSidebar}>
                     <i class="bi bi-list"></i>
                 </button>
             </div>
         {/if}
         <div class="main">
-            <slot></slot>
+            {@render children?.()}
         </div>
     </div>
 

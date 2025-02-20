@@ -2,17 +2,17 @@
     import Button from "$components/Button.svelte";
     import Container from "$components/Container.svelte";
 
-    let formatted = ""
-    let error = false
-    let input = ""
+    let formatted = $state("")
+    let error = $state(false)
+    let input = $state("")
 
-    let mode = "none"
-    let spaces = 4
-    let spaces_error = false
-    let tabs = 1
+    let mode = $state("none")
+    let spaces = $state(4)
+    let spaces_error = $state(false)
+    let tabs = $state(1)
     let tabs_error = false
-    let custom_indent = ""
-    let copy_btn = "コピー"
+    let custom_indent = $state("")
+    let copy_btn = $state("コピー")
 
     function changeMode(_mode: string) {
         mode = _mode
@@ -78,31 +78,31 @@
     <div class="main">
         <div>
             <p>JSON</p>
-            <textarea bind:value={input} on:input={changeInput}></textarea>
+            <textarea bind:value={input} oninput={changeInput}></textarea>
             {#if error && input != ""}
                 <p class="error">無効なJSONです</p>
             {/if}
         </div>
         <div class="indent-menu">
             <div>
-                <input type="radio" id="radio-0" name="radio" checked={mode == "none"} on:input={_ => changeMode("none")}>
+                <input type="radio" id="radio-0" name="radio" checked={mode == "none"} oninput={_ => changeMode("none")}>
                 <label for="radio-0">1行にまとめる</label>
             </div>
             <div>
-                <input type="radio" id="radio-1" name="radio" checked={mode == "spaces"} on:change={_ => changeMode("spaces")}>
-                <input type="number" class:error={spaces_error} min={1} max={99} bind:value={spaces} on:input={changeInput}>
+                <input type="radio" id="radio-1" name="radio" checked={mode == "spaces"} onchange={_ => changeMode("spaces")}>
+                <input type="number" class:error={spaces_error} min={1} max={99} bind:value={spaces} oninput={changeInput}>
                 <label for="radio-1">スペース</label>
             </div>
             <div>
-                <input type="radio" id="radio-2" name="radio" checked={mode == "tabs"} on:change={_ => changeMode("tabs")}>
-                <input type="number" min={1} max={99} bind:value={tabs} on:input={changeInput}>
+                <input type="radio" id="radio-2" name="radio" checked={mode == "tabs"} onchange={_ => changeMode("tabs")}>
+                <input type="number" min={1} max={99} bind:value={tabs} oninput={changeInput}>
                 <label for="radio-2">タブ</label>
             </div>
             <div>
-                <input type="radio" id="radio-3" name="radio" checked={mode == "custom"} on:change={_ => changeMode("custom")}>
+                <input type="radio" id="radio-3" name="radio" checked={mode == "custom"} onchange={_ => changeMode("custom")}>
                 <label for="radio-3">カスタム</label>
                 {#if mode == "custom"}
-                    <input type="text" bind:value={custom_indent} on:input={changeInput}>
+                    <input type="text" bind:value={custom_indent} oninput={changeInput}>
                 {/if}
             </div>
         </div>

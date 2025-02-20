@@ -1,12 +1,12 @@
 <script lang="ts">
     import Container from "$components/Container.svelte";
-    let mcid = "";
-    let result: Record<string, any> = {
+    let mcid = $state("");
+    let result: Record<string, any> = $state({
         players: {},
-    };
-    let error = false;
-    let processing = false;
-    let has_result = false;
+    });
+    let error = $state(false);
+    let processing = $state(false);
+    let has_result = $state(false);
 
     async function run() {
         processing = true;
@@ -41,7 +41,7 @@
             <input type="text" placeholder="akpc" bind:value={mcid} class:err={error} />
         </div>
         <div>
-            <button on:click={(_) => run()}>実行</button>
+            <button onclick={(_) => run()}>実行</button>
         </div>
     </div>
     <hr />

@@ -1,8 +1,8 @@
 <script>
     import Container from "$components/Container.svelte";
 
-    let plain = ""
-    let unicode = ""
+    let plain = $state("")
+    let unicode = $state("")
 
     function changePlain() {
         unicode = ""
@@ -42,14 +42,14 @@
     <div class="main">
         <div>
             <p>テキスト</p>
-            <textarea bind:value={plain} on:input={changePlain}></textarea>
+            <textarea bind:value={plain} oninput={changePlain}></textarea>
         </div>
         <div>
-            <button on:click={exchange}><i class="bi bi-arrow-down-up"></i></button>
+            <button onclick={exchange}><i class="bi bi-arrow-down-up"></i></button>
         </div>
         <div>
             <p>UNICODE</p>
-            <textarea bind:value={unicode} on:input={changeUnicode}></textarea>
+            <textarea bind:value={unicode} oninput={changeUnicode}></textarea>
         </div>
     </div>
 </Container>

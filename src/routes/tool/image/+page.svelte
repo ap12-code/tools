@@ -1,11 +1,11 @@
 <script lang="ts">
     import Container from "$components/Container.svelte";
 
-    let files: FileList;
-    let to_ext = "png";
-    let has_result = false;
-    let processing = false;
-    let err = false;
+    let files: FileList = $state();
+    let to_ext = $state("png");
+    let has_result = $state(false);
+    let processing = $state(false);
+    let err = $state(false);
     let imgSrc: string[] = [];
 
     const IMG_FORMATS = [
@@ -68,18 +68,18 @@
     <div class="main">
         <div>
             <p>入力</p>
-            <input class="file-input" type="file" bind:files multiple on:input={run} />
+            <input class="file-input" type="file" bind:files multiple oninput={run} />
         </div>
         <hr />
         <div>
             <p>形式</p>
-            <select on:input={run} bind:value={to_ext}>
+            <select oninput={run} bind:value={to_ext}>
                 {#each IMG_FORMATS as fmt}
                     <option value={fmt}>{fmt}</option>
                 {/each}
             </select>
         </div>
-        <button on:click={run}><i class="bi bi-arrow-down" /> 変換</button>
+        <button onclick={run}><i class="bi bi-arrow-down"></i> 変換</button>
         <hr />
         <div>
             <p>出力</p>
@@ -90,7 +90,7 @@
                     <img alt="変換失敗" src={imgS} />
                 {/each}
                 <div class="out-control">
-                    <button on:click={download}>ダウンロード</button>
+                    <button onclick={download}>ダウンロード</button>
                 </div>
             {:else if err}
                 <p class="err">変換に失敗しました。</p>

@@ -3,7 +3,7 @@
     import { browser } from "$app/environment"
     import { onMount } from "svelte"
 
-    let inputs: Record<string, string> = {
+    let inputs: Record<string, string> = $state({
         year: "2023",
         month: "12",
         day: "31",
@@ -11,13 +11,13 @@
         minute: "59",
         second: "59",
         ms: "000"
-    }
+    })
     let tz = 0
-    let outputs = {
+    let outputs = $state({
         time: "",
         plain: "",
         timems: ""
-    }
+    })
 
     const ORDERS = ["year", "month", "day", "hour", "minute", "second"]
 
@@ -167,44 +167,44 @@
     <hr />
     <p>時間</p>
     <div class="item">
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <div class="inputs" on:keydown={key}>
+        <!-- svelte-ignore a11y_no_static_element_interactions -->
+        <div class="inputs" onkeydown={key}>
             <div>
-                <input id="year" type="text" placeholder="年" bind:value={inputs.year} on:input={update}>年
+                <input id="year" type="text" placeholder="年" bind:value={inputs.year} oninput={update}>年
             </div>
             <div>
-                <input id="month" type="text" placeholder="月" bind:value={inputs.month} on:input={update}>月
+                <input id="month" type="text" placeholder="月" bind:value={inputs.month} oninput={update}>月
             </div>
             <div>
-                <input id="day" type="text" placeholder="日" bind:value={inputs.day} on:input={update}>日
+                <input id="day" type="text" placeholder="日" bind:value={inputs.day} oninput={update}>日
             </div>
             <div>
-                <input id="hour" type="text" placeholder="年" bind:value={inputs.hour} on:input={update}>時
+                <input id="hour" type="text" placeholder="年" bind:value={inputs.hour} oninput={update}>時
             </div>
             <div>
-                <input id="minute" type="text" placeholder="月" bind:value={inputs.minute} on:input={update}>分
+                <input id="minute" type="text" placeholder="月" bind:value={inputs.minute} oninput={update}>分
             </div>
             <div>
-                <input id="second" type="text" placeholder="日" bind:value={inputs.second} on:input={update}>秒
+                <input id="second" type="text" placeholder="日" bind:value={inputs.second} oninput={update}>秒
             </div>
         </div>
     </div>
     <div class="item">
         <textarea readonly bind:value={outputs.plain}></textarea>
-        <button on:click={_ => copy(outputs.plain)}>コピー</button>
+        <button onclick={_ => copy(outputs.plain)}>コピー</button>
     </div>
     <hr />
     <div>
         <p>UNIX TIMESTAMP</p>
         <span>秒単位 (Pythonなど)</span>
         <div class="item">
-            <input class="out" type="number" bind:value={outputs.time} on:input={updateTS} />
-            <button on:click={_ => copy(outputs.time)}>コピー</button>
+            <input class="out" type="number" bind:value={outputs.time} oninput={updateTS} />
+            <button onclick={_ => copy(outputs.time)}>コピー</button>
         </div>
         <span>ミリ秒単位 (JavaScriptなど)</span>
         <div class="item">
-            <input class="out" type="number" bind:value={outputs.timems} on:input={updateTSMS} />
-            <button on:click={_ => copy(outputs.timems)}>コピー</button>
+            <input class="out" type="number" bind:value={outputs.timems} oninput={updateTSMS} />
+            <button onclick={_ => copy(outputs.timems)}>コピー</button>
         </div>
     </div>
 </Container>

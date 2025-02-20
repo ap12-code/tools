@@ -7,8 +7,8 @@
     import "katex/dist/katex.css";
     import _ from "lodash";
 
-    let expr = "";
-    let output = "";
+    let expr = $state("");
+    let output = $state("");
     let err = false;
 
     function equal() {
@@ -113,7 +113,7 @@
     onMount(() => handleClick("0"));
 </script>
 
-<svelte:body on:keydown={handleKey} />
+<svelte:body onkeydown={handleKey} />
 
 <Container>
     <h1>電卓</h1>

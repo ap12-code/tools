@@ -6,7 +6,7 @@
         name: string;
     };
 
-    let counters: Counter[] = [];
+    let counters: Counter[] = $state([]);
 
     function save() {
         localStorage.setItem("counter", JSON.stringify(counters));
@@ -54,32 +54,32 @@
         {#each counters as counter, index}
             <div class="counter">
                 <div class="title">
-                    <input placeholder="タイトル" type="text" bind:value={counter.name} on:input={save} />
+                    <input placeholder="タイトル" type="text" bind:value={counter.name} oninput={save} />
                 </div>
                 <div class="cn">
                     <span class="count">{counter.count}</span><br />
                 </div>
                 <div class="control">
-                    <button on:click={(_) => add(index, 1)}>+1</button>
-                    <button on:click={(_) => add(index, -1)}>-1</button>
+                    <button onclick={(_) => add(index, 1)}>+1</button>
+                    <button onclick={(_) => add(index, -1)}>-1</button>
                 </div>
                 <div class="control">
-                    <button on:click={(_) => add(index, 10)}>+10</button>
-                    <button on:click={(_) => add(index, -10)}>-10</button>
+                    <button onclick={(_) => add(index, 10)}>+10</button>
+                    <button onclick={(_) => add(index, -10)}>-10</button>
                 </div>
                 <div class="control">
-                    <button on:click={(_) => add(index, 100)}>+100</button>
-                    <button on:click={(_) => add(index, -100)}>-100</button>
+                    <button onclick={(_) => add(index, 100)}>+100</button>
+                    <button onclick={(_) => add(index, -100)}>-100</button>
                 </div>
                 <div class="control">
-                    <button on:click={(_) => set(index, 0)}>0</button>
-                    <button on:click={(_) => del_counter(index)}>削除</button>
+                    <button onclick={(_) => set(index, 0)}>0</button>
+                    <button onclick={(_) => del_counter(index)}>削除</button>
                 </div>
             </div>
         {/each}
         <div class="counter">
             <div>
-                <button on:click={add_counter}><i class="bi bi-plus-lg" /> 作成</button>
+                <button onclick={add_counter}><i class="bi bi-plus-lg"></i> 作成</button>
             </div>
         </div>
     </div>

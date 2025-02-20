@@ -17,7 +17,7 @@
         km: new Decimal(1000 * 1000 * 10 * 100 * 1000),
     };
 
-    let values: Record<string, string> = {
+    let values: Record<string, string> = $state({
         nm: "0",
         um: "0",
         mm: "0",
@@ -28,8 +28,8 @@
         ft: "0",
         yd: "0",
         mi: "0",
-    };
-    let errs: Record<string, boolean> = {};
+    });
+    let errs: Record<string, boolean> = $state({});
 
     function change(unit: string) {
         if (values[unit].endsWith(".")) return;
@@ -61,7 +61,7 @@
     <div class="main">
         {#each Object.keys(values) as k}
             <div>
-                <input class:err={errs[k]} bind:value={values[k]} on:input={(_) => change(k)} />
+                <input class:err={errs[k]} bind:value={values[k]} oninput={(_) => change(k)} />
                 <span>{k}</span>
             </div>
         {/each}
