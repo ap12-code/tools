@@ -1,50 +1,62 @@
-<script lang="ts">
-    import type { ActionResult } from "$lib/types";
-    import { createEventDispatcher } from "svelte";
-
-
-    type Validator<T> = (val: string) => ActionResult<T>
+<script lang="ts" generics="T">
+    import type { Validator } from "$lib/types";
+    import type { Snippet } from "svelte";
 
     interface Props {
-        value?: string;
+        label?: string;
+        oninput?: (() => any) | null;
+        value?: T;
         placeholder?: string;
-        validator?: Validator<any> | null;
+        validator?: Validator<T> | null;
         copyable?: boolean;
         error?: boolean;
         error_message?: string;
+        children: Snippet;
     }
 
     let {
-        value = $bindable(""),
+        label = "",
+        oninput = null,
+        value = $bindable(),
         placeholder = "",
         validator = null,
         copyable = false,
         error = $bindable(false),
-        error_message = $bindable("")
+        error_message = $bindable(""),
+        children,
     }: Props = $props();
-    
-    const dispatch = createEventDispatcher()
+
+    let labelId = $derived(createLabelId());
 
     function update() {
-        if (validator) {
-            const result = validator(value)
-            error = result.is_error()
+        if (validator && value) {
+            const result = validator(value);
+            error = result.is_error();
             if (!error) {
-                error_message = ""
-                dispatch("update")
+                error_message = "";
+                if (oninput) oninput();
             } else {
-                error_message = result.get_error().message
+                error_message = result.get_error().message;
             }
         }
     }
 
     function copy() {
-        navigator.clipboard.writeText(value)
+        if (!error && value) {
+            navigator.clipboard.writeText(value.toString());
+        }
+    }
+
+    function createLabelId(): string {
+        return `label__${Math.floor(Math.random() * 100000)}`;
     }
 </script>
 
 <div>
-    <input type="text" bind:value={value} {placeholder} class:error={error} oninput={update}>
+    <label for={labelId}>{label}</label>
+    <select bind:value {placeholder} id={labelId} class:error onselect={update}>
+        {@render children?.()}
+    </select>
     {#if copyable}
         <button onclick={copy}>コピー</button>
     {/if}
@@ -55,7 +67,7 @@
     .error {
         border-color: #d00;
     }
-    input {
+    select {
         flex: 1 1;
         padding: 5px;
         background-color: #222;
@@ -66,7 +78,7 @@
         font-family: "Zen Maru Gothic", serif;
         border: 1px #666 solid;
     }
-    input:focus {
+    select:focus {
         outline: none;
     }
     button {
@@ -85,6 +97,9 @@
     div {
         gap: 10px;
         display: flex;
-        margin: 10px 0;
+        margin: 5px 0;
+    }
+    label {
+        width: 200px;
     }
 </style>

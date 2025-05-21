@@ -27,4 +27,5 @@ COPY --from=builder /app/node_modules /app/node_modules
 
 RUN apk add bind-tools iputils-ping
 
+ENV BODY_SIZE_LIMIT=102400
 CMD [ "node", "./build" ]

@@ -6,12 +6,13 @@
     }
 
     let { show = $bindable(false), title = "", children }: Props = $props();
+    
     export function close() {
         show = false;
     }
 </script>
 
-<div class:hide={!show}>
+<dialog class:hide={!show}>
     <div class="main">
         <div class="bg"></div>
         <div class="content">
@@ -27,7 +28,7 @@
             </div>
         </div>
     </div>
-</div>
+</dialog>
 
 <style>
     .bg {

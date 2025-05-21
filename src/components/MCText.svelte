@@ -10,7 +10,7 @@
         update?: Nullable<Function0<void>>;
     }
 
-    let { data = $bindable(null), ok = null, update = null }: Props = $props();
+    let { data = $bindable(), ok = null, update = null }: Props = $props();
     const elementId = crypto.randomUUID();
 
     function onInput() {

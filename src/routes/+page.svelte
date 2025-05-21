@@ -5,7 +5,14 @@
 
 <div>
     <Container show_back={false}>
-        <img src="/toolbox-logo.png" alt="AP12's ToolBox" />
+        <div>
+            <img src="/toolbox-logo.png" alt="AP12's ToolBox" />
+            <div class="header">
+                <a href="/information">バージョン情報</a>
+                <a href="/terms">利用規約</a>
+                <a href="/privacy">プライバシーポリシー</a>
+            </div>
+        </div>
         <hr />
         <div>
             {#each tools as d, i}
@@ -37,7 +44,8 @@
         border: #666 1px solid;
         border-radius: 5px;
     }
-    a {
+
+    .tool a {
         padding: 10px 20px;
         text-decoration: none;
         color: #fff;
@@ -49,5 +57,13 @@
     }
     img {
         height: 100px;
+    }
+    .header {
+        display: flex;
+        margin: 20px 0;
+        gap: 10px;
+    }
+    .header a {
+        color: #fff;
     }
 </style>

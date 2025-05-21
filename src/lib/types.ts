@@ -1,13 +1,21 @@
 export class ActionResult<T> {
-    private value: T | null;
-    private error: Error | null;
+    private _value: T | null;
+    private _error: Error | null;
 
-    constructor(value: T | null, error: Error | null) {
-        this.value = value;
-        this.error = error;
+    private constructor(value: T | null, error: Error | null) {
+        this._value = value;
+        this._error = error;
     }
 
-    public static success<T>(val: T) {
+    get value(): T | null {
+        return this._value;
+    }
+
+    get error(): Error | null {
+        return this._error;
+    }
+
+    public static success<T>(val: T): ActionResult<T> {
         return new ActionResult(val, null);
     }
 
@@ -15,8 +23,16 @@ export class ActionResult<T> {
         return new ActionResult<T>(null, new Error(msg));
     }
 
-    public is_error(): boolean {
-        return this.error != null;
+    public static error<T>(error: Error | null) {
+        return new ActionResult<T>(null, error);
+    }
+
+    public is_error(): this is { error: Error; value: null } {
+        return this.get_error() instanceof Error;
+    }
+
+    public is_success(): this is { error: null; value: T } {
+        return !this.is_error();
     }
 
     public get_nullable(): T | null {
@@ -30,12 +46,35 @@ export class ActionResult<T> {
     public get_or_throw(): T {
         if (this.is_error()) {
             throw this.error;
-        } else {
+        } else if (this.is_success()) {
             return this.value!;
         }
+        throw TypeError("Illegal state");
     }
 
     public get_error(): Error {
         return this.error!;
     }
+
+    public map<R>(mapper: (val: T) => R): ActionResult<R> {
+        if (this.is_success()) {
+            try {
+                return ActionResult.success(mapper(this.value));
+            } catch (e) {
+                if (e instanceof Error) {
+                    return ActionResult.error(e);
+                } else {
+                    return ActionResult.fail("Error");
+                }
+            }
+        } else {
+            return ActionResult.error(this.error);
+        }
+    }
 }
+
+export function numberValidator({ min, max }: { min?: number; max?: number }): Validator<number> {
+    return (v) => (v <= (max ? max : v) && v >= (min ? min : v) ? ActionResult.success(v) : ActionResult.fail(`無効な数値です。`));
+}
+
+export type Validator<V> = (val: V) => ActionResult<V>;

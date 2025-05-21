@@ -71,6 +71,11 @@
                     "href": "/tool/json-merger",
                     "name": "JSONの結合(マージ)",
                     "icon": "code-square"
+                },
+                {
+                    "href": "/tool/kanji-digits",
+                    "name": "漢数字変換",
+                    "icon": "1-square"
                 }
             ],
             "collapsed": false,

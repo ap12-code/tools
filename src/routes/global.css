@@ -14,7 +14,9 @@
 textarea {
     box-sizing: border-box;
 }
-textarea, input, select:not(.no-font) {
+textarea,
+input,
+select:not(.no-font) {
     font-family: "Noto Sans Mono", monospace;
 }
 hr {
@@ -22,18 +24,26 @@ hr {
     border-color: #666;
 }
 
-h1, p, span, label, button, a, select.no-font, h2 {
+h1,
+p,
+span,
+label,
+button,
+a,
+select.no-font,
+h2,
+li {
     font-family: "Zen Maru Gothic", serif;
     font-weight: 400;
     font-style: normal;
 }
 
-body::-webkit-scrollbar {
+.scroll::-webkit-scrollbar {
     background-color: #222;
     width: 3px;
 }
 
-body::-webkit-scrollbar-thumb {
+.scroll::-webkit-scrollbar-thumb {
     background-color: #bbb;
 }
 

@@ -2,13 +2,14 @@
     interface Props {
         show_back?: boolean;
         back_to?: string;
-        children?: import('svelte').Snippet;
+        children?: import("svelte").Snippet;
+        full?: boolean;
     }
 
-    let { show_back = true, back_to = "/", children }: Props = $props();
+    let { show_back = true, back_to = "/", children, full = false }: Props = $props();
 </script>
 
-<div>
+<div class:container={!full}>
     {#if show_back}
         <a class="back" href={back_to}>
             <i class="bi bi-chevron-left"></i>{back_to == "/" ? "ホームに戻る" : "戻る"}
@@ -22,7 +23,7 @@
         color: #fff;
         text-decoration: none;
     }
-    div {
+    .container {
         margin: 20px 100px;
     }
     @media (max-width: 1025px) {

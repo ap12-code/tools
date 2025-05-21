@@ -9,6 +9,12 @@
     import type { ComponentMap } from "$lib/data/components";
     import { SNBT } from "$lib/snbt";
     import Button from "$components/Button.svelte";
+    import Tabs from "$components/tab/Tabs.svelte";
+    import Tooltip from "$components/Tooltip.svelte";
+    import Text from "$components/form/Text.svelte";
+    import Select from "$components/form/Select.svelte";
+    import Number from "$components/form/Number.svelte";
+    import { ActionResult, numberValidator } from "$lib/types";
     interface Props {
         data: PageServerData;
     }
@@ -16,7 +22,7 @@
     let { data }: Props = $props();
     let search = $state("");
     let items: Item[] = $state([]);
-    let item: Nullable<Item> = $state(null);
+    let item: Nullable<Item> = $state();
     let count = $state(1);
     let itemId: Nullable<string> = $state(null);
     let is_food = $state(false);
@@ -74,7 +80,7 @@
         if (parsed.item) itemId = parsed.item.id;
         is_food = parsed.is_food;
 
-        _refreshOutput();
+        updateOutput();
     }
     function redo() {
         if (history_cursor >= histories.length) return;
@@ -90,11 +96,11 @@
         if (parsed.item) itemId = parsed.item.id;
         is_food = parsed.is_food;
 
-        _refreshOutput();
+        updateOutput();
     }
 
     function copyOutput() {
-        _refreshOutput();
+        updateOutput();
         if (!item) {
             alert("先にアイテムを選択してください");
             return;
@@ -152,15 +158,15 @@
         const selItem = items.find((i) => i.id == itemId);
         if (!selItem || !itemId) {
             item = null;
-            _refreshOutput();
+            updateOutput();
             return;
         }
         item = selItem;
         saveHistory();
-        _refreshOutput();
+        updateOutput();
     }
 
-    function _refreshOutput() {
+    function updateOutput() {
         let output: string[] = [];
 
         if (!item) {
@@ -211,7 +217,7 @@
         if (command != old_command) saveHistory();
         old_command = command;
 
-        _refreshOutput();
+        updateOutput();
     }
 
     function refreshSearch() {
@@ -221,6 +227,9 @@
             .filter((p) => p.id.split(":")[1].includes(search));
         if (items.length >= 1 && itemId != null) {
             itemId = items[0].id;
+            updateItem();
+        } else {
+            itemId = null;
             updateItem();
         }
     }
@@ -240,7 +249,12 @@
         <hr />
         <div class="outputs">
             <div class="output-actions">
-                <span>出力 - {command.length}文字</span>
+                <span>
+                    出力
+                    {#if item}
+                        - {command.length}文字
+                    {/if}
+                </span>
                 <div>
                     <Button onclick={refreshOutput}><i class="bi bi-arrow-clockwise"></i> 出力を更新</Button>
                     <Button onclick={copyOutput}><i class="bi bi-clipboard2"></i> {copied ? "コピーしました" : "コピー"}</Button>
@@ -264,135 +278,110 @@
                 <input type="text" class="input-text" placeholder="検索..." bind:value={search} oninput={refreshSearch} />
             </div>
             {#if item}
-                <div class="item-count component">
-                    <label for="count">数量</label>
-                    <input type="number" class="input-number" id="count" bind:value={count} min={0} oninput={refreshOutput} />
-                </div>
-                <div class="custom-name component">
-                    <span>カスタム名</span>
-                    <McText bind:data={components.custom_name} update={refreshOutput}></McText>
-                </div>
-                <div class="item-name component">
-                    <span>アイテム名</span>
-                    <McText bind:data={components.item_name} update={refreshOutput}></McText>
-                </div>
-                <div class="item-count component">
-                    <label for="max_stack_size">最大スタック数</label>
-                    <input
-                        type="number"
-                        class="input-number"
-                        id="max_stack_size"
-                        bind:value={components.max_stack_size}
-                        min={1}
-                        oninput={refreshOutput}
-                    />
-                </div>
-                <div class="item-ctm component">
-                    <label for="custommodeldata">CustomModelData</label>
-                    <input
-                        type="number"
-                        class="input-number"
-                        id="custommodeldata"
-                        bind:value={components.custom_model_data}
-                        max={65535}
-                        min={0}
-                        oninput={refreshOutput}
-                    />
-                </div>
-                {#if item.max_damage}
-                    <div class="item-damage component">
-                        <label for="damage">耐久値</label>
-                        <input
-                            type="number"
-                            class="input-number"
-                            id="damage"
-                            bind:value={components.damage}
-                            max={item.max_damage}
-                            min={0}
-                            oninput={refreshOutput}
-                        />
-                        <span>/{item.max_damage}</span>
-                    </div>
-                {/if}
-                <div class="item-ctm component">
-                    <label for="rarity">レアリティ</label>
-                    <select class="select" id="rarity" bind:value={components.rarity} onchange={refreshOutput}>
-                        <option value={null}>設定しない</option>
-                        <option value="common">Common</option>
-                        <option value="uncommon">Uncommon</option>
-                        <option value="rare">Rare</option>
-                        <option value="epic">Epic</option>
-                    </select>
-                </div>
-                <div class="item-ctm component">
-                    <label for="rarity">ツールチップの表示</label>
-                    <select class="select" id="rarity" bind:value={components.hide_tooltip} onchange={refreshOutput}>
-                        <option value={null}>表示</option>
-                        <option value={true}>非表示</option>
-                    </select>
-                </div>
-                <div class="item-ctm component">
-                    <label for="rarity">追加のツールチップの表示</label>
-                    <select class="select" id="rarity" bind:value={components.hide_additional_tooltip} onchange={refreshOutput}>
-                        <option value={null}>表示</option>
-                        <option value={true}>非表示</option>
-                    </select>
-                </div>
-                <div class="item-ctm component">
-                    <label for="rarity">炎への耐性</label>
-                    <select class="select" id="rarity" bind:value={components.fire_resistant} onchange={refreshOutput}>
-                        <option value={null}>なし</option>
-                        <option value={true}>あり</option>
-                    </select>
-                </div>
-                <div class="item-food component">
-                    <label for="food">食料</label>
-                    <div class="child-components">
-                        <select class="select" bind:value={is_food} onchange={refreshOutput}>
-                            <option value={true}>はい</option>
-                            <option value={false}>いいえ</option>
-                        </select>
-                        {#if components.food && is_food}
-                            <div class="component">
-                                <label for="food-nutrition">満腹度</label>
-                                <input
-                                    type="number"
-                                    class="input-number"
-                                    id="food-nutrition"
-                                    bind:value={components.food.nutrition}
-                                    oninput={refreshOutput}
-                                />
-                            </div>
-                            <div class="component">
-                                <label for="food-saturation">隠し満腹度</label>
-                                <input
-                                    type="number"
-                                    class="input-number"
-                                    id="food-saturation"
-                                    bind:value={components.food.saturation}
-                                    oninput={refreshOutput}
-                                />
-                            </div>
-                            <div class="component">
-                                <label for="food-eat-seconds">必要時間</label>
-                                <input
-                                    type="number"
-                                    class="input-number"
-                                    id="food-eat-seconds"
-                                    bind:value={components.food.eat_seconds}
-                                    oninput={refreshOutput}
-                                />
-                            </div>
-                            <div class="component">
-                                <label for="food-eat-seconds">いつでも食べれる</label>
-                                <select class="select" id="rarity" bind:value={components.food.can_always_eat} onchange={refreshOutput}>
-                                    <option value={null}>いいえ</option>
-                                    <option value={true}>はい</option>
-                                </select>
+                <Tabs tabs={["基本", "外観", "動作"]}>
+                    {#snippet tab({ name }: { name: string })}
+                        {#if item}
+                            <div class="components">
+                                {#if name == "基本"}
+                                    <Number bind:value={count} validator={numberValidator({ max: 6400, min: 1 })} label="数量" oninput={updateOutput}
+                                    ></Number>
+                                    <Number bind:value={components.max_stack_size} label="最大スタック数" oninput={updateOutput}></Number>
+                                    <Select label="レアリティ" bind:value={components.rarity} oninput={updateOutput}>
+                                        <option value={null}>設定しない</option>
+                                        <option value="common">Common</option>
+                                        <option value="uncommon">Uncommon</option>
+                                        <option value="rare">Rare</option>
+                                        <option value="epic">Epic</option>
+                                    </Select>
+                                {:else if name == "外観"}
+                                    <div class="item-ctm component">
+                                        <label for="rarity">ツールチップの表示</label>
+                                        <select class="select" id="rarity" bind:value={components.hide_tooltip} onchange={refreshOutput}>
+                                            <option value={null}>表示</option>
+                                            <option value={true}>非表示</option>
+                                        </select>
+                                    </div>
+                                    <div class="item-ctm component">
+                                        <label for="rarity">追加のツールチップの表示</label>
+                                        <select class="select" id="rarity" bind:value={components.hide_additional_tooltip} onchange={refreshOutput}>
+                                            <option value={null}>表示</option>
+                                            <option value={true}>非表示</option>
+                                        </select>
+                                    </div>
+                                    <div class="custom-name component">
+                                        <span>カスタム名</span>
+                                        <McText bind:data={components.custom_name} update={refreshOutput}></McText>
+                                    </div>
+                                    <div class="item-name component">
+                                        <span>アイテム名</span>
+                                        <McText bind:data={components.item_name} update={refreshOutput}></McText>
+                                    </div>
+                                {:else if name == "動作"}
+                                    <div class="item-ctm component">
+                                        <label for="rarity">炎への耐性</label>
+                                        <select class="select" id="rarity" bind:value={components.fire_resistant} onchange={refreshOutput}>
+                                            <option value={null}>なし</option>
+                                            <option value={true}>あり</option>
+                                        </select>
+                                    </div>
+                                    <div class="item-food component">
+                                        <label for="food">食用可能</label>
+                                        <div class="child-components">
+                                            <select class="select" bind:value={is_food} onchange={refreshOutput}>
+                                                <option value={true}>はい</option>
+                                                <option value={false}>いいえ</option>
+                                            </select>
+                                            {#if components.food && is_food}
+                                                <div class="component">
+                                                    <label for="food-nutrition">満腹度</label>
+                                                    <input
+                                                        type="number"
+                                                        class="input-number"
+                                                        id="food-nutrition"
+                                                        bind:value={components.food.nutrition}
+                                                        oninput={refreshOutput}
+                                                    />
+                                                </div>
+                                                <div class="component">
+                                                    <label for="food-saturation">隠し満腹度</label>
+                                                    <input
+                                                        type="number"
+                                                        class="input-number"
+                                                        id="food-saturation"
+                                                        bind:value={components.food.saturation}
+                                                        oninput={refreshOutput}
+                                                    />
+                                                </div>
+                                                <div class="component">
+                                                    <label for="food-eat-seconds">必要時間</label>
+                                                    <input
+                                                        type="number"
+                                                        class="input-number"
+                                                        id="food-eat-seconds"
+                                                        bind:value={components.food.eat_seconds}
+                                                        oninput={refreshOutput}
+                                                    />
+                                                </div>
+                                                <div class="component">
+                                                    <label for="food-eat-seconds">いつでも食べれる</label>
+                                                    <select
+                                                        class="select"
+                                                        id="rarity"
+                                                        bind:value={components.food.can_always_eat}
+                                                        onchange={refreshOutput}
+                                                    >
+                                                        <option value={null}>いいえ</option>
+                                                        <option value={true}>はい</option>
+                                                    </select>
+                                                </div>
+                                            {/if}
+                                        </div>
+                                    </div>
+                                {/if}
                             </div>
                         {/if}
-                    </div>
-                </div>
+                    {/snippet}
+                </Tabs>
             {/if}
         </div>
     </Container>
@@ -422,6 +411,10 @@
         font-family: monospace;
         word-break: break-all;
         max-width: 100%;
+    }
+    .components {
+        display: flex;
+        flex-direction: column;
     }
     .component {
         display: flex;
