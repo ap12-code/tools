@@ -9,9 +9,9 @@
         "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
     },
     "devDependencies": {
-        "@sveltejs/adapter-node": "^5.1.0",
-        "@sveltejs/kit": "^2.17.2",
-        "@sveltejs/vite-plugin-svelte": "^4.0.0",
+        "@sveltejs/adapter-node": "^0.0.18",
+        "@sveltejs/kit": "^2.21.5",
+        "@sveltejs/vite-plugin-svelte": "^5.1.0",
         "@types/archiver": "^6.0.2",
         "@types/dom-to-image": "^2.6.7",
         "@types/katex": "^0.16.7",
@@ -26,7 +26,7 @@
         "svelte-dnd-action": "^0.9.49",
         "tslib": "^2.4.1",
         "typescript": "^5.5.0",
-        "vite": "^5.4.4"
+        "vite": "^6.3.5"
     },
     "type": "module",
     "dependencies": {
@@ -35,6 +35,7 @@
         "chart.js": "^4.4.3",
         "decimal.js": "^10.4.3",
         "dom-to-image": "^2.6.0",
+        "esbuild": "^0.25.5",
         "js-base64": "^3.7.7",
         "katex": "^0.16.10",
         "lodash": "^4.17.21",
@@ -43,6 +44,7 @@
         "moment": "^2.30.1",
         "moment-timezone": "^0.5.45",
         "nerdamer-prime": "^1.1.19",
+        "prismjs": "^1.30.0",
         "qrcode": "^1.5.3",
         "sharp": "^0.33.4",
         "svelte-awesome-color-picker": "^3.1.0",
