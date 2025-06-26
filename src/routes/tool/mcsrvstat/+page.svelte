@@ -7,7 +7,7 @@
     let error = $state(false);
     let processing = $state(false);
     let has_result = $state(false);
-    
+
     async function run() {
         processing = true;
         has_result = false;

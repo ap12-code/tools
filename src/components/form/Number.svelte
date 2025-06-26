@@ -1,17 +1,18 @@
 <script lang="ts">
-    import type { Validator } from "$lib/types";
+    import { numberValidator, type Validator } from "$lib/types";
 
     interface Props {
         label?: string;
         oninput?: (() => any) | null;
         value?: number | null;
         placeholder?: string;
-        validator?: Validator<number> | null;
+        validator?: Validator<number>;
         copyable?: boolean;
         error?: boolean;
         error_message?: string;
         max?: number;
         min?: number;
+        read_only?: boolean;
     }
 
     let {
@@ -19,18 +20,19 @@
         oninput = null,
         value = $bindable(),
         placeholder = "",
-        validator = null,
+        validator = numberValidator(),
         copyable = false,
         error = $bindable(false),
         error_message = $bindable(""),
         max,
         min,
+        read_only = false,
     }: Props = $props();
 
     let labelId = $derived(createLabelId());
 
     function update() {
-        if (validator && value != null) {
+        if (value != null) {
             const result = validator(value);
             error = result.is_error();
             if (!error) {
@@ -59,7 +61,7 @@
         {#if error_message}
             <span class="error-text">{error_message}</span>
         {/if}
-        <input type="number" bind:value {placeholder} id={labelId} {max} {min} class:error oninput={update} />
+        <input type="number" bind:value readonly={read_only} {placeholder} id={labelId} {max} {min} class:error oninput={update} />
     </div>
     {#if copyable}
         <button onclick={copy}>コピー</button>

@@ -3,9 +3,8 @@
     import { onMount } from "svelte";
     import nerdamer from "nerdamer-prime";
     import "nerdamer-prime/all";
-    import Button from "$components/Button.svelte";
     import { range } from "$lib/utils";
-    import TextField from "$components/form/Text.svelte";
+    import Text from "$components/form/Text.svelte";
     import { ActionResult } from "$lib/types";
 
     let expr = $state("y=2x");
@@ -197,7 +196,7 @@
     </div>
     <div class="control">
         <span>DEBUG / Zoom: {zoom} / Graph: {graph_size} / SGrid: {small_grid_size} / Grid: {grid_size} / Offset: {offset}</span>
-        <TextField bind:value={expr} oninput={update} validator={(v) => ActionResult.success(v)}></TextField>
+        <Text bind:value={expr} oninput={update} validator={(v) => ActionResult.success(v)}></Text>
     </div>
 </div>
 

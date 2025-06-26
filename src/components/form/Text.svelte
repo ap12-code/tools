@@ -10,6 +10,7 @@
         copyable?: boolean;
         error?: boolean;
         error_message?: string;
+        read_only?: boolean;
     }
 
     let {
@@ -21,6 +22,7 @@
         copyable = false,
         error = $bindable(false),
         error_message = $bindable(""),
+        read_only = false,
     }: Props = $props();
 
     let labelId = $derived(createLabelId());
@@ -50,8 +52,10 @@
 </script>
 
 <div>
-    <label for={labelId}>{label}</label>
-    <input type="text" bind:value {placeholder} id={labelId} class:error oninput={update} />
+    {#if label}
+        <label for={labelId}>{label}</label>
+    {/if}
+    <input readonly={read_only} type="text" bind:value {placeholder} id={labelId} class:error oninput={update} />
     {#if copyable}
         <button onclick={copy}>コピー</button>
     {/if}

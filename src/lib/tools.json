@@ -1,47 +1,14 @@
 {
     "tools": [
         {
-            "name": "Minecraft",
+            "name": "変換",
             "icon": "",
             "tools": [
                 {
-                    "href": "/commands",
-                    "name": "コマンドジェネレーター",
-                    "icon": "nut-fill"
+                    "href": "/tool/converters",
+                    "name": "換算ツール",
+                    "icon": "arrow-left-right"
                 },
-                {
-                    "href": "/tool/mcsrvstat",
-                    "name": "MCサーバーステータス",
-                    "icon": "box-fill"
-                },
-                {
-                    "href": "/tool/mcid",
-                    "name": "MCID to UUID",
-                    "icon": "person-fill"
-                },
-                {
-                    "href": "/tool/pack-mcmeta",
-                    "name": "pack.mcmeta",
-                    "icon": "boxes"
-                },
-                {
-                    "href": "/tool/manifest-json",
-                    "name": "manifest.json",
-                    "icon": "filetype-json"
-                },
-                {
-                    "href": "/tool/mc-calc",
-                    "name": "スタック換算",
-                    "icon": "stack"
-                }
-            ],
-            "collapsed": false,
-            "color": "#0d9"
-        },
-        {
-            "name": "変換ツール",
-            "icon": "",
-            "tools": [
                 {
                     "href": "/tool/bases",
                     "name": "基数",
@@ -58,9 +25,14 @@
                     "icon": "clock-fill"
                 },
                 {
-                    "href": "/tool/converters",
-                    "name": "換算ツール",
-                    "icon": "arrow-left-right"
+                    "href": "/tool/num-remap",
+                    "name": "数値範囲",
+                    "icon": "crosshair"
+                },
+                {
+                    "href": "/tool/kanji-digits",
+                    "name": "漢数字",
+                    "icon": "1-square"
                 },
                 {
                     "href": "/tool/json-format",
@@ -71,18 +43,13 @@
                     "href": "/tool/json-merger",
                     "name": "JSONの結合(マージ)",
                     "icon": "code-square"
-                },
-                {
-                    "href": "/tool/kanji-digits",
-                    "name": "漢数字変換",
-                    "icon": "1-square"
                 }
             ],
             "collapsed": false,
             "color": "#bb0"
         },
         {
-            "name": "生成ツール",
+            "name": "生成",
             "icon": "",
             "tools": [
                 {
@@ -115,7 +82,7 @@
             "color": "#0b0"
         },
         {
-            "name": "エンコーダー/デコーダー",
+            "name": "エンコード/デコード",
             "icon": "",
             "tools": [
                 {
@@ -157,14 +124,14 @@
                     "icon": "wrench"
                 },
                 {
-                    "href": "/tool/whois",
-                    "name": "whois",
-                    "icon": "database-fill"
-                },
-                {
                     "href": "/tool/ping",
                     "name": "ping",
                     "icon": "activity"
+                },
+                {
+                    "href": "/tool/whois",
+                    "name": "whois",
+                    "icon": "database-fill"
                 }
             ],
             "collapsed": false,
@@ -212,7 +179,7 @@
             "color": "#9f9"
         },
         {
-            "name": "グラフィック",
+            "name": "画像",
             "icon": "",
             "tools": [
                 {
@@ -251,6 +218,44 @@
             ],
             "collapsed": false,
             "color": "#b33"
+        },
+        {
+            "name": "Minecraft",
+            "icon": "",
+            "tools": [
+                {
+                    "href": "/commands",
+                    "name": "コマンドジェネレーター",
+                    "icon": "nut-fill"
+                },
+                {
+                    "href": "/tool/mcsrvstat",
+                    "name": "MCサーバーステータス",
+                    "icon": "box-fill"
+                },
+                {
+                    "href": "/tool/mcid",
+                    "name": "MCID to UUID",
+                    "icon": "person-fill"
+                },
+                {
+                    "href": "/tool/pack-mcmeta",
+                    "name": "pack.mcmeta",
+                    "icon": "boxes"
+                },
+                {
+                    "href": "/tool/manifest-json",
+                    "name": "manifest.json",
+                    "icon": "filetype-json"
+                },
+                {
+                    "href": "/tool/mc-calc",
+                    "name": "スタック換算",
+                    "icon": "stack"
+                }
+            ],
+            "collapsed": false,
+            "color": "#0d9"
         }
     ]
 }

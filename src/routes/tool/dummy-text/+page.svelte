@@ -39,7 +39,6 @@
 
 <Container>
     <h1>Lorem Ipsumジェネレーター</h1>
-    <p>ダミーテキスト作るマン</p>
     <hr />
     <div class="main">
         <div class="controls">

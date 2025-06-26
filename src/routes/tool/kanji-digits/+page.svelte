@@ -1,6 +1,6 @@
 <script lang="ts">
     import Container from "$components/Container.svelte";
-    import TextField from "$components/form/Text.svelte";
+    import Text from "$components/form/Text.svelte";
     import { ActionResult } from "$lib/types";
     import { enumerate, isInteger, splitAll } from "$lib/utils";
 
@@ -108,8 +108,8 @@
         arabic = convertNumericKanjiToNumber(kanji).get().toString();
     }
 
-    function validateNumericKanji(val: string): ActionResult<number> {
-        return convertNumericKanjiToNumber(val);
+    function validateNumericKanji(val: string): ActionResult<string> {
+        return convertNumericKanjiToNumber(val).map(String.toString);
     }
 
     function updateArabic() {
@@ -126,12 +126,10 @@
     <hr />
     <div class="main">
         <div>
-            <p>漢数字</p>
-            <TextField bind:value={kanji} on:update={updateKanji} validator={validateNumericKanji} copyable={true} />
+            <Text bind:value={kanji} oninput={updateKanji} validator={validateNumericKanji} copyable={true} label="漢数字" />
         </div>
         <div>
-            <p>アラビア数字</p>
-            <TextField bind:value={arabic} on:update={updateArabic} validator={validateArabic} copyable={true} />
+            <Text bind:value={arabic} oninput={updateArabic} validator={validateArabic} copyable={true} label="アラビア数字" />
         </div>
     </div>
 </Container>

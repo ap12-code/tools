@@ -19,19 +19,20 @@
     function load() {
         const strCount = localStorage.getItem("stopwatch");
         if (!strCount) {
-            save()
-            return
+            save();
+            return;
         }
         stopwatches = JSON.parse(strCount);
         for (let w of stopwatches) {
             if (!w.started) continue;
             w.time += new Date().getTime() - new Date(w.saved_at).getTime();
         }
-
+        save();
+    }
+    function startInterval() {
         setInterval(() => {
             stopwatches.forEach((_, i) => {
                 if (stopwatches[i].started) stopwatches[i].time += 10;
-                save();
             });
         }, 10);
     }
@@ -69,6 +70,7 @@
         save();
     }
     onMount(load);
+    onMount(startInterval);
 </script>
 
 <svelte:head>

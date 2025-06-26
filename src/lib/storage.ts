@@ -1,0 +1,1 @@
+function update(key: string) {}
