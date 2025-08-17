@@ -1,4 +1,4 @@
-import type { TextObject, TextData } from "./data/types";
+import type { TextObject, TextData } from "./minecraft/types";
 
 export function isTextObject(val: any): val is TextObject {
     return val.text != undefined;

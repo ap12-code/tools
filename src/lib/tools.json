@@ -1,61 +1,63 @@
 {
     "tools": [
         {
+            "type": "group",
             "name": "変換",
-            "icon": "",
+            "icon": "sync_alt",
             "tools": [
                 {
                     "href": "/tool/converters",
-                    "name": "換算ツール",
-                    "icon": "arrow-left-right"
+                    "name": "単位換算",
+                    "icon": "sync_alt"
                 },
                 {
                     "href": "/tool/bases",
                     "name": "基数",
-                    "icon": "nut-fill"
+                    "icon": "hexagon"
                 },
                 {
                     "href": "/tool/upper-lower",
                     "name": "大文字小文字",
-                    "icon": "type"
+                    "icon": "match_case"
                 },
                 {
                     "href": "/tool/unix-timestamp",
                     "name": "UNIX TIMESTAMP",
-                    "icon": "clock-fill"
+                    "icon": "pace"
                 },
                 {
                     "href": "/tool/num-remap",
                     "name": "数値範囲",
-                    "icon": "crosshair"
+                    "icon": "swap_driving_apps_wheel"
                 },
                 {
                     "href": "/tool/kanji-digits",
                     "name": "漢数字",
-                    "icon": "1-square"
+                    "icon": "counter_1"
                 },
                 {
                     "href": "/tool/json-format",
                     "name": "JSONフォーマッター",
-                    "icon": "code-square"
+                    "icon": "data_array"
                 },
                 {
                     "href": "/tool/json-merger",
                     "name": "JSONの結合(マージ)",
-                    "icon": "code-square"
+                    "icon": "merge"
                 }
             ],
             "collapsed": false,
             "color": "#bb0"
         },
         {
+            "type": "group",
             "name": "生成",
             "icon": "",
             "tools": [
                 {
                     "href": "/tool/uuid",
                     "name": "UUID",
-                    "icon": "bookmark"
+                    "icon": "id_card"
                 },
                 {
                     "href": "/tool/password",
@@ -70,35 +72,36 @@
                 {
                     "href": "/tool/qrcode",
                     "name": "QRコード",
-                    "icon": "qr-code"
+                    "icon": "qr_code"
                 },
                 {
                     "href": "/tool/dummy-text",
                     "name": "Lorem Ipsum",
-                    "icon": "paragraph"
+                    "icon": "format_paragraph"
                 }
             ],
             "collapsed": false,
             "color": "#0b0"
         },
         {
+            "type": "group",
             "name": "エンコード/デコード",
             "icon": "",
             "tools": [
                 {
                     "href": "/tool/base64",
                     "name": "Base64",
-                    "icon": "file-text"
+                    "icon": "equal"
                 },
                 {
                     "href": "/tool/url",
                     "name": "URL",
-                    "icon": "slash-lg"
+                    "icon": "percent"
                 },
                 {
                     "href": "/tool/unicode",
                     "name": "UNICODEエスケープシーケンス",
-                    "icon": "card-text"
+                    "icon": "process_chart"
                 },
                 {
                     "href": "/tool/html",
@@ -110,75 +113,79 @@
             "color": "#0bb"
         },
         {
+            "type": "group",
             "name": "ネットワーク",
             "icon": "",
             "tools": [
                 {
                     "href": "/tool/ip",
                     "name": "IPチェッカー",
-                    "icon": "globe2"
+                    "icon": "globe"
                 },
                 {
                     "href": "/tool/lookup",
                     "name": "dig&nslookup",
-                    "icon": "wrench"
+                    "icon": "dns"
                 },
                 {
                     "href": "/tool/ping",
                     "name": "ping",
-                    "icon": "activity"
+                    "icon": "network_ping"
                 },
                 {
                     "href": "/tool/whois",
                     "name": "whois",
-                    "icon": "database-fill"
+                    "icon": "database"
                 }
             ],
             "collapsed": false,
             "color": "#b0b"
         },
         {
+            "type": "group",
             "name": "カウンタ",
             "icon": "",
             "tools": [
                 {
                     "href": "/tool/counter",
                     "name": "カウンタ",
-                    "icon": "file-text-fill"
+                    "icon": "unknown_2"
                 },
                 {
                     "href": "/tool/text-counter",
                     "name": "文字数カウンタ",
-                    "icon": "file-text-fill"
+                    "icon": "manage_search"
                 }
             ],
             "collapsed": false,
             "color": "#33b"
         },
         {
+            "type": "group",
             "name": "時間",
             "icon": "",
             "tools": [
                 {
                     "href": "/tool/clock",
                     "name": "時計",
-                    "icon": "clock"
+                    "icon": "schedule"
                 },
                 {
                     "href": "/tool/stopwatch",
                     "name": "ストップウォッチ",
-                    "icon": "stopwatch"
+                    "icon": "timer"
                 },
                 {
                     "href": "/tool/timeavg",
                     "name": "平均時間",
-                    "icon": "clock-history"
+                    "icon": "avg_pace"
                 }
             ],
             "collapsed": false,
             "color": "#9f9"
         },
         {
+            "type": "group",
             "name": "画像",
             "icon": "",
             "tools": [
@@ -190,68 +197,75 @@
                 {
                     "href": "/tool/color",
                     "name": "カラーピッカー",
-                    "icon": "eyedropper"
+                    "icon": "colorize"
                 }
             ],
             "collapsed": false,
             "color": "#bb9"
         },
         {
+            "type": "group",
             "name": "計算",
             "icon": "",
             "tools": [
                 {
                     "href": "/tool/calc",
                     "name": "電卓",
-                    "icon": "calculator"
+                    "icon": "calculate"
                 },
                 {
                     "href": "/tool/solver",
                     "name": "数式計算機",
-                    "icon": "pen-fill"
+                    "icon": "functions"
                 },
                 {
                     "href": "/tool/mathjax",
                     "name": "数式表示",
-                    "icon": "triangle-fill"
+                    "icon": "function"
                 }
             ],
             "collapsed": false,
             "color": "#b33"
         },
         {
+            "type": "group",
             "name": "Minecraft",
             "icon": "",
             "tools": [
                 {
-                    "href": "/commands",
+                    "href": "/tool/commands",
                     "name": "コマンドジェネレーター",
-                    "icon": "nut-fill"
+                    "icon": "code"
                 },
                 {
                     "href": "/tool/mcsrvstat",
                     "name": "MCサーバーステータス",
-                    "icon": "box-fill"
+                    "icon": "signal_cellular_4_bar"
                 },
                 {
                     "href": "/tool/mcid",
                     "name": "MCID to UUID",
-                    "icon": "person-fill"
+                    "icon": "person_search"
                 },
                 {
                     "href": "/tool/pack-mcmeta",
                     "name": "pack.mcmeta",
-                    "icon": "boxes"
+                    "icon": "integration_instructions"
                 },
                 {
                     "href": "/tool/manifest-json",
                     "name": "manifest.json",
-                    "icon": "filetype-json"
+                    "icon": "integration_instructions"
                 },
                 {
                     "href": "/tool/mc-calc",
                     "name": "スタック換算",
                     "icon": "stack"
+                },
+                {
+                    "href": "/tool/mc-text",
+                    "name": "テキストジェネレーター",
+                    "icon": "data_object"
                 }
             ],
             "collapsed": false,

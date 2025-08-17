@@ -1,14 +1,20 @@
-@font-face {
-    font-family: "Noto Sans Mono";
-    src: url("/NotoSansMono-Regular.ttf");
-}
-@font-face {
-    font-family: "Zen Maru Gothic";
-    src: url("/ZenMaruGothic-Regular.ttf");
-}
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Zen+Maru+Gothic&display=fallback");
+
 @font-face {
     font-family: "unifont";
     src: url("/unifont_jp.otf");
+}
+
+.icon {
+    font-family: "Material Symbols Rounded";
+    font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 24;
+    font-size: 20px;
+    vertical-align: -4px;
+}
+
+.icon.fill {
+    font-variation-settings: "FILL" 1, "wght" 300, "GRAD" 0, "opsz" 24;
 }
 
 textarea {
@@ -17,7 +23,7 @@ textarea {
 textarea,
 input,
 select:not(.no-font) {
-    font-family: "Noto Sans Mono", monospace;
+    font-family: "Noto Sans", monospace;
 }
 hr {
     margin: 20px 0;

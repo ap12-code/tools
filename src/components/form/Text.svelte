@@ -1,5 +1,5 @@
 <script lang="ts" generics="T">
-    import type { Validator } from "$lib/types";
+    import type { Validator } from "$lib/validator";
 
     interface Props {
         label?: string;

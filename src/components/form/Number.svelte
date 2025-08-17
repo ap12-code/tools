@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { numberValidator, type Validator } from "$lib/types";
+    import { numberValidator, type Validator } from "$lib/validator";
 
     interface Props {
         label?: string;
@@ -13,6 +13,7 @@
         max?: number;
         min?: number;
         read_only?: boolean;
+        id?: string;
     }
 
     let {
@@ -27,6 +28,7 @@
         max,
         min,
         read_only = false,
+        id = "",
     }: Props = $props();
 
     let labelId = $derived(createLabelId());
@@ -51,17 +53,30 @@
     }
 
     function createLabelId(): string {
-        return `label__${Math.floor(Math.random() * 100000)}`;
+        return id || `label__${Math.floor(Math.random() * 100000)}`;
     }
 </script>
 
 <div>
-    <label for={labelId}>{label}</label>
+    {#if label}
+        <label for={labelId}>{label}</label>
+    {/if}
     <div class="input-field">
         {#if error_message}
             <span class="error-text">{error_message}</span>
         {/if}
-        <input type="number" bind:value readonly={read_only} {placeholder} id={labelId} {max} {min} class:error oninput={update} />
+        <input
+            type="number"
+            class="input-number"
+            bind:value
+            readonly={read_only}
+            {placeholder}
+            id={labelId}
+            {max}
+            {min}
+            class:error
+            oninput={update}
+        />
     </div>
     {#if copyable}
         <button onclick={copy}>コピー</button>
@@ -108,6 +123,7 @@
         width: 200px;
     }
     .input-field {
+        width: 100%;
         flex-grow: 1;
         position: relative;
     }

@@ -6,7 +6,7 @@
     let has_result = $state(false);
     let processing = $state(false);
     let err = $state(false);
-    let imgSrc: string[] = [];
+    let imgSrc: string[] = $state([]);
 
     const IMG_FORMATS = [
         "heic",
@@ -35,6 +35,7 @@
         has_result = false;
         processing = true;
         err = false;
+        imgSrc = [];
         for (let file of files) {
             const fd = new FormData();
             fd.append("uploadfile", file);

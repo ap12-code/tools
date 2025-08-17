@@ -5,7 +5,7 @@
     import "nerdamer-prime/all";
     import { range } from "$lib/utils";
     import Text from "$components/form/Text.svelte";
-    import { ActionResult } from "$lib/types";
+    import { ActionResult } from "$lib/action_result";
 
     let expr = $state("y=2x");
 
@@ -196,7 +196,7 @@
     </div>
     <div class="control">
         <span>DEBUG / Zoom: {zoom} / Graph: {graph_size} / SGrid: {small_grid_size} / Grid: {grid_size} / Offset: {offset}</span>
-        <Text bind:value={expr} oninput={update} validator={(v) => ActionResult.success(v)}></Text>
+        <Text bind:value={expr} oninput={update} validator={(v: string) => ActionResult.success(v)}></Text>
     </div>
 </div>
 

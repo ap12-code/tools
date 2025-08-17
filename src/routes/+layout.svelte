@@ -1,7 +1,6 @@
 <script lang="ts">
     import { afterNavigate } from "$app/navigation";
     import { page } from "$app/stores";
-    import "bootstrap-icons/font/bootstrap-icons.css";
     import "./global.css";
     import { onMount } from "svelte";
     import { tools } from "$lib/tools.json";
@@ -92,14 +91,14 @@
                 {#each favorites as t}
                     <div class="tool">
                         <a class:selected={$page.url.pathname == t.href} class="sidebar-button" href={t.href}>
-                            <i class="bi bi-{t.icon}"></i>
+                            <span class="icon">{t.icon}</span>
                             {t.name}
                         </a>
                         <button class="favorite-button" onclick={(_) => switchFavorite(t)}>
                             {#if favorites.find((p) => p.name == t.name)}
-                                <i class="bi bi-star-fill"></i>
+                                <span class="icon fill">star</span>
                             {:else}
-                                <i class="bi bi-star"></i>
+                                <span class="icon">star</span>
                             {/if}
                         </button>
                     </div>
@@ -108,27 +107,27 @@
                 {#each data as d, i}
                     {#if !d.collapsed}
                         <button onclick={(_) => switchCategory(i)} class="sidebar-button">
-                            <i class="bi bi-caret-up-fill"></i>
+                            <span class="icon fill">stat_1</span>
                             {d.name}
                         </button>
                         {#each d.tools as t}
                             <div class="tool mg-right">
                                 <a class:selected={$page.url.pathname.startsWith(t.href)} class="sidebar-button" href={t.href}>
-                                    <i class="bi bi-{t.icon}"></i>
+                                    <span class="icon fill">{t.icon}</span>
                                     {t.name}
                                 </a>
                                 <button class="favorite-button" onclick={(_) => switchFavorite(t)}>
                                     {#if favorites.find((p) => p.name == t.name)}
-                                        <i class="bi bi-star-fill"></i>
+                                        <span class="icon fill">star</span>
                                     {:else}
-                                        <i class="bi bi-star"></i>
+                                        <span class="icon">star</span>
                                     {/if}
                                 </button>
                             </div>
                         {/each}
                     {:else}
                         <button onclick={(_) => switchCategory(i)} class="sidebar-button">
-                            <i class="bi bi-caret-down-fill"></i>
+                            <span class="icon fill">stat_minus_1</span>
                             {d.name}
                         </button>
                     {/if}
@@ -138,12 +137,26 @@
     {:else}
         <div class="sidebar-show-button">
             <button onclick={switchSidebar} aria-label="サイドバーを表示">
-                <i class="bi bi-list"></i>
+                <span class="icon">menu</span>
             </button>
         </div>
     {/if}
     <div class="main scroll">
+        <div class="dev-banner">
+            {#if dev}
+                <span>注意: これは開発版サイトです。実際のリリース時のサイトとは異なる場合がございます。</span>
+            {/if}
+        </div>
         {@render children?.()}
+
+        {#if $page.url.pathname == "/"}
+            <div class="footer">
+                <span>
+                    &copy;2025 ap12<br />
+                    このサイトのソースコードはMITでライセンスされています。ソースコード: <a href="https://github.com/ap12-code/tools">GitHub</a>
+                </span>
+            </div>
+        {/if}
     </div>
 </div>
 
@@ -167,17 +180,11 @@
     .mg-right {
         margin-left: 20px;
     }
-    .copyright {
-        font-size: 18px;
-    }
     .button-collapse button {
         cursor: pointer;
         background-color: #222;
         color: #fff;
         border: none;
-    }
-    .dev-warn {
-        color: #dd0;
     }
     .sidebar-show-button {
         position: fixed;
@@ -224,7 +231,6 @@
     }
     .app {
         display: flex;
-        gap: 10px;
         height: 100vh;
     }
     .sidebar-button {
@@ -233,9 +239,6 @@
         padding: 5px 10px;
         display: block;
         border-radius: 5px;
-    }
-    .tool.sidebar-button {
-        margin-left: 15px;
     }
     .tool {
         display: flex;
@@ -273,12 +276,25 @@
     .back {
         text-decoration: underline;
     }
-    .pin {
-        opacity: 0;
-        transition: 0.3s all;
+
+    @media (max-width: 414px) {
+        .sidebar-show-button {
+            display: none;
+            visibility: hidden;
+        }
     }
-    .pin:hover {
-        opacity: 1;
-        transition: 0.3s all;
+    .dev-banner {
+        background-color: #111;
+        display: block;
+        text-align: center;
+    }
+
+    .footer {
+        padding: 5px;
+        text-align: center;
+        background-color: #111;
+    }
+    .footer a {
+        color: #fff;
     }
 </style>

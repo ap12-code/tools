@@ -3,22 +3,27 @@
         {
             "name": "為替",
             "path": "/tool/converters/money",
-            "icon": "currency-exchange"
+            "icon": "currency_exchange"
         },
         {
             "name": "データ容量",
             "path": "/tool/converters/data",
-            "icon": "device-hdd-fill"
+            "icon": "hard_drive"
         },
         {
             "name": "温度",
             "path": "/tool/converters/temprature",
-            "icon": "thermometer-high"
+            "icon": "thermometer"
         },
         {
             "name": "距離",
             "path": "/tool/converters/length",
-            "icon": "rulers"
+            "icon": "straighten"
+        },
+        {
+            "name": "質量",
+            "path": "/tool/converters/weight",
+            "icon": "scale"
         }
     ]
 }

@@ -3,22 +3,22 @@
     import { converters } from "$lib/converters.json";
 </script>
 
-<div>
-    <Container>
+<Container>
+    <div class="home">
         <h1>換算ツール</h1>
         <hr />
         <div class="tools">
             {#each converters as t}
                 <div style="border-left: 10px #bb0 solid;" class="tool mg-right">
                     <a href={t.path}>
-                        <i class="bi bi-{t.icon}"></i>
+                        <span class="icon fill">{t.icon}</span>
                         {t.name}
                     </a>
                 </div>
             {/each}
         </div>
-    </Container>
-</div>
+    </div>
+</Container>
 
 <style>
     .tools {
@@ -39,5 +39,17 @@
     hr {
         margin: 20px 0;
         border-color: #666;
+    }
+
+    @media (max-width: 720px) {
+        .tools {
+            display: grid;
+            gap: 10px;
+            grid-template-columns: 1fr;
+        }
+        .home {
+            padding-top: 10px;
+            margin: 0 10px;
+        }
     }
 </style>

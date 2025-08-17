@@ -12,7 +12,7 @@
 <div class:container={!full}>
     {#if show_back}
         <a class="back" href={back_to}>
-            <i class="bi bi-chevron-left"></i>{back_to == "/" ? "ホームに戻る" : "戻る"}
+            <span class="icon fill">arrow_left</span>{back_to == "/" ? "ホームに戻る" : "戻る"}
         </a>
     {/if}
     {@render children?.()}
@@ -23,17 +23,19 @@
         color: #fff;
         text-decoration: none;
     }
-    .container {
-        margin: 20px 100px;
-    }
     @media (max-width: 1025px) {
-        div {
+        .container {
             margin: 10px 15px;
         }
     }
     @media (max-width: 720px) {
-        div {
+        .container {
             margin: 10px 5px;
+        }
+    }
+    @media (min-width: 1025px) {
+        .container {
+            margin: 20px 100px;
         }
     }
 </style>

@@ -3,10 +3,10 @@
     import { tools } from "$lib/tools.json";
 </script>
 
-<div>
-    <Container show_back={false}>
+<Container show_back={false}>
+    <div class="home">
         <div>
-            <img src="/toolbox-logo.png" alt="AP12's ToolBox" />
+            <img src="/toolbox-logo.png" class="logo" alt="AP12's ToolBox" />
             <div class="header">
                 <a href="/information">バージョン情報</a>
                 <a href="/terms">利用規約</a>
@@ -21,8 +21,8 @@
                     {#each d.tools as t}
                         <div style="border-left: 10px {d.color} solid;" class="tool mg-right">
                             <a href={t.href}>
-                                <i class="bi bi-{t.icon}"></i>
-                                {t.name}
+                                <span class="icon fill">{t.icon}</span>
+                                <span>{t.name}</span>
                             </a>
                         </div>
                     {/each}
@@ -31,8 +31,8 @@
                 </div>
             {/each}
         </div>
-    </Container>
-</div>
+    </div>
+</Container>
 
 <style>
     .tools {
@@ -65,5 +65,24 @@
     }
     .header a {
         color: #fff;
+    }
+
+    @media (max-width: 720px) {
+        .tools {
+            display: grid;
+            gap: 10px;
+            grid-template-columns: 1fr;
+        }
+        .home {
+            padding-top: 10px;
+            margin: 0 10px;
+        }
+        .header {
+            justify-content: center;
+        }
+        .logo {
+            display: block;
+            margin: 0 auto;
+        }
     }
 </style>

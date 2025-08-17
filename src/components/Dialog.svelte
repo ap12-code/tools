@@ -1,24 +1,28 @@
 <script lang="ts">
+    import type { Snippet } from "svelte";
+
     interface Props {
         show?: boolean;
         title?: string;
-        children?: import("svelte").Snippet;
+        children?: Snippet;
     }
+
+    let element: HTMLDialogElement;
 
     let { show = $bindable(false), title = "", children }: Props = $props();
-    
-    export function close() {
-        show = false;
-    }
+
+    $effect(() => {
+        show ? element.showModal() : element.close();
+    });
 </script>
 
-<dialog class:hide={!show}>
+<dialog bind:this={element}>
     <div class="main">
         <div class="bg"></div>
         <div class="content">
             <div class="close-btn">
                 <span>{title}</span>
-                <button aria-label="閉じる" onclick={close}>
+                <button aria-label="閉じる" onclick={() => (show = false)}>
                     <i class="bi bi-x-lg"></i>
                 </button>
             </div>
@@ -40,10 +44,6 @@
     }
     .main {
         width: 100%;
-    }
-    .hide {
-        display: none;
-        visibility: hidden;
     }
     .content {
         display: flex;
