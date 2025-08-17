@@ -4,17 +4,19 @@
     interface Props {
         children: Snippet;
         onclick: () => void;
+        disabled?: boolean;
     }
 
-    let { children, onclick }: Props = $props();
+    let { children, onclick, disabled }: Props = $props();
 </script>
 
-<button {onclick} class="button-component">
+<button {onclick} {disabled} class="button-component">
     {@render children?.()}
 </button>
 
 <style>
     button {
+        cursor: pointer;
         padding: 5px;
         display: block;
         background-color: #222;
@@ -25,7 +27,8 @@
     }
     button:hover {
         background-color: #666;
-        transition: 0.2s all;
-        cursor: pointer;
+    }
+    button:disabled {
+        background-color: #444;
     }
 </style>

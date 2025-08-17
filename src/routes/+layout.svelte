@@ -1,7 +1,6 @@
 <script lang="ts">
     import { afterNavigate } from "$app/navigation";
     import { page } from "$app/stores";
-    import "bootstrap-icons/font/bootstrap-icons.css";
     import "./global.css";
     import { onMount } from "svelte";
     import { tools } from "$lib/tools.json";
@@ -75,93 +74,91 @@
     });
 </script>
 
-<main>
-    <div class="app">
-        {#if shown_sidebar}
-            <div class="sidebar">
-                <div class="sidebar-inner">
-                    <div class="button-collapse">
-                        <button onclick={switchSidebar}>
-                            <i class="bi bi-chevron-left"></i> 非表示
+<div class="app">
+    {#if shown_sidebar}
+        <div class="sidebar scroll">
+            <div class="sidebar-inner">
+                <div class="button-collapse">
+                    <button onclick={switchSidebar}>
+                        <i class="bi bi-chevron-left"></i> 非表示
+                    </button>
+                </div>
+                <div class="sidebar-header">
+                    <img src="/favicon.png" alt="logo" class="sidebar-logo" />
+                    <a href="/" class:back={$page.url.pathname != "/"}>ToolBox</a>
+                </div>
+                <a class:selected={$page.url.pathname == "/"} class="sidebar-button" href="/">ホーム</a>
+                {#each favorites as t}
+                    <div class="tool">
+                        <a class:selected={$page.url.pathname == t.href} class="sidebar-button" href={t.href}>
+                            <span class="icon">{t.icon}</span>
+                            {t.name}
+                        </a>
+                        <button class="favorite-button" onclick={(_) => switchFavorite(t)}>
+                            {#if favorites.find((p) => p.name == t.name)}
+                                <span class="icon fill">star</span>
+                            {:else}
+                                <span class="icon">star</span>
+                            {/if}
                         </button>
                     </div>
-                    <div class="sidebar-header">
-                        <img src="/favicon.png" alt="logo" class="sidebar-logo" />
-                        <a href="/" class:back={$page.url.pathname != "/"}>ToolBox</a>
-                    </div>
-                    <a class:selected={$page.url.pathname == "/"} class="sidebar-button" href="/">ホーム</a>
-                    {#each favorites as t}
-                        <div class="tool">
-                            <a class:selected={$page.url.pathname == t.href} class="sidebar-button" href={t.href}>
-                                <i class="bi bi-{t.icon}"></i>
-                                {t.name}
-                            </a>
-                            <button class="favorite-button" onclick={(_) => switchFavorite(t)}>
-                                {#if favorites.find((p) => p.name == t.name)}
-                                    <i class="bi bi-star-fill"></i>
-                                {:else}
-                                    <i class="bi bi-star"></i>
-                                {/if}
-                            </button>
-                        </div>
-                    {/each}
-                    <hr />
-                    {#each data as d, i}
-                        {#if !d.collapsed}
-                            <button onclick={(_) => switchCategory(i)} class="sidebar-button">
-                                <i class="bi bi-caret-up-fill"></i>
-                                {d.name}
-                            </button>
-                            {#each d.tools as t}
-                                <div class="tool mg-right">
-                                    <a class:selected={$page.url.pathname.startsWith(t.href)} class="sidebar-button" href={t.href}>
-                                        <i class="bi bi-{t.icon}"></i>
-                                        {t.name}
-                                    </a>
-                                    <button class="favorite-button" onclick={(_) => switchFavorite(t)}>
-                                        {#if favorites.find((p) => p.name == t.name)}
-                                            <i class="bi bi-star-fill"></i>
-                                        {:else}
-                                            <i class="bi bi-star"></i>
-                                        {/if}
-                                    </button>
-                                </div>
-                            {/each}
-                        {:else}
-                            <button onclick={(_) => switchCategory(i)} class="sidebar-button">
-                                <i class="bi bi-caret-down-fill"></i>
-                                {d.name}
-                            </button>
-                        {/if}
-                    {/each}
-                </div>
+                {/each}
+                <hr />
+                {#each data as d, i}
+                    {#if !d.collapsed}
+                        <button onclick={(_) => switchCategory(i)} class="sidebar-button">
+                            <span class="icon fill">stat_1</span>
+                            {d.name}
+                        </button>
+                        {#each d.tools as t}
+                            <div class="tool mg-right">
+                                <a class:selected={$page.url.pathname.startsWith(t.href)} class="sidebar-button" href={t.href}>
+                                    <span class="icon fill">{t.icon}</span>
+                                    {t.name}
+                                </a>
+                                <button class="favorite-button" onclick={(_) => switchFavorite(t)}>
+                                    {#if favorites.find((p) => p.name == t.name)}
+                                        <span class="icon fill">star</span>
+                                    {:else}
+                                        <span class="icon">star</span>
+                                    {/if}
+                                </button>
+                            </div>
+                        {/each}
+                    {:else}
+                        <button onclick={(_) => switchCategory(i)} class="sidebar-button">
+                            <span class="icon fill">stat_minus_1</span>
+                            {d.name}
+                        </button>
+                    {/if}
+                {/each}
             </div>
-        {:else}
-            <div class="sidebar-show-button">
-                <button onclick={switchSidebar} aria-label="サイドバーを表示">
-                    <i class="bi bi-list"></i>
-                </button>
-            </div>
-        {/if}
-        <div class="main">
-            {@render children?.()}
         </div>
-    </div>
+    {:else}
+        <div class="sidebar-show-button">
+            <button onclick={switchSidebar} aria-label="サイドバーを表示">
+                <span class="icon">menu</span>
+            </button>
+        </div>
+    {/if}
+    <div class="main scroll">
+        <div class="dev-banner">
+            {#if dev}
+                <span>注意: これは開発版サイトです。実際のリリース時のサイトとは異なる場合がございます。</span>
+            {/if}
+        </div>
+        {@render children?.()}
 
-    <footer class:pin={fs}>
-        {#if dev}
-            <div>
-                <span class="dev-warn">注意: これは開発環境です。一般使用は保証されていません</span>
+        {#if $page.url.pathname == "/"}
+            <div class="footer">
+                <span>
+                    &copy;2025 ap12<br />
+                    このサイトのソースコードはMITでライセンスされています。ソースコード: <a href="https://github.com/ap12-code/tools">GitHub</a>
+                </span>
             </div>
         {/if}
-        <span class="copyright">©{new Date().getFullYear()} ap12</span><br />
-        <a href="https://github.com/ap12-code" target="_blank">GitHub</a> | <a href="https://twitter.ap12.net" target="_blank">Twitter</a> |
-        <a href="/information">バージョン情報</a>
-        <div>
-            <a href="/terms">利用規約</a> | <a href="/privacy">プライバシーポリシー</a>
-        </div>
-    </footer>
-</main>
+    </div>
+</div>
 
 <style>
     @keyframes sidebarAnimIn {
@@ -183,17 +180,11 @@
     .mg-right {
         margin-left: 20px;
     }
-    .copyright {
-        font-size: 18px;
-    }
     .button-collapse button {
         cursor: pointer;
         background-color: #222;
         color: #fff;
         border: none;
-    }
-    .dev-warn {
-        color: #dd0;
     }
     .sidebar-show-button {
         position: fixed;
@@ -230,6 +221,7 @@
         min-width: 350px;
         border-right: #000 1px solid;
         position: relative;
+        overflow-y: scroll;
     }
     .sidebar-inner {
         position: sticky;
@@ -239,7 +231,7 @@
     }
     .app {
         display: flex;
-        gap: 10px;
+        height: 100vh;
     }
     .sidebar-button {
         text-decoration: none;
@@ -247,9 +239,6 @@
         padding: 5px 10px;
         display: block;
         border-radius: 5px;
-    }
-    .tool.sidebar-button {
-        margin-left: 15px;
     }
     .tool {
         display: flex;
@@ -281,30 +270,31 @@
     }
     .main {
         flex: 1;
-    }
-    footer {
-        text-align: center;
-        margin-top: auto;
-        background-color: #111;
-    }
-    footer a {
-        color: #fff;
-    }
-    main {
-        display: flex;
-        height: 100vh;
-        flex-direction: column;
+        overflow-y: scroll;
     }
 
     .back {
         text-decoration: underline;
     }
-    .pin {
-        opacity: 0;
-        transition: 0.3s all;
+
+    @media (max-width: 414px) {
+        .sidebar-show-button {
+            display: none;
+            visibility: hidden;
+        }
     }
-    .pin:hover {
-        opacity: 1;
-        transition: 0.3s all;
+    .dev-banner {
+        background-color: #111;
+        display: block;
+        text-align: center;
+    }
+
+    .footer {
+        padding: 5px;
+        text-align: center;
+        background-color: #111;
+    }
+    .footer a {
+        color: #fff;
     }
 </style>

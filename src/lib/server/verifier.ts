@@ -10,7 +10,6 @@ function verifyIP(addr: string): boolean {
 
 export function verifyAddress(addr: string): boolean {
     if (!addr) return false;
-    if (!ADDRESS_REGEX.test(addr)) return false;
 
-    return true;
+    return ADDRESS_REGEX.test(addr) || IP_REGEX.test(addr);
 }

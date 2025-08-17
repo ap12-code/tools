@@ -2,39 +2,65 @@
     import { onMount } from "svelte";
     import "$components/mctext.css";
     import type { Function0 } from "lodash";
-    import type { Nullable, TextData, TextObject } from "$lib/data/types";
+    import type { Nullable, TextData, TextObject } from "$lib/minecraft/types";
+    import { isTextArray } from "$lib/utils";
+
     let serialized: string = "";
+
     interface Props {
         data?: Nullable<TextData>;
         ok?: Nullable<Function0<void>>;
         update?: Nullable<Function0<void>>;
     }
 
-    let { data = $bindable(null), ok = null, update = null }: Props = $props();
+    let { data = $bindable(), ok = null, update = null }: Props = $props();
     const elementId = crypto.randomUUID();
 
     function onInput() {
-        data = serializeData();
+        data = compactData(serializeData());
         serialized = JSON.stringify(data);
         if (update) update();
     }
+
+    function compactData(data: TextData) {
+        if (data instanceof Array) {
+            return data[0];
+        }
+        return data;
+    }
+
     function createNestedElementWithText(nodeNames: string[], text: string) {
         if (nodeNames.length == 1) return createElementWithText(nodeNames[0], text);
-        let elm = document.createElement(nodeNames[0]);
-        let lastElm = elm;
+        let rootElement = document.createElement(nodeNames[0]);
+        let lastElm = rootElement;
         for (let name of nodeNames.slice(1)) {
-            const elm2 = document.createElement(name);
-            elm = elm.appendChild(elm2);
-            console.log(elm);
-            lastElm = elm2;
+            const childElmement = document.createElement(name);
+            lastElm.appendChild(childElmement);
+            lastElm = childElmement;
         }
         lastElm.textContent = text;
-        return elm;
+        return rootElement;
     }
+
     function createElementWithText(nodeName: string, text: string) {
         const elm = document.createElement(nodeName);
         elm.textContent = text;
         return elm;
+    }
+
+    function applyReset() {
+        applyColor("reset");
+
+        let serialized = serializeData();
+        if (isTextArray(serialized)) {
+            serialized.forEach((_, i) => {
+                if (serialized[i].color == "reset") {
+                    serialized[i] = { text: serialized[i].text };
+                }
+            });
+        }
+        clearData();
+        deserializeData(serialized);
     }
 
     function applyTag(tagName: string, color?: string) {
@@ -43,21 +69,18 @@
         const selection = window.getSelection();
         if (!selection) return;
         const range = selection.getRangeAt(0).cloneRange();
-        const nested: string[] = [tagName];
-        for (let elm of element.childNodes) {
-            if (range.intersectsNode(elm) && elm.nodeType != Node.TEXT_NODE) {
-                nested.push(elm.nodeName.toLowerCase());
-            }
-        }
+
         const str = range.toString();
         range.deleteContents();
-        const elm = createNestedElementWithText(nested.toReversed(), str);
+
+        const elm = createElementWithText(tagName, str);
         if (color) {
             elm.classList.add(`color-${color}`);
             elm.dataset.color = color;
         }
-
         range.insertNode(elm);
+
+        selection.removeAllRanges();
         onInput();
     }
 
@@ -79,9 +102,12 @@
 
     function getParents(elm: Node) {
         const result: string[] = [];
-        let parent = elm.parentNode;
-        while (["B", "I", "S", "U"].includes(parent!.nodeName)) {
-            result.push(parent!.nodeName);
+        let parent = elm;
+        while (["b", "i", "s", "u", "span"].includes(parent!.nodeName.toLowerCase())) {
+            const nodeName = parent!.nodeName.toLowerCase();
+            if (nodeName != "span") {
+                result.push(nodeName);
+            }
             if (!parent?.parentNode) break;
             parent = parent?.parentNode;
         }
@@ -97,6 +123,12 @@
         return parent.dataset.color || undefined;
     }
 
+    function clearData() {
+        const element = document.getElementById(elementId);
+        if (!element) return;
+        Array.from(element.children).forEach((elm) => elm.remove());
+    }
+
     function _reSerializeData(data: TextObject[], elm: ChildNode | HTMLElement) {
         for (let e of Array.from(elm.childNodes)) {
             if (!e.textContent) continue;
@@ -107,14 +139,14 @@
                 if (elm instanceof HTMLElement) {
                     color = getColor(elm);
                 }
-                const parents = getParents(e);
+                const parents = getParents(elm);
                 data.push({
                     text: e.textContent || "",
                     color: color,
-                    bold: parents.includes("B") ? true : undefined,
-                    italic: parents.includes("I") ? true : undefined,
-                    strikethrough: parents.includes("S") ? true : undefined,
-                    underline: parents.includes("U") ? true : undefined,
+                    bold: parents.includes("b") ? true : undefined,
+                    italic: parents.includes("i") ? true : undefined,
+                    strikethrough: parents.includes("s") ? true : undefined,
+                    underline: parents.includes("u") ? true : undefined,
                 });
             }
         }
@@ -125,8 +157,8 @@
         if (!element) return [];
         const result: TextObject[] = [];
         _reSerializeData(result, element);
-        if (result.length == 1) {
-            return result[0];
+        if (result.length == 0) {
+            return "";
         }
         return result;
     }
@@ -134,20 +166,23 @@
     function _reDeserializeData(data: TextObject[]) {
         const element = document.getElementById(elementId);
         if (!element) return;
+
         for (let obj of data) {
             let nodes: string[] = [];
-            if (obj.bold) nodes.push("B");
-            if (obj.italic) nodes.push("I");
-            if (obj.underline) nodes.push("U");
-            if (obj.strikethrough) nodes.push("S");
-            if (nodes.length == 0 && !obj.color) {
-                element.appendChild(document.createTextNode(obj.text));
-                continue;
-            }
-            const objNode = createNestedElementWithText(nodes, obj.text);
+
+            if (obj.bold) nodes.push("b");
+            if (obj.italic) nodes.push("i");
+            if (obj.underline) nodes.push("u");
+            if (obj.strikethrough) nodes.push("s");
+            if (obj.color) nodes.push("span");
+
+            const objNode = createNestedElementWithText(nodes.toReversed(), obj.text);
+
             if (obj.color) {
                 objNode.classList.add(`color-${obj.color}`);
+                objNode.dataset.color = obj.color;
             }
+
             element.appendChild(objNode);
         }
     }
@@ -163,6 +198,13 @@
         onInput();
     }
 
+    function reload() {
+        const serialized = serializeData();
+
+        clearData();
+        deserializeData(serialized);
+    }
+
     onMount(() => {
         if (data) {
             deserializeData(data);
@@ -170,6 +212,7 @@
             onInput();
         }
     });
+
     const colors = [
         "black",
         "dark_blue",
@@ -192,13 +235,17 @@
 
 <div>
     <div class="toolbar">
-        <button aria-label="太字" class="control" onclick={applyBold}><i class="bi bi-type-bold"></i></button>
-        <button aria-label="斜体" class="control" onclick={applyItalic}><i class="bi bi-type-italic"></i></button>
-        <button aria-label="取り消し線" class="control" onclick={applyStrikeThrough}><i class="bi bi-type-strikethrough"></i></button>
-        <button aria-label="下線" class="control" onclick={applyUnderline}><i class="bi bi-type-underline"></i></button>
+        <button aria-label="太字" class="control" onclick={applyBold}><span class="icon fill">format_bold</span></button>
+        <button aria-label="斜体" class="control" onclick={applyItalic}><span class="icon fill">format_italic</span></button>
+        <button aria-label="取り消し線" class="control" onclick={applyStrikeThrough}><span class="icon fill">format_strikethrough</span></button>
+        <button aria-label="下線" class="control" onclick={applyUnderline}><span class="icon fill">format_underlined</span></button>
+        <button aria-label="リセット" class="control" onclick={applyReset}><span class="icon fill">format_clear</span></button>
         {#each colors as color}
-            <button aria-label="色" class="control" onclick={(_) => applyColor(color)}><i class={`bi bi-square-fill color-${color}`}></i></button>
+            <button aria-label="色" class="control" onclick={(_) => applyColor(color)}>
+                <span class={`color-${color}`}><span class={`icon fill`}>square</span></span>
+            </button>
         {/each}
+        <button aria-label="リロード" class="control" onclick={reload}><span class="icon fill">sync</span></button>
     </div>
     <div contenteditable="true" role="textbox" spellcheck="false" class="main font-mc" id={elementId} oninput={onInput}></div>
     <div class="actions">
@@ -210,11 +257,16 @@
 
 <style>
     .control {
+        cursor: pointer;
+        transition: 0.1s;
         background-color: #222;
         border: #666 1px solid;
         border-radius: 5px;
         padding: 5px 7px;
         color: #fff;
+    }
+    .control:hover {
+        background-color: #444;
     }
     .toolbar {
         display: flex;

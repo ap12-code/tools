@@ -1,8 +1,6 @@
 <script lang="ts">
-    import { run } from "svelte/legacy";
-
     import Container from "$components/Container.svelte";
-    import Text from "$components/Text.svelte";
+    import Text from "$components/form/Text.svelte";
     import { onMount } from "svelte";
 
     let ipv4 = $state("取得中...");
@@ -51,19 +49,19 @@
     <h1>IPチェッカー</h1>
     <hr />
     <span>IPアドレス (IPv4)</span>
-    <Text readonly value={ipv4} />
+    <Text read_only value={ipv4} />
     <span>IPアドレス (IPv6)</span>
-    <Text readonly value={ipv6} />
+    <Text read_only value={ipv6} />
     <hr />
     <span>国</span>
-    <Text readonly value={data.country} />
+    <Text read_only value={data.country} />
     <span>県</span>
-    <Text readonly value={data.region} />
+    <Text read_only value={data.region} />
     <span>市</span>
-    <Text readonly value={data.city} />
+    <Text read_only value={data.city} />
     <hr />
     <span>プロバイダ</span>
-    <Text readonly value={data.org} />
+    <Text read_only value={data.org} />
     <hr />
     <p>Data Provided by ipapi.co & ipify.org</p>
 </Container>

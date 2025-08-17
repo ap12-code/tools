@@ -2,7 +2,6 @@
     import Container from "$components/Container.svelte";
     import { Decimal } from "decimal.js";
     import _ from "lodash";
-    import { onMount } from "svelte";
 
     let mapping: Record<string, Decimal> = {
         nm: new Decimal(1),
