@@ -1,22 +1,21 @@
 <script lang="ts">
-    import { read, NBTData, stringify } from "nbtify";
+    import { read, NBTData, stringify } from 'nbtify';
 
     let files: FileList;
-    let names: string[] = []
+    let names: string[] = [];
     let nbt: NBTData = new NBTData({});
 
     async function update() {
-        const file = files[0]
-        if (!file) return
+        const file = files[0];
+        if (!file) return;
 
-        nbt = await read(await file.arrayBuffer())
+        nbt = await read(await file.arrayBuffer());
     }
-
 </script>
 
 <div class="settings">
     <div class="input">
-        <input type="file" bind:files={files} on:change={update} />
+        <input type="file" bind:files on:change={update} />
     </div>
     <div class="code">
         {#key nbt}

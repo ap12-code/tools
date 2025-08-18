@@ -1,24 +1,24 @@
 <script lang="ts">
-    import Container from "$components/Container.svelte";
-    import { onMount } from "svelte";
-    import type { PageServerData } from "./$types";
+    import Container from '$components/Container.svelte';
+    import { onMount } from 'svelte';
+    import type { PageServerData } from './$types';
 
     interface Props {
         data: PageServerData;
     }
 
     let { data }: Props = $props();
-    let description = $state("");
-    let types = $state("dp");
-    let dataVersion = $state("");
-    let search = $state("");
+    let description = $state('');
+    let types = $state('dp');
+    let dataVersion = $state('');
+    let search = $state('');
     let output = {
         pack: {
             pack_format: 0,
-            description: "",
-        },
+            description: ''
+        }
     };
-    let outJSON = $state("");
+    let outJSON = $state('');
     let versions: [string, number][] = $state([]);
 
     function update() {
@@ -49,12 +49,12 @@
     function download() {
         const url = URL.createObjectURL(
             new Blob([outJSON], {
-                type: "text/plain",
-            }),
+                type: 'text/plain'
+            })
         );
-        const element = document.createElement("a");
+        const element = document.createElement('a');
         element.href = url;
-        element.download = "pack.mcmeta";
+        element.download = 'pack.mcmeta';
         element.click();
     }
     onMount(() => {

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Container from "$components/Container.svelte";
+    import Container from '$components/Container.svelte';
 
     let amount = $state(4);
     let max = $state(100);

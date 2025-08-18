@@ -1,21 +1,21 @@
 <script lang="ts">
-    import Container from "$components/Container.svelte";
-    import QRCode from "qrcode";
-    import { page } from "$app/stores";
-    import { onMount } from "svelte";
-    import ColorPicker from "svelte-awesome-color-picker";
+    import Container from '$components/Container.svelte';
+    import QRCode from 'qrcode';
+    import { page } from '$app/stores';
+    import { onMount } from 'svelte';
+    import ColorPicker from 'svelte-awesome-color-picker';
 
-    let input = $state("https://komaken.net");
-    let err: string = $state("");
-    let backcol = $state("#ffffffff");
-    let forecol = $state("#00000000");
+    let input = $state('https://komaken.net');
+    let err: string = $state('');
+    let backcol = $state('#ffffffff');
+    let forecol = $state('#00000000');
     function update() {
-        err = "";
+        err = '';
         backcol = backcol.substring(0, 7);
         forecol = forecol.substring(0, 7);
-        const canv = document.getElementById("output");
+        const canv = document.getElementById('output');
         if (!canv || !(canv instanceof HTMLCanvasElement)) return;
-        const ctx = canv.getContext("2d");
+        const ctx = canv.getContext('2d');
         if (!ctx) return;
         if (!input) {
             ctx.clearRect(0, 0, canv.width, canv.height);
@@ -24,40 +24,40 @@
                 input,
                 {
                     width: 200,
-                    color: { dark: forecol, light: backcol },
+                    color: { dark: forecol, light: backcol }
                 },
                 (err2, canvas) => {
                     if (err2) err = err2.toString();
                     ctx.drawImage(canvas, 0, 0, canv.width, canv.height);
-                },
+                }
             );
         }
     }
     function copy() {
-        const canv = document.getElementById("output");
+        const canv = document.getElementById('output');
         if (!canv || !(canv instanceof HTMLCanvasElement)) return;
-        const ctx = canv.getContext("2d");
+        const ctx = canv.getContext('2d');
         if (!ctx) return;
         canv.toBlob((bl) => {
             if (!bl) return;
-            navigator.clipboard.write([new ClipboardItem({ "image/png": bl }, {})]);
+            navigator.clipboard.write([new ClipboardItem({ 'image/png': bl }, {})]);
         });
     }
     function download() {
-        const canv = document.getElementById("output");
+        const canv = document.getElementById('output');
         if (!canv || !(canv instanceof HTMLCanvasElement)) return;
-        const ctx = canv.getContext("2d");
+        const ctx = canv.getContext('2d');
         if (!ctx) return;
         canv.toBlob((bl) => {
             if (!bl) return;
             const url = URL.createObjectURL(
                 new Blob([bl], {
-                    type: "image/png",
-                }),
+                    type: 'image/png'
+                })
             );
-            const element = document.createElement("a");
+            const element = document.createElement('a');
             element.href = url;
-            element.download = "qrcode.png";
+            element.download = 'qrcode.png';
             element.click();
         });
     }

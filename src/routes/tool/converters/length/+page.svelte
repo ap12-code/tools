@@ -1,7 +1,7 @@
 <script lang="ts">
-    import Container from "$components/Container.svelte";
-    import { Decimal } from "decimal.js";
-    import _ from "lodash";
+    import Container from '$components/Container.svelte';
+    import { Decimal } from 'decimal.js';
+    import _ from 'lodash';
 
     let mapping: Record<string, Decimal> = {
         nm: new Decimal(1),
@@ -13,36 +13,36 @@
         ft: new Decimal(1000 * 1000 * 10 * 2.54 * 12),
         mi: new Decimal((1000 * 1000 * 10 * 100) / 0.000621371),
         yd: new Decimal(1000 * 1000 * 10 * 100 * 1.0936132983),
-        km: new Decimal(1000 * 1000 * 10 * 100 * 1000),
+        km: new Decimal(1000 * 1000 * 10 * 100 * 1000)
     };
 
     let values: Record<string, string> = $state({
-        nm: "0",
-        um: "0",
-        mm: "0",
-        cm: "0",
-        m: "0",
-        km: "0",
-        in: "0",
-        ft: "0",
-        yd: "0",
-        mi: "0",
+        nm: '0',
+        um: '0',
+        mm: '0',
+        cm: '0',
+        m: '0',
+        km: '0',
+        in: '0',
+        ft: '0',
+        yd: '0',
+        mi: '0'
     });
     let errs: Record<string, boolean> = $state({});
 
     function change(unit: string) {
-        if (values[unit].endsWith(".")) return;
-        if (values[unit].endsWith("-")) {
-            if (values[unit].startsWith("-")) {
+        if (values[unit].endsWith('.')) return;
+        if (values[unit].endsWith('-')) {
+            if (values[unit].startsWith('-')) {
                 values[unit] = `${values[unit].slice(1, -1)}`;
             } else {
                 values[unit] = `-${values[unit].slice(0, -1)}`;
             }
-            if (values[unit] == "0" || values[unit] == "-0") return;
+            if (values[unit] == '0' || values[unit] == '-0') return;
         }
         errs[unit] = false;
         if (!errs[unit]) {
-            if (!values[unit]) values[unit] = "0";
+            if (!values[unit]) values[unit] = '0';
             if (isNaN(parseFloat(values[unit]))) return (errs[unit] = true);
             values[unit] = parseFloat(values[unit]).toString();
             for (let v of Object.keys(values)) {
@@ -54,7 +54,7 @@
     }
 </script>
 
-<Container back_to={"/tool/converters"}>
+<Container back_to={'/tool/converters'}>
     <h1>距離換算</h1>
     <hr />
     <div class="main">

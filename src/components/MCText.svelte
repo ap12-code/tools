@@ -1,11 +1,11 @@
 <script lang="ts">
-    import { onMount } from "svelte";
-    import "$components/mctext.css";
-    import type { Function0 } from "lodash";
-    import type { Nullable, TextData, TextObject } from "$lib/minecraft/types";
-    import { isTextArray } from "$lib/utils";
+    import { onMount } from 'svelte';
+    import '$components/mctext.css';
+    import type { Function0 } from 'lodash';
+    import type { Nullable, TextData, TextObject } from '$lib/minecraft/types';
+    import { isTextArray } from '$lib/utils';
 
-    let serialized: string = "";
+    let serialized: string = '';
 
     interface Props {
         data?: Nullable<TextData>;
@@ -49,12 +49,12 @@
     }
 
     function applyReset() {
-        applyColor("reset");
+        applyColor('reset');
 
         let serialized = serializeData();
         if (isTextArray(serialized)) {
             serialized.forEach((_, i) => {
-                if (serialized[i].color == "reset") {
+                if (serialized[i].color == 'reset') {
                     serialized[i] = { text: serialized[i].text };
                 }
             });
@@ -85,27 +85,27 @@
     }
 
     function applyBold() {
-        applyTag("b");
+        applyTag('b');
     }
     function applyItalic() {
-        applyTag("i");
+        applyTag('i');
     }
     function applyStrikeThrough() {
-        applyTag("s");
+        applyTag('s');
     }
     function applyUnderline() {
-        applyTag("u");
+        applyTag('u');
     }
     function applyColor(color: string) {
-        applyTag("span", color);
+        applyTag('span', color);
     }
 
     function getParents(elm: Node) {
         const result: string[] = [];
         let parent = elm;
-        while (["b", "i", "s", "u", "span"].includes(parent!.nodeName.toLowerCase())) {
+        while (['b', 'i', 's', 'u', 'span'].includes(parent!.nodeName.toLowerCase())) {
             const nodeName = parent!.nodeName.toLowerCase();
-            if (nodeName != "span") {
+            if (nodeName != 'span') {
                 result.push(nodeName);
             }
             if (!parent?.parentNode) break;
@@ -141,12 +141,12 @@
                 }
                 const parents = getParents(elm);
                 data.push({
-                    text: e.textContent || "",
+                    text: e.textContent || '',
                     color: color,
-                    bold: parents.includes("b") ? true : undefined,
-                    italic: parents.includes("i") ? true : undefined,
-                    strikethrough: parents.includes("s") ? true : undefined,
-                    underline: parents.includes("u") ? true : undefined,
+                    bold: parents.includes('b') ? true : undefined,
+                    italic: parents.includes('i') ? true : undefined,
+                    strikethrough: parents.includes('s') ? true : undefined,
+                    underline: parents.includes('u') ? true : undefined
                 });
             }
         }
@@ -158,7 +158,7 @@
         const result: TextObject[] = [];
         _reSerializeData(result, element);
         if (result.length == 0) {
-            return "";
+            return '';
         }
         return result;
     }
@@ -170,11 +170,11 @@
         for (let obj of data) {
             let nodes: string[] = [];
 
-            if (obj.bold) nodes.push("b");
-            if (obj.italic) nodes.push("i");
-            if (obj.underline) nodes.push("u");
-            if (obj.strikethrough) nodes.push("s");
-            if (obj.color) nodes.push("span");
+            if (obj.bold) nodes.push('b');
+            if (obj.italic) nodes.push('i');
+            if (obj.underline) nodes.push('u');
+            if (obj.strikethrough) nodes.push('s');
+            if (obj.color) nodes.push('span');
 
             const objNode = createNestedElementWithText(nodes.toReversed(), obj.text);
 
@@ -190,7 +190,7 @@
     function deserializeData(data: TextData) {
         if (data instanceof Array) {
             _reDeserializeData(data);
-        } else if (typeof data === "string") {
+        } else if (typeof data === 'string') {
             _reDeserializeData([{ text: data }]);
         } else {
             _reDeserializeData([data]);
@@ -214,22 +214,22 @@
     });
 
     const colors = [
-        "black",
-        "dark_blue",
-        "dark_green",
-        "dark_aqua",
-        "dark_red",
-        "dark_purple",
-        "gold",
-        "gray",
-        "dark_gray",
-        "blue",
-        "green",
-        "aqua",
-        "red",
-        "light_purple",
-        "yellow",
-        "white",
+        'black',
+        'dark_blue',
+        'dark_green',
+        'dark_aqua',
+        'dark_red',
+        'dark_purple',
+        'gold',
+        'gray',
+        'dark_gray',
+        'blue',
+        'green',
+        'aqua',
+        'red',
+        'light_purple',
+        'yellow',
+        'white'
     ];
 </script>
 

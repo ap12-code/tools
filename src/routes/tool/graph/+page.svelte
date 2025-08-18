@@ -1,13 +1,13 @@
 <script lang="ts">
-    import "katex/dist/katex.css";
-    import { onMount } from "svelte";
-    import nerdamer from "nerdamer-prime";
-    import "nerdamer-prime/all";
-    import { range } from "$lib/utils";
-    import Text from "$components/form/Text.svelte";
-    import { ActionResult } from "$lib/action_result";
+    import 'katex/dist/katex.css';
+    import { onMount } from 'svelte';
+    import nerdamer from 'nerdamer-prime';
+    import 'nerdamer-prime/all';
+    import { range } from '$lib/utils';
+    import Text from '$components/form/Text.svelte';
+    import { ActionResult } from '$lib/action_result';
 
-    let expr = $state("y=2x");
+    let expr = $state('y=2x');
 
     const zoom_unit = 0.5;
     const size = 1000;
@@ -29,13 +29,13 @@
 
     let offset = $state(0);
 
-    let point_data = $state("");
+    let point_data = $state('');
     let points: Point[] = $state([]);
     let grid_count = $state(0);
 
     let font_size = 14;
     let point_size = 3;
-    let color = "red";
+    let color = 'red';
 
     let legends: number[] = $state(range(50));
 
@@ -61,18 +61,18 @@
         small_grid_size = grid_size / 10;
         offset = (size - graph_size) / 2;
 
-        point_data = "";
+        point_data = '';
         points = [];
         let lines: string[] = [];
 
         const solver = one(nerdamer(expr));
-        const solver_y = one(solver.solveFor("y")).evaluate();
+        const solver_y = one(solver.solveFor('y')).evaluate();
 
         const max = Math.ceil(graph_size / small_grid_size / zoom / 2 / 10);
 
         for (let x = -max; x <= max; x += 0.1) {
             x = fix(x, 100);
-            const y = solver_y.buildFunction(["x"])(x);
+            const y = solver_y.buildFunction(['x'])(x);
 
             const rx = fix(x * zoom * 100 + 500, 100);
             const ry = fix(-y * zoom * 100 + 500, 100);
@@ -89,7 +89,7 @@
                     y: -y,
                     hover: false,
                     rx: rx,
-                    ry: ry,
+                    ry: ry
                 });
                 continue;
             }
@@ -100,12 +100,12 @@
                     y: y,
                     hover: false,
                     rx: rx,
-                    ry: ry,
+                    ry: ry
                 });
             }
         }
         points = points;
-        point_data = lines.join(" ");
+        point_data = lines.join(' ');
     }
     function update() {
         renderChart();
@@ -119,9 +119,9 @@
 
     function init() {
         update();
-        const element = document.getElementById("graph");
+        const element = document.getElementById('graph');
         if (element instanceof SVGElement) {
-            element.addEventListener("wheel", (ev) => {
+            element.addEventListener('wheel', (ev) => {
                 if (ev.deltaY < 0) {
                     if (zoom < 5) {
                         zoom += 0.1;

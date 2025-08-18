@@ -1,8 +1,8 @@
 <script lang="ts">
-    import Container from "$components/Container.svelte";
-    let ip = $state("");
+    import Container from '$components/Container.svelte';
+    let ip = $state('');
     let result: Record<string, any> = $state({
-        players: {},
+        players: {}
     });
     let error = $state(false);
     let processing = $state(false);
@@ -26,46 +26,46 @@
     }
 
     const COLOR_MAPPING: Record<string, string> = {
-        0: "color: #000",
-        1: "color: #00a",
-        2: "color: #0a0",
-        3: "color: #0aa",
-        4: "color: #a00",
-        5: "color: #a0a",
-        6: "color: #fa0",
-        7: "color: #aaa",
-        8: "color: #555",
-        9: "color: #55f",
-        a: "color: #5f5",
-        b: "color: #5ff",
-        c: "color: #f55",
-        d: "color: #f5f",
-        e: "color: #ff5",
-        f: "color: #fff",
+        0: 'color: #000',
+        1: 'color: #00a',
+        2: 'color: #0a0',
+        3: 'color: #0aa',
+        4: 'color: #a00',
+        5: 'color: #a0a',
+        6: 'color: #fa0',
+        7: 'color: #aaa',
+        8: 'color: #555',
+        9: 'color: #55f',
+        a: 'color: #5f5',
+        b: 'color: #5ff',
+        c: 'color: #f55',
+        d: 'color: #f5f',
+        e: 'color: #ff5',
+        f: 'color: #fff'
     };
 
     function parseText(text: any): string {
-        if (!text) return "";
-        if (typeof text === "string") {
-            let a = "";
-            for (let str of text.split("§")) {
+        if (!text) return '';
+        if (typeof text === 'string') {
+            let a = '';
+            for (let str of text.split('§')) {
                 if (!str) continue;
-                a += str.replace(str, `<span style="${COLOR_MAPPING[str.at(0) || "f"] || ""}; font-family: unifont;">${str.substring(1)}</span>`);
+                a += str.replace(str, `<span style="${COLOR_MAPPING[str.at(0) || 'f'] || ''}; font-family: unifont;">${str.substring(1)}</span>`);
             }
-            a = a.replaceAll("\n", "<br />");
-            return a || "";
+            a = a.replaceAll('\n', '<br />');
+            return a || '';
         }
         if (text instanceof Object) {
-            let a = "";
-            a += `<span style="color: ${text.color || ""}; font-family: unifont;">${text.text || ""}</span>`;
+            let a = '';
+            a += `<span style="color: ${text.color || ''}; font-family: unifont;">${text.text || ''}</span>`;
             for (let extra of [...text.extra, ...text.extra.flatMap((p: any) => p.extra)]) {
                 if (extra) {
-                    a += `<span style="color: ${extra.color}; font-family: unifont;">${extra.text || ""}</span>`;
+                    a += `<span style="color: ${extra.color}; font-family: unifont;">${extra.text || ''}</span>`;
                 }
             }
-            return a || "";
+            return a || '';
         }
-        return "";
+        return '';
     }
 </script>
 
@@ -89,7 +89,7 @@
     {#if has_result}
         <p>結果</p>
         <div class="result">
-            <img src={result.favicon || "/unknown_server.png"} alt="NoLogo" class="logo" />
+            <img src={result.favicon || '/unknown_server.png'} alt="NoLogo" class="logo" />
             <div>
                 <span class="description">{@html result.description}</span>
             </div>
@@ -116,12 +116,12 @@
     .result {
         display: flex;
         gap: 10px;
-        background-image: url("/light_dirt_background.png");
+        background-image: url('/light_dirt_background.png');
         background-size: 40px;
         padding: 10px;
     }
     .result * {
-        font-family: "unifont";
+        font-family: 'unifont';
     }
     .err {
         border-color: #d00;

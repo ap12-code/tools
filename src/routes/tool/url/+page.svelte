@@ -1,8 +1,8 @@
 <script>
-    import Container from "$components/Container.svelte";
+    import Container from '$components/Container.svelte';
 
-    let plain = $state("");
-    let urlEncoded = $state("");
+    let plain = $state('');
+    let urlEncoded = $state('');
 
     function changePlain() {
         urlEncoded = encodeURIComponent(plain);

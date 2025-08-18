@@ -1,13 +1,13 @@
 <script lang="ts">
-    import { onMount } from "svelte";
-    import Button from "$components/Button.svelte";
-    import Container from "$components/Container.svelte";
-    import nerdamer from "nerdamer-prime";
-    import "katex/dist/katex.css";
-    import _ from "lodash";
+    import { onMount } from 'svelte';
+    import Button from '$components/Button.svelte';
+    import Container from '$components/Container.svelte';
+    import nerdamer from 'nerdamer-prime';
+    import 'katex/dist/katex.css';
+    import _ from 'lodash';
 
-    let expr = $state("");
-    let output = $state("");
+    let expr = $state('');
+    let output = $state('');
     let err = false;
 
     function equal() {
@@ -15,69 +15,69 @@
             output = nerdamer(expr + output)
                 .evaluate()
                 .toDecimal();
-            expr = "";
+            expr = '';
         } catch (e: any) {
-            output = "ERR";
-            expr = "";
+            output = 'ERR';
+            expr = '';
             err = true;
         }
     }
     function op(btn: string) {
         output = expr + output;
-        output = output.replace(/^(.+)[\+\-\*\/]$/, "$1");
+        output = output.replace(/^(.+)[\+\-\*\/]$/, '$1');
         output += btn;
-        [expr, output] = [output, "0"];
+        [expr, output] = [output, '0'];
     }
 
     function handleClick(btn: string) {
         switch (btn) {
-            case "sin":
+            case 'sin':
                 output = `sin(${output})`;
                 break;
-            case "cos":
+            case 'cos':
                 output = `cos(${output})`;
                 break;
-            case "tan":
+            case 'tan':
                 output = `tan(${output})`;
                 break;
-            case "sqrt":
+            case 'sqrt':
                 output = `sqrt(${output})`;
                 break;
-            case "C":
-                output = "0";
+            case 'C':
+                output = '0';
                 err = false;
                 break;
-            case "CA":
-                output = "0";
-                expr = "";
+            case 'CA':
+                output = '0';
+                expr = '';
                 err = false;
                 break;
-            case "*-1":
+            case '*-1':
                 if (err) break;
                 output = (parseInt(output) * -1).toString();
                 break;
-            case "=":
+            case '=':
                 if (err) break;
                 if (!output) break;
                 equal();
                 break;
-            case "BS":
+            case 'BS':
                 if (err) break;
-                if (output == "0" && expr) {
-                    [expr, output] = ["", expr.substring(0, expr.length - 1)];
+                if (output == '0' && expr) {
+                    [expr, output] = ['', expr.substring(0, expr.length - 1)];
                 } else {
-                    if (output.endsWith(")")) {
-                        output = output.replace(/(sin|cos|tan|sqrt)\((.+)\)/, "$2");
+                    if (output.endsWith(')')) {
+                        output = output.replace(/(sin|cos|tan|sqrt)\((.+)\)/, '$2');
                     } else {
                         output = output.substring(0, output.length - 1);
-                        output = parseInt(output || "0").toString();
+                        output = parseInt(output || '0').toString();
                     }
                 }
                 break;
             default:
                 if (err) break;
-                if (output == "0") output = "";
-                if (/[0-9]/.test(btn) || btn == ".") {
+                if (output == '0') output = '';
+                if (/[0-9]/.test(btn) || btn == '.') {
                     output += btn;
                 } else {
                     op(btn);
@@ -90,26 +90,26 @@
         if (/^[\+\-\*\/0-9\.]$/.test(ev.key)) {
             handleClick(ev.key);
         }
-        if (ev.key == "Escape") {
-            if (output == "0") {
-                handleClick("CA");
+        if (ev.key == 'Escape') {
+            if (output == '0') {
+                handleClick('CA');
             } else {
-                handleClick("C");
+                handleClick('C');
             }
         }
-        if (ev.key == "Enter") {
-            handleClick("=");
+        if (ev.key == 'Enter') {
+            handleClick('=');
         }
-        if (ev.key == "Backspace") {
-            handleClick("BS");
+        if (ev.key == 'Backspace') {
+            handleClick('BS');
         }
     }
 
     function view(input: string): string {
-        return input.replace("*", "×").replace("/", "÷");
+        return input.replace('*', '×').replace('/', '÷');
     }
 
-    onMount(() => handleClick("0"));
+    onMount(() => handleClick('0'));
 </script>
 
 <svelte:body onkeydown={handleKey} />
@@ -125,34 +125,34 @@
         </div>
 
         <div class="buttons">
-            <Button onclick={() => handleClick("7")}>7</Button>
-            <Button onclick={() => handleClick("8")}>8</Button>
-            <Button onclick={() => handleClick("9")}>9</Button>
-            <Button onclick={() => handleClick("/")}>/</Button>
+            <Button onclick={() => handleClick('7')}>7</Button>
+            <Button onclick={() => handleClick('8')}>8</Button>
+            <Button onclick={() => handleClick('9')}>9</Button>
+            <Button onclick={() => handleClick('/')}>/</Button>
 
-            <Button onclick={() => handleClick("4")}>4</Button>
-            <Button onclick={() => handleClick("5")}>5</Button>
-            <Button onclick={() => handleClick("6")}>6</Button>
-            <Button onclick={() => handleClick("*")}>*</Button>
+            <Button onclick={() => handleClick('4')}>4</Button>
+            <Button onclick={() => handleClick('5')}>5</Button>
+            <Button onclick={() => handleClick('6')}>6</Button>
+            <Button onclick={() => handleClick('*')}>*</Button>
 
-            <Button onclick={() => handleClick("1")}>1</Button>
-            <Button onclick={() => handleClick("2")}>2</Button>
-            <Button onclick={() => handleClick("3")}>3</Button>
-            <Button onclick={() => handleClick("-")}>-</Button>
+            <Button onclick={() => handleClick('1')}>1</Button>
+            <Button onclick={() => handleClick('2')}>2</Button>
+            <Button onclick={() => handleClick('3')}>3</Button>
+            <Button onclick={() => handleClick('-')}>-</Button>
 
-            <Button onclick={() => handleClick(".")}>.</Button>
-            <Button onclick={() => handleClick("0")}>0</Button>
-            <Button onclick={() => handleClick("*-1")}>+/-</Button>
-            <Button onclick={() => handleClick("+")}>+</Button>
+            <Button onclick={() => handleClick('.')}>.</Button>
+            <Button onclick={() => handleClick('0')}>0</Button>
+            <Button onclick={() => handleClick('*-1')}>+/-</Button>
+            <Button onclick={() => handleClick('+')}>+</Button>
 
-            <Button onclick={() => handleClick("CA")}>CA</Button>
-            <Button onclick={() => handleClick("C")}>C</Button>
-            <Button onclick={() => handleClick("=")}>=</Button>
-            <Button onclick={() => handleClick("BS")}><i class="bi bi-backspace-fill"></i></Button>
-            <Button onclick={() => handleClick("sin")}>sin</Button>
-            <Button onclick={() => handleClick("cos")}>cos</Button>
-            <Button onclick={() => handleClick("tan")}>tan</Button>
-            <Button onclick={() => handleClick("sqrt")}>√</Button>
+            <Button onclick={() => handleClick('CA')}>CA</Button>
+            <Button onclick={() => handleClick('C')}>C</Button>
+            <Button onclick={() => handleClick('=')}>=</Button>
+            <Button onclick={() => handleClick('BS')}><i class="bi bi-backspace-fill"></i></Button>
+            <Button onclick={() => handleClick('sin')}>sin</Button>
+            <Button onclick={() => handleClick('cos')}>cos</Button>
+            <Button onclick={() => handleClick('tan')}>tan</Button>
+            <Button onclick={() => handleClick('sqrt')}>√</Button>
         </div>
     </section>
 </Container>
@@ -167,7 +167,7 @@
         height: 45px;
     }
     .result span {
-        font-family: "Noto Sans Mono";
+        font-family: 'Noto Sans Mono';
     }
     .out {
         font-size: 20px;

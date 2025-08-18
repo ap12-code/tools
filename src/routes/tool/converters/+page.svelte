@@ -1,6 +1,6 @@
 <script>
-    import Container from "$components/Container.svelte";
-    import { converters } from "$lib/converters.json";
+    import Container from '$components/Container.svelte';
+    import { converters } from '$lib/converters.json';
 </script>
 
 <Container>

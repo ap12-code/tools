@@ -1,29 +1,28 @@
-import type { Component } from "$lib/minecraft/components/index.svelte"
+import type { Component } from '$lib/minecraft/components/index.svelte';
 
 export class BooleanComponent {
-    private value: boolean = false
+    private value: boolean = false;
 
-    public constructor() {
-    }
+    public constructor() {}
 
     public serialize(): string {
-        return this.value.toString()
+        return this.value.toString();
     }
 
     public deserialize(value?: string): Component<BooleanComponent> {
-        if (value) this.value = Boolean(value)
-        return this
+        if (value) this.value = Boolean(value);
+        return this;
     }
 
     public get(): BooleanComponent {
-        return this
+        return this;
     }
 
     public getValue() {
-        return this.value
+        return this.value;
     }
 
     public setValue(value: boolean) {
-        this.value = value
+        this.value = value;
     }
 }

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { Snippet } from "svelte";
+    import type { Snippet } from 'svelte';
 
     interface Props {
         show?: boolean;
@@ -9,7 +9,7 @@
 
     let element: HTMLDialogElement;
 
-    let { show = $bindable(false), title = "", children }: Props = $props();
+    let { show = $bindable(false), title = '', children }: Props = $props();
 
     $effect(() => {
         show ? element.showModal() : element.close();

@@ -1,30 +1,29 @@
 <script lang="ts">
-    import Container from "$components/Container.svelte";
-    import McText from "$components/MCText.svelte";
-    import _ from "lodash";
-    import type { PageServerData } from "./$types";
-    import { isTextData } from "$lib/utils";
-    import type { Item, Nullable } from "$lib/minecraft/types";
-    import { ComponentMap, DataComponentTypes } from "$lib/minecraft/components/index.svelte";
-    import Button from "$components/Button.svelte";
-    import Tabs from "$components/tab/Tabs.svelte";
-    import { browser } from "$app/environment";
-    import { Rarity } from "$lib/minecraft/components/1.21.8/rarity";
-    import Tooltip from "$components/Tooltip.svelte";
-    import Dialog from "$components/Dialog.svelte";
+    import Container from '$components/Container.svelte';
+    import McText from '$components/MCText.svelte';
+    import type { PageServerData } from './$types';
+    import { isTextData } from '$lib/utils';
+    import type { Item, Nullable } from '$lib/minecraft/types';
+    import { ComponentMap, DataComponentTypes } from '$lib/minecraft/components/index.svelte';
+    import Button from '$components/Button.svelte';
+    import Tabs from '$components/tab/Tabs.svelte';
+    import { browser } from '$app/environment';
+    import { Rarity } from '$lib/minecraft/components/1.21.8/rarity';
+    import Tooltip from '$components/Tooltip.svelte';
+    import Dialog from '$components/Dialog.svelte';
+    import { goto } from '$app/navigation';
     interface Props {
         data: PageServerData;
     }
 
     let { data }: Props = $props();
-    let search = $state("");
+    let search = $state('');
     let items: Item[] = $state([]);
     let item: Nullable<Item> = $state();
     let count = $state(1);
     let itemId: Nullable<string> = $state(null);
-    let is_food = $state(false);
     let components: ComponentMap = $state(new ComponentMap());
-    let command = $state("アイテムを選択してください");
+    let command = $state('アイテムを選択してください');
     let copied = $state(false);
     let loading = $state(true);
     let auto_save = true;
@@ -40,17 +39,28 @@
     let redoed: GiveCommandData[] = [];
     let history_cursor: number = -1;
 
-    const LOCAL_STORAGE_KEY = "data:commands/give";
+    const LOCAL_STORAGE_KEY = 'data:commands/give';
 
     function loadBrowser() {
         const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
         if (!savedData) return;
         const parsed = JSON.parse(savedData);
         // console.log(savedData);
-        components.deserialize(parsed.components);
-        count = parsed.count;
-        if (parsed.item) item = parsed.item;
-        if (parsed.item) itemId = parsed.item.id;
+        try {
+            components.deserialize(parsed.components);
+            count = parsed.count;
+            if (parsed.item) item = parsed.item;
+            if (parsed.item) itemId = parsed.item.id;
+        } catch {
+            const check = confirm(
+                'データ読み込み中にエラーが発生しました。\n正常にページを読み込むには保存済みのコマンドをリセットする必要があります。\n続行してもよろしいですか?'
+            );
+            if (check) {
+                deleteBrowser();
+            } else {
+                goto('/commands');
+            }
+        }
     }
 
     function saveBrowser() {
@@ -61,7 +71,7 @@
             const data = {
                 components: components.serialize(),
                 count: count,
-                item: item,
+                item: item
             };
 
             localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
@@ -73,7 +83,7 @@
         history_cursor -= 1;
         const parsed = histories[history_cursor];
         if (!parsed) return;
-        console.log("UNDO ", parsed);
+        console.log('UNDO ', parsed);
         console.log(histories);
 
         components = parsed.components;
@@ -87,7 +97,7 @@
         if (history_cursor >= histories.length) return;
         history_cursor += 1;
         const parsed = histories[history_cursor];
-        console.log("REDO ", parsed);
+        console.log('REDO ', parsed);
         console.log(histories);
         if (!parsed) return;
 
@@ -112,11 +122,11 @@
     }
 
     function updateAutoSave() {
-        localStorage.setItem("data:commands/give/autosave", auto_save.toString());
+        localStorage.setItem('data:commands/give/autosave', auto_save.toString());
     }
 
     function loadAutoSave() {
-        const autosave = localStorage.getItem("data:commands/give/autosave");
+        const autosave = localStorage.getItem('data:commands/give/autosave');
         if (!autosave) return;
         auto_save = Boolean(autosave);
     }
@@ -127,7 +137,7 @@
         const data: GiveCommandData = {
             components: components,
             count: count,
-            item: item,
+            item: item
         };
         histories.push(data);
         histories = histories;
@@ -137,7 +147,7 @@
 
     function deleteBrowser() {
         const bl = confirm(
-            "確認\n\nブラウザに保存されているコマンドのデータを消去し、すべての項目をリセットします。よろしいですか?\n\nこの操作は元に戻せません!",
+            '確認\n\nブラウザに保存されているコマンドのデータを消去し、すべての項目をリセットします。よろしいですか?\n\nこの操作は元に戻せません!'
         );
         if (!bl) return;
         localStorage.removeItem(LOCAL_STORAGE_KEY);
@@ -145,7 +155,6 @@
         count = 1;
         item = null;
         itemId = null;
-        is_food = false;
         histories = [];
         history_cursor = 0;
         saveBrowser();
@@ -169,32 +178,32 @@
 
         saveBrowser();
         if (!item) {
-            command = "アイテムを選択してください";
+            command = 'アイテムを選択してください';
             return;
         }
         if (count < 1) count = 1;
         if (count > 6400) count = 6400;
 
-        output.push("/give", "@s");
+        output.push('/give', '@s');
         let parsed_components: string[] = [];
 
         for (let [k, v] of components.entries()) {
             if (!v) continue;
             const key = k.getId();
             if (isTextData(v)) {
-                if (v != "") {
+                if (v != '') {
                     parsed_components.push(`minecraft:${key}=${JSON.stringify(v)}`);
                 }
                 continue;
             }
             parsed_components.push(`${key}=${v.serialize()}`);
         }
-        const cs = parsed_components.length >= 1 ? `[${parsed_components.join(",")}]` : "";
+        const cs = parsed_components.length >= 1 ? `[${parsed_components.join(',')}]` : '';
 
         output.push(`${item.id}${cs}`);
         output.push(`${count}`);
 
-        command = output.join(" ");
+        command = output.join(' ');
     }
 
     function refreshOutput() {
@@ -209,7 +218,7 @@
         items = data.items
             .sort((a, b) => a.id.length - b.id.length)
             .sort((a, b) => a.id.localeCompare(b.id))
-            .filter((p) => (search ? p.id.split(":")[1].includes(search) : true));
+            .filter((p) => (search ? p.id.split(':')[1].includes(search) : true));
 
         if (items.length >= 1 && itemId != null) {
             itemId = items[0].id;
@@ -252,7 +261,7 @@
                         <Button onclick={refreshOutput}><i class="bi bi-arrow-clockwise"></i> 出力を更新</Button>
                         <Button onclick={copyOutput}>
                             <i class="bi bi-clipboard2"></i>
-                            {copied ? "コピーしました" : "コピー"}
+                            {copied ? 'コピーしました' : 'コピー'}
                         </Button>
                         <Button onclick={deleteBrowser}><i class="bi bi-trash"></i> リセット</Button>
                     </div>
@@ -274,11 +283,11 @@
                     <input type="text" class="input-text" placeholder="検索..." bind:value={search} oninput={refreshSearch} />
                 </div>
                 {#if item}
-                    <Tabs tabs={["基本", "外観", "動作"]}>
+                    <Tabs tabs={['基本', '外観', '動作']}>
                         {#snippet tab({ name }: { name: string })}
                             {#if item}
                                 <div class="components">
-                                    {#if name == "基本"}
+                                    {#if name == '基本'}
                                         <div class="item-ctm component">
                                             <label for="count">数量</label>
                                             <input
@@ -300,14 +309,14 @@
                                                     () => components.get(DataComponentTypes.MAX_STACK_SIZE)?.get()?.getValue(),
                                                     (v) =>
                                                         components.compute(DataComponentTypes.MAX_STACK_SIZE, Boolean(v), (c) =>
-                                                            c.get()?.setValue(v!),
+                                                            c.get()?.setValue(v!)
                                                         )
                                                 }
                                                 id="max-stack-size"
                                                 oninput={updateOutput}
                                             />
                                         </div>
-                                    {:else if name == "外観"}
+                                    {:else if name == '外観'}
                                         <div class="component">
                                             <label for="rarity">レアリティ</label>
                                             <select
@@ -373,7 +382,7 @@
                                                     () => components.get(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE)?.getValue() || null,
                                                     (v) =>
                                                         components.compute(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, v !== null, (c) =>
-                                                            c.setValue(v!),
+                                                            c.setValue(v!)
                                                         )
                                                 }
                                                 onchange={updateOutput}
@@ -403,7 +412,7 @@
                                                 update={refreshOutput}
                                             ></McText>
                                         </div>
-                                    {:else if name == "動作"}
+                                    {:else if name == '動作'}
                                         <div class="item-ctm component">
                                             <label for="damage_resistant">ダメージへの耐性</label>
                                             <div class="child-components">
@@ -429,14 +438,14 @@
                                                                 () => components.getOrPut(DataComponentTypes.DAMAGE_RESISTANT).getTypes() || null,
                                                                 (v) =>
                                                                     components.compute(DataComponentTypes.DAMAGE_RESISTANT, Boolean(v), (c) =>
-                                                                        c.setTypes(v!),
+                                                                        c.setTypes(v!)
                                                                     )
                                                             }
                                                             onchange={refreshOutput}
                                                         >
                                                             <option value={null} disabled>選択してください...</option>
                                                             {#each data.damage_tags as damage_tag}
-                                                                <option value={"#" + damage_tag.id}>#{damage_tag.id}</option>
+                                                                <option value={'#' + damage_tag.id}>#{damage_tag.id}</option>
                                                             {/each}
                                                         </select>
                                                     </div>

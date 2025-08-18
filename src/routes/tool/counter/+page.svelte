@@ -1,6 +1,6 @@
 <script lang="ts">
-    import Container from "$components/Container.svelte";
-    import { onMount } from "svelte";
+    import Container from '$components/Container.svelte';
+    import { onMount } from 'svelte';
     type Counter = {
         count: number;
         name: string;
@@ -9,10 +9,10 @@
     let counters: Counter[] = $state([]);
 
     function save() {
-        localStorage.setItem("counter", JSON.stringify(counters));
+        localStorage.setItem('counter', JSON.stringify(counters));
     }
     function load() {
-        const strCount = localStorage.getItem("counter");
+        const strCount = localStorage.getItem('counter');
         if (!strCount) return;
         counters = JSON.parse(strCount);
     }
@@ -27,7 +27,7 @@
     function add_counter() {
         counters.push({
             count: 0,
-            name: "",
+            name: ''
         });
         counters = counters;
         save();
@@ -112,7 +112,7 @@
     .count {
         font-size: 100px;
         text-align: center;
-        font-family: "Share Tech Mono", monospace;
+        font-family: 'Share Tech Mono', monospace;
     }
     .cn {
         text-align: center;

@@ -1,31 +1,31 @@
 <script>
-    import Container from "$components/Container.svelte";
-    import { LoremIpsum } from "lorem-ipsum";
-    import { onMount } from "svelte";
+    import Container from '$components/Container.svelte';
+    import { LoremIpsum } from 'lorem-ipsum';
+    import { onMount } from 'svelte';
 
-    let output = $state("");
+    let output = $state('');
     let amount = $state(1);
-    let type = $state("paragraph");
+    let type = $state('paragraph');
     const lorem = new LoremIpsum({
         sentencesPerParagraph: {
             max: 8,
-            min: 4,
+            min: 4
         },
         wordsPerSentence: {
             max: 16,
-            min: 4,
-        },
+            min: 4
+        }
     });
 
     function gen() {
         switch (type) {
-            case "word":
+            case 'word':
                 output = lorem.generateWords(amount);
                 break;
-            case "paragraph":
+            case 'paragraph':
                 output = lorem.generateParagraphs(amount);
                 break;
-            case "sentence":
+            case 'sentence':
                 output = lorem.generateSentences(amount);
                 break;
         }
@@ -80,7 +80,7 @@
         margin-left: auto;
         width: 50%;
     }
-    input[type="number"] {
+    input[type='number'] {
         text-align: end;
     }
     select {

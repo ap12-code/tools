@@ -1,8 +1,8 @@
 <script lang="ts">
-    import Container from "$components/Container.svelte";
-    let mcid = $state("");
+    import Container from '$components/Container.svelte';
+    let mcid = $state('');
     let result: Record<string, any> = $state({
-        players: {},
+        players: {}
     });
     let error = $state(false);
     let processing = $state(false);
@@ -13,13 +13,13 @@
         has_result = false;
         error = false;
         const resp = await fetch(`/tool/mcid/lookup`, {
-            method: "POST",
+            method: 'POST',
             body: JSON.stringify({
-                mcid: mcid,
+                mcid: mcid
             }),
             headers: {
-                "Content-Type": "application/json",
-            },
+                'Content-Type': 'application/json'
+            }
         });
 
         if (resp.ok) {
@@ -68,15 +68,15 @@
     .result {
         display: flex;
         gap: 10px;
-        background-image: url("/light_dirt_background.png");
+        background-image: url('/light_dirt_background.png');
         background-size: 40px;
         padding: 10px;
     }
     .result * {
-        font-family: "unifont";
+        font-family: 'unifont';
     }
     .result .name {
-        font-family: "unifont";
+        font-family: 'unifont';
         font-size: 20px;
         margin: 10px 0;
         display: block;

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Container from "$components/Container.svelte";
+    import Container from '$components/Container.svelte';
 </script>
 
 <Container>
@@ -7,7 +7,16 @@
     <hr />
     <h2>更新履歴</h2>
     <div class="version">
-        <h3>v1.5.0 (現行)</h3>
+        <h3>v1.5.1 (現行)</h3>
+        <p>パスワードジェネレータへの新機能追加とバグ修正</p>
+        <ul>
+            <li>(パスワードジェネレータ)自動で再生成するかのスイッチを追加</li>
+            <li>(パスワードジェネレータ)チェックボックスの表示に関する不具合を修正</li>
+            <li>(パスワードジェネレータ)セキュリティ上の理由からcryptoを使用するように</li>
+        </ul>
+    </div>
+    <div class="version">
+        <h3>v1.5.0</h3>
         <p>大幅アップデート</p>
         <ul>
             <li>カテゴリを整理</li>
@@ -73,7 +82,7 @@
         margin: 10px 0;
     }
     .version > h3 {
-        font-family: "Noto Sans";
+        font-family: 'Noto Sans';
         margin: 0;
     }
     .version > p {

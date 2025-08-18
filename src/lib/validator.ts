@@ -1,4 +1,4 @@
-import { ActionResult } from "$lib/action_result";
+import { ActionResult } from '$lib/action_result';
 
 export type NumberRange = {
     min?: number;

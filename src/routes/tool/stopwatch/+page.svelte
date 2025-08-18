@@ -1,6 +1,6 @@
 <script lang="ts">
-    import Container from "$components/Container.svelte";
-    import { onMount } from "svelte";
+    import Container from '$components/Container.svelte';
+    import { onMount } from 'svelte';
     type Stopwatch = {
         time: number;
         name: string;
@@ -14,10 +14,10 @@
         for (let w of stopwatches) {
             w.saved_at = new Date();
         }
-        localStorage.setItem("stopwatch", JSON.stringify(stopwatches));
+        localStorage.setItem('stopwatch', JSON.stringify(stopwatches));
     }
     function load() {
-        const strCount = localStorage.getItem("stopwatch");
+        const strCount = localStorage.getItem('stopwatch');
         if (!strCount) {
             save();
             return;
@@ -50,16 +50,16 @@
         save();
     }
     const floor = Math.floor;
-    const pad = (v: number, l: number) => v.toString().padStart(l, "0");
+    const pad = (v: number, l: number) => v.toString().padStart(l, '0');
     function parse(val: number): string {
         return `${pad(floor(val / 1000 / 60 / 60), 2)}:${pad(floor((val / 1000 / 60) % 60), 2)}:${pad(floor(((val / 1000) % 60) % 60), 2)}.${pad(floor((val % 1000) / 10), 2)}`;
     }
     function create() {
         stopwatches.push({
             time: 0,
-            name: "",
+            name: '',
             started: false,
-            saved_at: new Date(),
+            saved_at: new Date()
         });
         stopwatches = stopwatches;
         save();
@@ -145,7 +145,7 @@
     .count {
         font-size: max(5vw, 60px);
         text-align: center;
-        font-family: "Share Tech Mono", monospace;
+        font-family: 'Share Tech Mono', monospace;
     }
     .cn {
         text-align: center;

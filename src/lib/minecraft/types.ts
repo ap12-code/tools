@@ -1,4 +1,4 @@
-import type { ComponentMap } from "$lib/minecraft/components/index.svelte";
+import type { ComponentMap } from '$lib/minecraft/components/index.svelte';
 
 export type Nullable<T> = T | null | undefined;
 export type TrueOrNull = undefined | null | {};
@@ -37,7 +37,7 @@ export type TextObject = {
     click_event?: Nullable<TextClickEvent>;
     hover_event?: Nullable<TextHoverEvent>;
 };
-export type TextArray = TextObject[]
+export type TextArray = TextObject[];
 export type TextData = TextArray | TextObject | string;
 
 export type Item = {

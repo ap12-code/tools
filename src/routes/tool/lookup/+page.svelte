@@ -1,20 +1,20 @@
 <script lang="ts">
-    import Container from "$components/Container.svelte";
-    let ip = $state("");
-    let dig_param = $state("ANY");
-    let result = $state("");
+    import Container from '$components/Container.svelte';
+    let ip = $state('');
+    let dig_param = $state('ANY');
+    let result = $state('');
     let error = $state(false);
 
     const dig_params = {
-        A: "Aレコード - ホストアドレス",
-        ANY: "ANY - 全て",
-        CNAME: "CNAMEレコード - CNAMEレコード情報",
-        MX: "MXレコード - メールサーバー",
-        NS: "NSレコード - DNSサーバー",
-        SOA: "SOAレコード - 管理情報",
-        HINFO: "HINFO - ホスト情報",
-        AXFR: "AXFR - ゾーン転送情報",
-        TXT: "TXTレコード - TXTレコード情報",
+        A: 'Aレコード - ホストアドレス',
+        ANY: 'ANY - 全て',
+        CNAME: 'CNAMEレコード - CNAMEレコード情報',
+        MX: 'MXレコード - メールサーバー',
+        NS: 'NSレコード - DNSサーバー',
+        SOA: 'SOAレコード - 管理情報',
+        HINFO: 'HINFO - ホスト情報',
+        AXFR: 'AXFR - ゾーン転送情報',
+        TXT: 'TXTレコード - TXTレコード情報'
     };
 
     async function run(t: string) {
@@ -22,12 +22,12 @@
         const resp = await fetch(`/tool/lookup/${t}`, {
             body: JSON.stringify({
                 address: ip,
-                param: dig_param,
+                param: dig_param
             }),
-            method: "POST",
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json",
-            },
+                'Content-Type': 'application/json'
+            }
         });
 
         if (resp.ok) {
@@ -56,8 +56,8 @@
         </div>
         <div>
             <p>実行</p>
-            <button onclick={(_) => run("dig")}>dig実行</button>
-            <button onclick={(_) => run("nslookup")}>nslookup実行</button>
+            <button onclick={(_) => run('dig')}>dig実行</button>
+            <button onclick={(_) => run('nslookup')}>nslookup実行</button>
         </div>
     </div>
     <hr />

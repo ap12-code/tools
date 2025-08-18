@@ -1,20 +1,20 @@
-import net from "net";
-import { Buffer } from "node:buffer";
-import varint from "varint";
+import net from 'net';
+import { Buffer } from 'node:buffer';
+import varint from 'varint';
 
 export function getStatus(host: string, port: number): Promise<any> {
     return new Promise((resolve, reject) => {
         const client = new net.Socket();
         let responseDataBuffer = Buffer.alloc(0);
         client.setTimeout(3000);
-        client.on("timeout", () => {
-            reject("Connection Timed out.");
+        client.on('timeout', () => {
+            reject('Connection Timed out.');
             client.end();
         });
-        client.on("error", (err) => {
+        client.on('error', (err) => {
             reject(err);
         });
-        client.on("data", (d) => {
+        client.on('data', (d) => {
             responseDataBuffer = Buffer.concat([responseDataBuffer, d]);
             let responseDataBufferLength: number;
             try {
@@ -33,7 +33,7 @@ export function getStatus(host: string, port: number): Promise<any> {
             offset += varint.decode.bytes!;
 
             try {
-                const response = JSON.parse(responseDataBuffer.toString("utf-8", offset));
+                const response = JSON.parse(responseDataBuffer.toString('utf-8', offset));
 
                 resolve(response);
             } catch (error) {
@@ -42,7 +42,7 @@ export function getStatus(host: string, port: number): Promise<any> {
 
             client.end();
         });
-        client.on("ready", () => {
+        client.on('ready', () => {
             const packetBuffer = Buffer.from([0x00]);
             const protocolBuffer = Buffer.from(varint.encode(765));
             const hostLengthBuffer = Buffer.from(varint.encode(host.length));

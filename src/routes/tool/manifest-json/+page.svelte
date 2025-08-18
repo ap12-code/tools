@@ -1,7 +1,7 @@
 <script lang="ts">
-    import Container from "$components/Container.svelte";
-    import { onMount } from "svelte";
-    let dataVersion = "";
+    import Container from '$components/Container.svelte';
+    import { onMount } from 'svelte';
+    let dataVersion = '';
     type Module = {
         description: string;
         type: string;
@@ -9,37 +9,37 @@
         version: string;
     };
 
-    const MODULE_TYPES = ["resources", "data", "script", "world_template"];
+    const MODULE_TYPES = ['resources', 'data', 'script', 'world_template'];
     const LICENSE_TYPES = {
-        "The Unlicense": "",
-        "MIT License": "MIT",
-        "GNU AGPLv3": "AGPLv3",
-        "GNU GPLv3": "GPLv3",
-        "GNU LGPLv3": "LGPLv3",
-        "Mozilla Public License 2.0": "MPL2.0",
-        "Apache License 2.0": "Apache2.0",
+        'The Unlicense': '',
+        'MIT License': 'MIT',
+        'GNU AGPLv3': 'AGPLv3',
+        'GNU GPLv3': 'GPLv3',
+        'GNU LGPLv3': 'LGPLv3',
+        'Mozilla Public License 2.0': 'MPL2.0',
+        'Apache License 2.0': 'Apache2.0'
     };
 
     let modules: Module[] = $state([]);
     let output = $state({
         format_version: 2,
         header: {
-            name: "",
-            description: "",
+            name: '',
+            description: '',
             uuid: crypto.randomUUID(),
-            version: "0.1.0",
-            min_engine_version: "1.21.0",
+            version: '0.1.0',
+            min_engine_version: '1.21.0'
         },
         modules: [] as Module[],
         dependencies: [],
         capabilities: [],
         metadata: {
             authors: [],
-            url: "",
-            license: "v1.0",
-        },
+            url: '',
+            license: 'v1.0'
+        }
     });
-    let outJSON = $state("");
+    let outJSON = $state('');
 
     function update() {
         output.modules = modules;
@@ -54,20 +54,20 @@
     function download() {
         const url = URL.createObjectURL(
             new Blob([outJSON], {
-                type: "text/plain",
-            }),
+                type: 'text/plain'
+            })
         );
-        const element = document.createElement("a");
+        const element = document.createElement('a');
         element.href = url;
-        element.download = "pack.mcmeta";
+        element.download = 'pack.mcmeta';
         element.click();
     }
     function add_module() {
         modules.push({
             description: output.header.description,
-            type: "resources",
+            type: 'resources',
             uuid: crypto.randomUUID(),
-            version: "",
+            version: ''
         });
         modules = modules;
         update();

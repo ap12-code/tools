@@ -1,13 +1,13 @@
 <script lang="ts">
-    import { afterNavigate } from "$app/navigation";
-    import { page } from "$app/stores";
-    import "./global.css";
-    import { onMount } from "svelte";
-    import { tools } from "$lib/tools.json";
-    import _ from "lodash";
-    import { dev } from "$app/environment";
+    import { afterNavigate } from '$app/navigation';
+    import { page } from '$app/stores';
+    import './global.css';
+    import { onMount } from 'svelte';
+    import { tools } from '$lib/tools.json';
+    import _ from 'lodash';
+    import { dev } from '$app/environment';
     interface Props {
-        children?: import("svelte").Snippet;
+        children?: import('svelte').Snippet;
     }
 
     let { children }: Props = $props();
@@ -23,7 +23,7 @@
     let data: Category = $state(tools);
     let favorites: Tools = $state([]);
 
-    let sel = "...";
+    let sel = '...';
     function switchSidebar() {
         shown_sidebar = !shown_sidebar;
         save();
@@ -32,7 +32,7 @@
         if (favorites.findIndex((p) => p.name == tool.name) != -1) {
             favorites.splice(
                 favorites.findIndex((p) => p.name == tool.name),
-                1,
+                1
             );
         } else {
             favorites.push(tool);
@@ -45,24 +45,24 @@
         save();
     }
     function save() {
-        window.localStorage.setItem("shown_sidebar", shown_sidebar.toString());
+        window.localStorage.setItem('shown_sidebar', shown_sidebar.toString());
         let parsed: CategorySaved = [];
         for (let i = 0; i < data.length; i++) {
             parsed[i] = { collapsed: data[i].collapsed };
         }
-        window.localStorage.setItem("sidebar_data", JSON.stringify(parsed));
-        window.localStorage.setItem("sidebar_favorites", JSON.stringify(favorites));
+        window.localStorage.setItem('sidebar_data', JSON.stringify(parsed));
+        window.localStorage.setItem('sidebar_favorites', JSON.stringify(favorites));
     }
     function load() {
-        shown_sidebar = window.localStorage.getItem("shown_sidebar") == "true";
-        const data2 = window.localStorage.getItem("sidebar_data");
+        shown_sidebar = window.localStorage.getItem('shown_sidebar') == 'true';
+        const data2 = window.localStorage.getItem('sidebar_data');
         if (data2) {
             const parsed = JSON.parse(data2) as CategorySaved;
             for (let i = 0; i < data.length; i++) {
                 data[i].collapsed = parsed[i].collapsed;
             }
         }
-        const rawFavorites = window.localStorage.getItem("sidebar_favorites");
+        const rawFavorites = window.localStorage.getItem('sidebar_favorites');
         if (rawFavorites) {
             favorites = JSON.parse(rawFavorites) as Tools;
         }
@@ -85,9 +85,9 @@
                 </div>
                 <div class="sidebar-header">
                     <img src="/favicon.png" alt="logo" class="sidebar-logo" />
-                    <a href="/" class:back={$page.url.pathname != "/"}>ToolBox</a>
+                    <a href="/" class:back={$page.url.pathname != '/'}>ToolBox</a>
                 </div>
-                <a class:selected={$page.url.pathname == "/"} class="sidebar-button" href="/">ホーム</a>
+                <a class:selected={$page.url.pathname == '/'} class="sidebar-button" href="/">ホーム</a>
                 {#each favorites as t}
                     <div class="tool">
                         <a class:selected={$page.url.pathname == t.href} class="sidebar-button" href={t.href}>
@@ -149,7 +149,7 @@
         </div>
         {@render children?.()}
 
-        {#if $page.url.pathname == "/"}
+        {#if $page.url.pathname == '/'}
             <div class="footer">
                 <span>
                     &copy;2025 ap12<br />

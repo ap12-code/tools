@@ -1,7 +1,7 @@
-import type { Consumer } from "$lib/functions";
-import { SvelteMap } from "svelte/reactivity";
-import { Rarity, DamageResistant, Food, TooltipDisplay } from "$lib/minecraft/components/1.21.8";
-import { BooleanComponent, ComponentText, NumberComponent } from "$lib/minecraft/components/common";
+import type { Consumer } from '$lib/functions';
+import { SvelteMap } from 'svelte/reactivity';
+import { Rarity, DamageResistant, Food, TooltipDisplay } from '$lib/minecraft/components/1.21.8';
+import { BooleanComponent, ComponentText, NumberComponent } from '$lib/minecraft/components/common';
 
 export abstract class Component<T> {
     public abstract serialize(): string;
@@ -39,15 +39,15 @@ export class ComponentType<T> {
 export class DataComponentTypes {
     public static KEYS: Record<string, ComponentType<any>> = {};
 
-    public static readonly MAX_STACK_SIZE = DataComponentTypes.register(ComponentType.of("minecraft:max_stack_size", new NumberComponent()));
-    public static readonly RARITY = DataComponentTypes.register(ComponentType.of("minecraft:rarity", new Rarity()));
-    public static readonly TOOLTIP_DISPLAY = DataComponentTypes.register(ComponentType.of("minecraft:tooltip_display", new TooltipDisplay()));
-    public static readonly CUSTOM_NAME = DataComponentTypes.register(ComponentType.of("minecraft:custom_name", new ComponentText()));
-    public static readonly ITEM_NAME = DataComponentTypes.register(ComponentType.of("minecraft:item_name", new ComponentText()));
-    public static readonly DAMAGE_RESISTANT = DataComponentTypes.register(ComponentType.of("minecraft:damage_resistant", new DamageResistant()));
-    public static readonly FOOD = DataComponentTypes.register(ComponentType.of("minecraft:food", new Food()));
+    public static readonly MAX_STACK_SIZE = DataComponentTypes.register(ComponentType.of('minecraft:max_stack_size', new NumberComponent()));
+    public static readonly RARITY = DataComponentTypes.register(ComponentType.of('minecraft:rarity', new Rarity()));
+    public static readonly TOOLTIP_DISPLAY = DataComponentTypes.register(ComponentType.of('minecraft:tooltip_display', new TooltipDisplay()));
+    public static readonly CUSTOM_NAME = DataComponentTypes.register(ComponentType.of('minecraft:custom_name', new ComponentText()));
+    public static readonly ITEM_NAME = DataComponentTypes.register(ComponentType.of('minecraft:item_name', new ComponentText()));
+    public static readonly DAMAGE_RESISTANT = DataComponentTypes.register(ComponentType.of('minecraft:damage_resistant', new DamageResistant()));
+    public static readonly FOOD = DataComponentTypes.register(ComponentType.of('minecraft:food', new Food()));
     public static readonly ENCHANTMENT_GLINT_OVERRIDE = DataComponentTypes.register(
-        ComponentType.of("minecraft:enchantment_glint_override", new BooleanComponent())
+        ComponentType.of('minecraft:enchantment_glint_override', new BooleanComponent())
     );
 
     public static register<T>(type: ComponentType<T>) {

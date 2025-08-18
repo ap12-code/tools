@@ -1,14 +1,14 @@
 <script lang="ts">
-    import Container from "$components/Container.svelte";
-    import { page } from "$app/stores";
+    import Container from '$components/Container.svelte';
+    import { page } from '$app/state';
 </script>
 
 <Container show_back={false}>
-    <h1>エラーだよ!</h1>
-    <span>コード: {$page.status}</span>
+    <h1>申し訳ございません。エラーが発生しました</h1>
+    <span>エラーコード: {page.status}</span>
     <hr />
     <p>
-        {$page.error?.message}
+        {page.error?.message}
     </p>
     <a href="/">ホームに戻る</a>
 </Container>

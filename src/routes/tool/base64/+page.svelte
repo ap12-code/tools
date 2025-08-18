@@ -1,9 +1,9 @@
 <script>
-    import Container from "$components/Container.svelte";
-    import { encode, decode } from "js-base64";
+    import Container from '$components/Container.svelte';
+    import { encode, decode } from 'js-base64';
 
-    let plain = $state("");
-    let base64 = $state("");
+    let plain = $state('');
+    let base64 = $state('');
 
     function changePlain() {
         base64 = encode(plain);

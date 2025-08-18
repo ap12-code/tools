@@ -93,7 +93,7 @@ export class StringReader {
     }
 
     public readStringUntil(terminator: string): string {
-        let result = "";
+        let result = '';
         while (this.canRead()) {
             let c = this.read();
             if (c == terminator) {

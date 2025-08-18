@@ -1,13 +1,13 @@
-import { Component } from "../index.svelte";
+import { Component } from '../index.svelte';
 
 export class DamageResistant implements Component<DamageResistant> {
-    private types: string = "";
+    private types: string = '';
 
     public constructor() {}
 
     public serialize(): string {
         return JSON.stringify({
-            types: this.types,
+            types: this.types
         });
     }
     public deserialize(value: string): Component<DamageResistant> {

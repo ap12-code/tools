@@ -1,25 +1,24 @@
 <script lang="ts">
-    import Container from "$components/Container.svelte";
-    import moment from "moment";
-    import { onMount } from "svelte";
+    import Container from '$components/Container.svelte';
+    import moment from 'moment';
+    import { onMount } from 'svelte';
 
-    let texts: string[] = $state([""]);
+    let texts: string[] = $state(['']);
     let avgTimes: number = $state(0);
-    let avgTimesFormatted = $state("");
+    let avgTimesFormatted = $state('');
     let totalTimes: number = $state(0);
-    let totalTimesFormatted = $state("");
-
+    let totalTimesFormatted = $state('');
 
     function parse(i: string): number {
-        if (i == "") {
+        if (i == '') {
             return 0;
         }
 
-        if (i.split(":").length == 2) {
-            i = "00:" + i;
+        if (i.split(':').length == 2) {
+            i = '00:' + i;
         }
 
-        const ti = moment.duration(i, "seconds");
+        const ti = moment.duration(i, 'seconds');
         if (ti.isValid()) {
             return ti.asSeconds();
         }
@@ -36,13 +35,13 @@
     }
 
     function format(sec: number): string {
-        let ret = "";
+        let ret = '';
 
-        ret += `${Math.floor(sec / 3600)}`.padStart(2, "0");
-        ret += ":";
-        ret += `${Math.floor((sec % 3600) / 60)}`.padStart(2, "0");
-        ret += ":";
-        ret += `${Math.floor((sec % 3600) % 60)}`.padStart(2, "0");
+        ret += `${Math.floor(sec / 3600)}`.padStart(2, '0');
+        ret += ':';
+        ret += `${Math.floor((sec % 3600) / 60)}`.padStart(2, '0');
+        ret += ':';
+        ret += `${Math.floor((sec % 3600) % 60)}`.padStart(2, '0');
         ret += `${decimalPart((sec % 3600) % 60, 2).slice(1)}`;
 
         return ret;
@@ -54,7 +53,7 @@
     }
 
     function avg(times: number[]): number {
-        const elmCount = texts.filter((v) => v != "").length;
+        const elmCount = texts.filter((v) => v != '').length;
         if (elmCount == 0) {
             return 0;
         }
@@ -62,33 +61,33 @@
     }
 
     function clear() {
-        if (confirm("ローカルストレージに保存されたデータを削除し、入力値をクリアします。よろしいですか?")) {
-            localStorage.removeItem("timeavg_times");
-            texts = [""];
+        if (confirm('ローカルストレージに保存されたデータを削除し、入力値をクリアします。よろしいですか?')) {
+            localStorage.removeItem('timeavg_times');
+            texts = [''];
             update();
         }
     }
 
     function update() {
-        const parsed = texts.map(parse)
+        const parsed = texts.map(parse);
         avgTimes = avg(parsed);
-        totalTimes = sum(parsed)
+        totalTimes = sum(parsed);
 
-        texts = texts.filter((v, i) => !(i != 0 && v == ""));
-        if (texts[texts.length - 1] != "") {
-            texts.push("");
+        texts = texts.filter((v, i) => !(i != 0 && v == ''));
+        if (texts[texts.length - 1] != '') {
+            texts.push('');
         }
         avgTimesFormatted = format(avgTimes);
-        totalTimesFormatted = format(totalTimes)
+        totalTimesFormatted = format(totalTimes);
 
-        localStorage.setItem("timeavg_times", JSON.stringify(texts));
+        localStorage.setItem('timeavg_times', JSON.stringify(texts));
     }
 
     onMount(() => {
-        const storage = localStorage.getItem("timeavg_times");
+        const storage = localStorage.getItem('timeavg_times');
         if (storage) {
             texts = JSON.parse(storage);
-            update()
+            update();
         }
     });
     avgTimesFormatted = format(0);

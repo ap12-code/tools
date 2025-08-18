@@ -1,4 +1,4 @@
-import type { TextObject, TextData } from "./minecraft/types";
+import type { TextObject, TextData } from './minecraft/types';
 
 export function isTextObject(val: any): val is TextObject {
     return val.text != undefined;
@@ -26,19 +26,19 @@ export function enumerate<T>(data: T[]): [number, T][] {
 }
 
 export function splitAll(text: string, sep: string[]): Record<string, string> {
-    let buf = "";
+    let buf = '';
     let ret: Record<string, string> = {};
 
-    for (const c of text.split("")) {
+    for (const c of text.split('')) {
         if (sep.includes(c)) {
             ret[c] = buf;
-            buf = "";
+            buf = '';
         } else {
             buf += c;
         }
     }
 
-    ret["一"] = buf;
+    ret['一'] = buf;
     return ret;
 }
 

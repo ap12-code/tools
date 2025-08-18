@@ -1,14 +1,20 @@
-import { error, type RequestHandler } from "@sveltejs/kit";
-import sharp from "sharp"
+import { error, type RequestHandler } from '@sveltejs/kit';
+import sharp from 'sharp';
 
 export const POST: RequestHandler = async ({ request, url }) => {
-    const to_ext = url.searchParams.get("to")
+    const to_ext = url.searchParams.get('to');
     if (!to_ext) error(400);
-    const ext_enum = to_ext as keyof sharp.FormatEnum
-    const stream = await request.formData()
-    const file = stream.get("uploadfile")
+    const ext_enum = to_ext as keyof sharp.FormatEnum;
+    const stream = await request.formData();
+    const file = stream.get('uploadfile');
     if (!file || !(file instanceof File)) error(400);
-    const ctx = sharp(await file.arrayBuffer())
 
-    return new Response(await ctx.toFormat(ext_enum).toBuffer(), {headers: {"Access-Control-Allow-Origin": "*"}});
+    const ctx = sharp(await file.arrayBuffer());
+
+    const buf = await ctx.toFormat(ext_enum).toBuffer().catch((err) => {
+        error(500, 'Failed to convert image');
+    });
+    if (!buf) error(500);
+
+    return new Response(Buffer.from(buf), { headers: { 'Access-Control-Allow-Origin': '*' } });
 };

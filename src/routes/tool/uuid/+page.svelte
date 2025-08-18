@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Container from "$components/Container.svelte";
+    import Container from '$components/Container.svelte';
 
     let amount = $state(4);
     let noph = $state(false);
@@ -11,7 +11,7 @@
         for (let i = 0; i < amount; i++) {
             let uuid: string = crypto.randomUUID();
             if (noph) {
-                uuid = uuid.replace(/-/g, "");
+                uuid = uuid.replace(/-/g, '');
             }
             if (useupper) {
                 uuid = uuid.toUpperCase();
@@ -86,9 +86,9 @@
         place-content: center;
         color: #000;
         height: 100%;
-        font-family: "bootstrap-icons";
+        font-family: 'bootstrap-icons';
         font-size: 18px;
-        content: "\F633";
+        content: '\F633';
     }
     .checkbox:focus-visible {
         outline: none;
@@ -133,7 +133,7 @@
         margin: 20px 0;
         border-color: #666;
     }
-    input[type="text"] {
+    input[type='text'] {
         width: 100%;
         padding: 5px;
         background-color: #222;

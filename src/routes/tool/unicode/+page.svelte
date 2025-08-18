@@ -1,32 +1,32 @@
 <script>
-    import Container from "$components/Container.svelte";
+    import Container from '$components/Container.svelte';
 
-    let plain = $state("");
-    let unicode = $state("");
+    let plain = $state('');
+    let unicode = $state('');
 
     function changePlain() {
-        unicode = "";
-        for (let c of plain.split("")) {
+        unicode = '';
+        for (let c of plain.split('')) {
             let cn = c.codePointAt(0);
             if (cn) {
-                let cr = cn.toString(16).padStart(4, "0");
+                let cr = cn.toString(16).padStart(4, '0');
                 unicode += `\\u${cr}`;
             } else {
-                unicode = "変換エラー";
+                unicode = '変換エラー';
                 return;
             }
         }
     }
     function changeUnicode() {
-        plain = "";
-        for (let c of unicode.split("\\u")) {
+        plain = '';
+        for (let c of unicode.split('\\u')) {
             if (!c) continue;
             let cn = parseInt(c, 16);
             if (cn) {
                 let cr = String.fromCodePoint(cn);
                 plain += `${cr}`;
             } else {
-                plain = "変換エラー";
+                plain = '変換エラー';
                 return;
             }
         }

@@ -1,6 +1,6 @@
 <script>
-    import Container from "$components/Container.svelte";
-    import { commands } from "$lib/commands.json";
+    import Container from '$components/Container.svelte';
+    import { commands } from '$lib/commands.json';
 </script>
 
 <Container>

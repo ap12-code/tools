@@ -1,33 +1,33 @@
 <script lang="ts">
-    import Container from "$components/Container.svelte";
+    import Container from '$components/Container.svelte';
 
     let files: FileList | undefined = $state();
-    let to_ext = $state("png");
+    let to_ext = $state('png');
     let has_result = $state(false);
     let processing = $state(false);
     let err = $state(false);
     let imgSrc: string[] = $state([]);
 
     const IMG_FORMATS = [
-        "heic",
-        "heif",
-        "avif",
-        "jpeg",
-        "jpg",
-        "jpe",
-        "tile",
-        "dz",
-        "png",
-        "raw",
-        "tiff",
-        "tif",
-        "webp",
-        "gif",
-        "jp2",
-        "jpx",
-        "j2k",
-        "j2c",
-        "jxl",
+        'heic',
+        'heif',
+        'avif',
+        'jpeg',
+        'jpg',
+        'jpe',
+        'tile',
+        'dz',
+        'png',
+        'raw',
+        'tiff',
+        'tif',
+        'webp',
+        'gif',
+        'jp2',
+        'jpx',
+        'j2k',
+        'j2c',
+        'jxl'
     ];
 
     async function run() {
@@ -38,10 +38,10 @@
         imgSrc = [];
         for (let file of files) {
             const fd = new FormData();
-            fd.append("uploadfile", file);
+            fd.append('uploadfile', file);
             const resp = await fetch(`/tool/image/convert?to=${to_ext}`, {
                 body: fd,
-                method: "POST",
+                method: 'POST'
             });
             if (resp.ok) {
                 imgSrc.push(URL.createObjectURL(await resp.blob()));
@@ -54,7 +54,7 @@
     }
 
     function download() {
-        const a = document.createElement("a");
+        const a = document.createElement('a');
         for (const imgSr of imgSrc) {
             a.href = imgSr;
             a.download = `${crypto.randomUUID()}.${to_ext}`;

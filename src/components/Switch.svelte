@@ -1,23 +1,23 @@
 <script lang="ts">
-    import { createEventDispatcher } from "svelte";
+    import { createEventDispatcher } from 'svelte';
 
     interface Props {
         name?: string;
         value?: boolean;
     }
 
-    let { name = "", value = $bindable(false) }: Props = $props();
+    let { name = '', value = $bindable(false) }: Props = $props();
 
     const dispatch = createEventDispatcher();
     function update() {
-        dispatch("input")
+        dispatch('input');
     }
 </script>
 
 <div class="toggleWapper">
     <label class="toggle-button">
         {name}
-        <input type="checkbox" bind:checked={value} onchange={update}>
+        <input type="checkbox" bind:checked={value} onchange={update} />
     </label>
 </div>
 
@@ -31,7 +31,7 @@
         border: 2px solid #666;
         box-sizing: content-box;
         cursor: pointer;
-        transition: border-color .4s;
+        transition: border-color 0.4s;
     }
 
     .toggle-button:has(:global(:checked)) {
@@ -48,7 +48,7 @@
         border-radius: 50%;
         background-color: #666;
         content: '';
-        transition: left .4s;
+        transition: left 0.4s;
     }
 
     .toggle-button:has(:global(:checked))::after {
@@ -59,5 +59,4 @@
     .toggle-button input {
         display: none;
     }
-
 </style>

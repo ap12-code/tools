@@ -1,27 +1,27 @@
 <script lang="ts">
-    import Container from "$components/Container.svelte";
-    import nerdamer from "nerdamer-prime";
-    import katex from "katex";
-    import "katex/dist/katex.css";
-    import Button from "$components/Button.svelte";
+    import Container from '$components/Container.svelte';
+    import nerdamer from 'nerdamer-prime';
+    import katex from 'katex';
+    import 'katex/dist/katex.css';
+    import Button from '$components/Button.svelte';
 
-    let plain = $state("");
+    let plain = $state('');
     let output: nerdamer.Expression | null = $state(null);
-    let out2 = "";
+    let out2 = '';
 
     function update() {
         nerdamer.clearVars();
         output = nerdamer(plain);
-        const element = document.getElementById("math");
+        const element = document.getElementById('math');
         if (!element) return;
         katex.render(nerdamer.convertToLaTeX(plain), element, {
-            throwOnError: false,
+            throwOnError: false
         });
     }
 
     function solve() {
         if (!output) return;
-        const element = document.getElementById("math");
+        const element = document.getElementById('math');
         if (!element) return;
         output = output.evaluate();
         plain = output.text();

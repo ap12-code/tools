@@ -1,16 +1,16 @@
 <script>
-    import Container from "$components/Container.svelte";
+    import Container from '$components/Container.svelte';
 
-    let plain = $state("");
-    let html = $state("");
+    let plain = $state('');
+    let html = $state('');
 
     function changePlain() {
-        const textArea = document.createElement("textarea");
+        const textArea = document.createElement('textarea');
         textArea.innerHTML = plain;
         html = textArea.innerHTML;
     }
     function changeHTML() {
-        const textArea = document.createElement("textarea");
+        const textArea = document.createElement('textarea');
         textArea.innerHTML = html;
         plain = textArea.value;
     }

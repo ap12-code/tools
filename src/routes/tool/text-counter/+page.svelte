@@ -1,13 +1,22 @@
 <script>
-    import Container from "$components/Container.svelte";
+    import Button from '$components/Button.svelte';
+    import Container from '$components/Container.svelte';
 
-    let output = $state("")
-    let amount = $state(0)
+    let output = $state('');
+    let amount = $state(0);
+    let copy_state = $state('コピー');
 
     function update() {
-        amount = Array.from(output).length
+        amount = Array.from(output).length;
+    }
+
+    function copy() {
+        navigator.clipboard.writeText(amount.toString());
+        copy_state = 'コピーしました';
+        setTimeout(() => (copy_state = 'コピー'), 1000);
     }
 </script>
+
 <Container>
     <h1>文字数カウンタ</h1>
     <hr />
@@ -15,7 +24,8 @@
         <div class="controls">
             <div class="control-item">
                 <label for="amount">文字数</label>
-                <input readonly bind:value={amount} type="number" id="amount">
+                <input readonly bind:value={amount} type="number" id="amount" />
+                <Button onclick={copy}>{copy_state}</Button>
             </div>
         </div>
         <div>
@@ -35,8 +45,9 @@
         display: flex;
         align-items: center;
         width: 100%;
+        gap: 10px;
     }
-    .control-item > input[type="number"] {
+    .control-item > input[type='number'] {
         margin-left: auto;
         width: 50%;
         text-align: end;
@@ -63,7 +74,6 @@
         border: #666 1px solid;
         border-radius: 5px;
         color: #fff;
-        height: 24px;
     }
     hr {
         margin: 20px 0;

@@ -1,253 +1,253 @@
 {
-  "version": "1.21.8",
-  "entries": [
-    {
-      "id": "minecraft:cramming"
-    },
-    {
-      "id": "minecraft:trident"
-    },
-    {
-      "id": "minecraft:sting"
-    },
-    {
-      "id": "minecraft:thrown"
-    },
-    {
-      "id": "minecraft:hot_floor"
-    },
-    {
-      "id": "minecraft:player_attack"
-    },
-    {
-      "id": "minecraft:sonic_boom"
-    },
-    {
-      "id": "minecraft:mob_attack_no_aggro"
-    },
-    {
-      "id": "minecraft:fireball"
-    },
-    {
-      "id": "minecraft:player_explosion"
-    },
-    {
-      "id": "minecraft:falling_stalactite"
-    },
-    {
-      "id": "minecraft:bad_respawn_point"
-    },
-    {
-      "id": "minecraft:generic_kill"
-    },
-    {
-      "id": "minecraft:arrow"
-    },
-    {
-      "id": "minecraft:sweet_berry_bush"
-    },
-    {
-      "id": "minecraft:dragon_breath"
-    },
-    {
-      "id": "minecraft:fly_into_wall"
-    },
-    {
-      "id": "minecraft:ender_pearl"
-    },
-    {
-      "id": "minecraft:out_of_world"
-    },
-    {
-      "id": "minecraft:drown"
-    },
-    {
-      "id": "minecraft:dry_out"
-    },
-    {
-      "id": "minecraft:wither"
-    },
-    {
-      "id": "minecraft:spit"
-    },
-    {
-      "id": "minecraft:explosion"
-    },
-    {
-      "id": "minecraft:falling_block"
-    },
-    {
-      "id": "minecraft:outside_border"
-    },
-    {
-      "id": "minecraft:generic"
-    },
-    {
-      "id": "minecraft:indirect_magic"
-    },
-    {
-      "id": "minecraft:wither_skull"
-    },
-    {
-      "id": "minecraft:on_fire"
-    },
-    {
-      "id": "minecraft:lava"
-    },
-    {
-      "id": "minecraft:mace_smash"
-    },
-    {
-      "id": "minecraft:campfire"
-    },
-    {
-      "id": "minecraft:unattributed_fireball"
-    },
-    {
-      "id": "minecraft:wind_charge"
-    },
-    {
-      "id": "minecraft:stalagmite"
-    },
-    {
-      "id": "minecraft:in_fire"
-    },
-    {
-      "id": "minecraft:magic"
-    },
-    {
-      "id": "minecraft:mob_attack"
-    },
-    {
-      "id": "minecraft:freeze"
-    },
-    {
-      "id": "minecraft:cactus"
-    },
-    {
-      "id": "minecraft:starve"
-    },
-    {
-      "id": "minecraft:fireworks"
-    },
-    {
-      "id": "minecraft:fall"
-    },
-    {
-      "id": "minecraft:falling_anvil"
-    },
-    {
-      "id": "minecraft:in_wall"
-    },
-    {
-      "id": "minecraft:lightning_bolt"
-    },
-    {
-      "id": "minecraft:thorns"
-    },
-    {
-      "id": "minecraft:mob_projectile"
-    }
-  ],
-  "tags": [
-    {
-      "id": "minecraft:always_hurts_ender_dragons"
-    },
-    {
-      "id": "minecraft:burn_from_stepping"
-    },
-    {
-      "id": "minecraft:is_fire"
-    },
-    {
-      "id": "minecraft:wither_immune_to"
-    },
-    {
-      "id": "minecraft:always_triggers_silverfish"
-    },
-    {
-      "id": "minecraft:panic_environmental_causes"
-    },
-    {
-      "id": "minecraft:bypasses_invulnerability"
-    },
-    {
-      "id": "minecraft:no_knockback"
-    },
-    {
-      "id": "minecraft:avoids_guardian_thorns"
-    },
-    {
-      "id": "minecraft:mace_smash"
-    },
-    {
-      "id": "minecraft:bypasses_shield"
-    },
-    {
-      "id": "minecraft:can_break_armor_stand"
-    },
-    {
-      "id": "minecraft:always_most_significant_fall"
-    },
-    {
-      "id": "minecraft:bypasses_resistance"
-    },
-    {
-      "id": "minecraft:no_anger"
-    },
-    {
-      "id": "minecraft:is_projectile"
-    },
-    {
-      "id": "minecraft:is_freezing"
-    },
-    {
-      "id": "minecraft:is_explosion"
-    },
-    {
-      "id": "minecraft:panic_causes"
-    },
-    {
-      "id": "minecraft:witch_resistant_to"
-    },
-    {
-      "id": "minecraft:ignites_armor_stands"
-    },
-    {
-      "id": "minecraft:is_lightning"
-    },
-    {
-      "id": "minecraft:always_kills_armor_stands"
-    },
-    {
-      "id": "minecraft:burns_armor_stands"
-    },
-    {
-      "id": "minecraft:is_player_attack"
-    },
-    {
-      "id": "minecraft:is_fall"
-    },
-    {
-      "id": "minecraft:is_drowning"
-    },
-    {
-      "id": "minecraft:damages_helmet"
-    },
-    {
-      "id": "minecraft:no_impact"
-    },
-    {
-      "id": "minecraft:bypasses_armor"
-    },
-    {
-      "id": "minecraft:bypasses_enchantments"
-    },
-    {
-      "id": "minecraft:bypasses_wolf_armor"
-    },
-    {
-      "id": "minecraft:bypasses_effects"
-    }
-  ]
+    "version": "1.21.8",
+    "entries": [
+        {
+            "id": "minecraft:cramming"
+        },
+        {
+            "id": "minecraft:trident"
+        },
+        {
+            "id": "minecraft:sting"
+        },
+        {
+            "id": "minecraft:thrown"
+        },
+        {
+            "id": "minecraft:hot_floor"
+        },
+        {
+            "id": "minecraft:player_attack"
+        },
+        {
+            "id": "minecraft:sonic_boom"
+        },
+        {
+            "id": "minecraft:mob_attack_no_aggro"
+        },
+        {
+            "id": "minecraft:fireball"
+        },
+        {
+            "id": "minecraft:player_explosion"
+        },
+        {
+            "id": "minecraft:falling_stalactite"
+        },
+        {
+            "id": "minecraft:bad_respawn_point"
+        },
+        {
+            "id": "minecraft:generic_kill"
+        },
+        {
+            "id": "minecraft:arrow"
+        },
+        {
+            "id": "minecraft:sweet_berry_bush"
+        },
+        {
+            "id": "minecraft:dragon_breath"
+        },
+        {
+            "id": "minecraft:fly_into_wall"
+        },
+        {
+            "id": "minecraft:ender_pearl"
+        },
+        {
+            "id": "minecraft:out_of_world"
+        },
+        {
+            "id": "minecraft:drown"
+        },
+        {
+            "id": "minecraft:dry_out"
+        },
+        {
+            "id": "minecraft:wither"
+        },
+        {
+            "id": "minecraft:spit"
+        },
+        {
+            "id": "minecraft:explosion"
+        },
+        {
+            "id": "minecraft:falling_block"
+        },
+        {
+            "id": "minecraft:outside_border"
+        },
+        {
+            "id": "minecraft:generic"
+        },
+        {
+            "id": "minecraft:indirect_magic"
+        },
+        {
+            "id": "minecraft:wither_skull"
+        },
+        {
+            "id": "minecraft:on_fire"
+        },
+        {
+            "id": "minecraft:lava"
+        },
+        {
+            "id": "minecraft:mace_smash"
+        },
+        {
+            "id": "minecraft:campfire"
+        },
+        {
+            "id": "minecraft:unattributed_fireball"
+        },
+        {
+            "id": "minecraft:wind_charge"
+        },
+        {
+            "id": "minecraft:stalagmite"
+        },
+        {
+            "id": "minecraft:in_fire"
+        },
+        {
+            "id": "minecraft:magic"
+        },
+        {
+            "id": "minecraft:mob_attack"
+        },
+        {
+            "id": "minecraft:freeze"
+        },
+        {
+            "id": "minecraft:cactus"
+        },
+        {
+            "id": "minecraft:starve"
+        },
+        {
+            "id": "minecraft:fireworks"
+        },
+        {
+            "id": "minecraft:fall"
+        },
+        {
+            "id": "minecraft:falling_anvil"
+        },
+        {
+            "id": "minecraft:in_wall"
+        },
+        {
+            "id": "minecraft:lightning_bolt"
+        },
+        {
+            "id": "minecraft:thorns"
+        },
+        {
+            "id": "minecraft:mob_projectile"
+        }
+    ],
+    "tags": [
+        {
+            "id": "minecraft:always_hurts_ender_dragons"
+        },
+        {
+            "id": "minecraft:burn_from_stepping"
+        },
+        {
+            "id": "minecraft:is_fire"
+        },
+        {
+            "id": "minecraft:wither_immune_to"
+        },
+        {
+            "id": "minecraft:always_triggers_silverfish"
+        },
+        {
+            "id": "minecraft:panic_environmental_causes"
+        },
+        {
+            "id": "minecraft:bypasses_invulnerability"
+        },
+        {
+            "id": "minecraft:no_knockback"
+        },
+        {
+            "id": "minecraft:avoids_guardian_thorns"
+        },
+        {
+            "id": "minecraft:mace_smash"
+        },
+        {
+            "id": "minecraft:bypasses_shield"
+        },
+        {
+            "id": "minecraft:can_break_armor_stand"
+        },
+        {
+            "id": "minecraft:always_most_significant_fall"
+        },
+        {
+            "id": "minecraft:bypasses_resistance"
+        },
+        {
+            "id": "minecraft:no_anger"
+        },
+        {
+            "id": "minecraft:is_projectile"
+        },
+        {
+            "id": "minecraft:is_freezing"
+        },
+        {
+            "id": "minecraft:is_explosion"
+        },
+        {
+            "id": "minecraft:panic_causes"
+        },
+        {
+            "id": "minecraft:witch_resistant_to"
+        },
+        {
+            "id": "minecraft:ignites_armor_stands"
+        },
+        {
+            "id": "minecraft:is_lightning"
+        },
+        {
+            "id": "minecraft:always_kills_armor_stands"
+        },
+        {
+            "id": "minecraft:burns_armor_stands"
+        },
+        {
+            "id": "minecraft:is_player_attack"
+        },
+        {
+            "id": "minecraft:is_fall"
+        },
+        {
+            "id": "minecraft:is_drowning"
+        },
+        {
+            "id": "minecraft:damages_helmet"
+        },
+        {
+            "id": "minecraft:no_impact"
+        },
+        {
+            "id": "minecraft:bypasses_armor"
+        },
+        {
+            "id": "minecraft:bypasses_enchantments"
+        },
+        {
+            "id": "minecraft:bypasses_wolf_armor"
+        },
+        {
+            "id": "minecraft:bypasses_effects"
+        }
+    ]
 }

@@ -1,6 +1,6 @@
 <script lang="ts">
-    import Container from "$components/Container.svelte";
-    import Number from "$components/form/Number.svelte";
+    import Container from '$components/Container.svelte';
+    import Number from '$components/form/Number.svelte';
 
     let inrange_max = $state(0);
     let inrange_min = $state(0);

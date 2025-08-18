@@ -1,28 +1,28 @@
 <script lang="ts">
-    import Container from "$components/Container.svelte";
-    import katex from "katex";
-    import "katex/dist/katex.css";
-    import { onMount } from "svelte";
-    import domtoimage from "dom-to-image";
-    import Button from "$components/Button.svelte";
+    import Container from '$components/Container.svelte';
+    import katex from 'katex';
+    import 'katex/dist/katex.css';
+    import { onMount } from 'svelte';
+    import domtoimage from 'dom-to-image';
+    import Button from '$components/Button.svelte';
 
-    let plain = $state("y = 2x");
+    let plain = $state('y = 2x');
 
     function update() {
-        const element = document.getElementById("math");
+        const element = document.getElementById('math');
         if (!element) return;
-        katex.render(plain.replaceAll("\n", ""), element, {
+        katex.render(plain.replaceAll('\n', ''), element, {
             throwOnError: false,
-            macros: {},
+            macros: {}
         });
     }
     function save() {
-        const element = document.getElementById("math");
+        const element = document.getElementById('math');
         if (!element) return;
         domtoimage.toBlob(element).then((blob) => {
-            const a = document.createElement("a");
+            const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
-            a.download = "math.png";
+            a.download = 'math.png';
             a.click();
         });
     }

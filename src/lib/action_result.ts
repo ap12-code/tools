@@ -49,7 +49,7 @@ export class ActionResult<T> {
         } else if (this.is_success()) {
             return this.value!;
         }
-        throw TypeError("Illegal state");
+        throw TypeError('Illegal state');
     }
 
     public get_error(): Error {
@@ -64,7 +64,7 @@ export class ActionResult<T> {
                 if (e instanceof Error) {
                     return ActionResult.error(e);
                 } else {
-                    return ActionResult.fail("Error");
+                    return ActionResult.fail('Error');
                 }
             }
         } else {

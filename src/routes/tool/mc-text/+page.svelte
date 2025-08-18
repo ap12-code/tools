@@ -1,12 +1,12 @@
 <script lang="ts">
-    import Button from "$components/Button.svelte";
-    import Container from "$components/Container.svelte";
-    import Text from "$components/form/Text.svelte";
-    import McText from "$components/MCText.svelte";
-    import type { TextData } from "$lib/minecraft/types";
+    import Button from '$components/Button.svelte';
+    import Container from '$components/Container.svelte';
+    import Text from '$components/form/Text.svelte';
+    import McText from '$components/MCText.svelte';
+    import type { TextData } from '$lib/minecraft/types';
 
-    let data: TextData = $state("");
-    let value: string = $state("");
+    let data: TextData = $state('');
+    let value: string = $state('');
 
     function onInput() {
         data = JSON.parse(value);

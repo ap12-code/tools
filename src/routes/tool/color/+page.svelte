@@ -1,27 +1,27 @@
 <script lang="ts">
-    import Container from "$components/Container.svelte";
-    import { page } from "$app/stores";
-    import { onMount } from "svelte";
-    import ColorPicker from "svelte-awesome-color-picker";
-    import Button from "$components/Button.svelte";
+    import Container from '$components/Container.svelte';
+    import { page } from '$app/stores';
+    import { onMount } from 'svelte';
+    import ColorPicker from 'svelte-awesome-color-picker';
+    import Button from '$components/Button.svelte';
 
-    let input = "https://komaken.net";
-    let err: string = "";
+    let input = 'https://komaken.net';
+    let err: string = '';
     let forecol = $state({
         r: 255,
         g: 255,
         b: 255,
-        a: 1,
+        a: 1
     });
     let backcol = $state({
         r: 0,
         g: 0,
         b: 0,
-        a: 1,
+        a: 1
     });
     function update() {
-        err = "";
-        const canv = document.getElementById("output");
+        err = '';
+        const canv = document.getElementById('output');
         if (!canv || !(canv instanceof HTMLDivElement)) return;
         canv.style.backgroundColor = `rgb(${backcol.r} ${backcol.g} ${backcol.b} / ${backcol.a})`;
         canv.style.color = `rgb(${forecol.r} ${forecol.g} ${forecol.b} / ${forecol.a})`;

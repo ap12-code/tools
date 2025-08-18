@@ -1,22 +1,22 @@
 <script lang="ts">
-    import Container from "$components/Container.svelte";
-    let ip = $state("");
-    let result = $state("");
+    import Container from '$components/Container.svelte';
+    let ip = $state('');
+    let result = $state('');
     let error = $state(false);
     let processing = $state(false);
 
     async function run() {
         processing = true;
-        result = "";
+        result = '';
         error = false;
         const resp = await fetch(`/tool/ping/ping`, {
             body: JSON.stringify({
-                address: ip,
+                address: ip
             }),
-            method: "POST",
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json",
-            },
+                'Content-Type': 'application/json'
+            }
         });
 
         if (resp.ok) {
@@ -38,7 +38,7 @@
         </div>
         <div>
             <p>実行</p>
-            <button onclick={(_) => run()} disabled={processing}>{!processing ? "ping実行" : "実行中..."}</button>
+            <button onclick={(_) => run()} disabled={processing}>{!processing ? 'ping実行' : '実行中...'}</button>
         </div>
     </div>
     <hr />

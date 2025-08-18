@@ -1,55 +1,53 @@
-import type { Component } from "../index.svelte"
+import type { Component } from '../index.svelte';
 
 export class Food {
-    private nutrition: number = 0
-    private saturation: number = 0
-    private can_always_eat: boolean = false
+    private nutrition: number = 0;
+    private saturation: number = 0;
+    private can_always_eat: boolean = false;
 
-    public constructor() {
-
-    }
+    public constructor() {}
 
     public serialize(): string {
         return JSON.stringify({
             nutrition: this.nutrition,
             saturation: this.saturation,
             can_always_eat: this.can_always_eat
-        })
+        });
     }
     public deserialize(value?: string): Component<Food> {
         if (value) {
-            const parsed = JSON.parse(value)
-            this.nutrition = parsed.nutrition
-            this.saturation = parsed.saturation
-            this.can_always_eat = parsed.can_always_eat
+            const parsed = JSON.parse(value);
+            this.nutrition = parsed.nutrition;
+            this.saturation = parsed.saturation;
+            this.can_always_eat = parsed.can_always_eat;
         }
-        return this
+        return this;
     }
     public get(): Food | undefined {
-        return this
+        return this;
     }
 
     public getNutrition() {
-        return this.nutrition
+        return this.nutrition;
     }
 
     public getSaturation() {
-        return this.saturation
+        return this.saturation;
     }
 
     public getCanAlwaysEat() {
-        return this.can_always_eat
+        return this.can_always_eat;
     }
 
     public setNutrition(v: number) {
-        this.nutrition = v
+        this.nutrition = v;
     }
 
     public setSaturation(v: number) {
-        this.saturation = v
+        this.saturation = v;
     }
 
     public setCanAlwaysEat(v: boolean) {
-        this.can_always_eat = v
+        this.can_always_eat = v;
     }
 }

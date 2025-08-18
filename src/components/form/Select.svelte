@@ -1,6 +1,6 @@
 <script lang="ts" generics="T">
-    import type { Validator } from "$lib/validator";
-    import type { Snippet } from "svelte";
+    import type { Validator } from '$lib/validator';
+    import type { Snippet } from 'svelte';
 
     interface Props {
         label?: string;
@@ -15,15 +15,15 @@
     }
 
     let {
-        label = "",
+        label = '',
         oninput = null,
         value = $bindable(),
-        placeholder = "",
+        placeholder = '',
         validator = null,
         copyable = false,
         error = $bindable(false),
-        error_message = $bindable(""),
-        children,
+        error_message = $bindable(''),
+        children
     }: Props = $props();
 
     let labelId = $derived(createLabelId());
@@ -33,7 +33,7 @@
             const result = validator(value);
             error = result.is_error();
             if (!error) {
-                error_message = "";
+                error_message = '';
                 if (oninput) oninput();
             } else {
                 error_message = result.get_error().message;
@@ -75,7 +75,7 @@
         align-content: center;
         border-radius: 5px;
         color: #fff;
-        font-family: "Zen Maru Gothic", serif;
+        font-family: 'Zen Maru Gothic', serif;
         border: 1px #666 solid;
     }
     select:focus {

@@ -1,4 +1,4 @@
-import { SvelteMap } from "svelte/reactivity";
+import { SvelteMap } from 'svelte/reactivity';
 
 export class DialogContext {
     private _map = new SvelteMap<string, boolean>();

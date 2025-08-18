@@ -1,6 +1,6 @@
 <script>
-    import Container from "$components/Container.svelte";
-    import { tools } from "$lib/tools.json";
+    import Container from '$components/Container.svelte';
+    import { tools } from '$lib/tools.json';
 </script>
 
 <Container show_back={false}>

@@ -6,7 +6,7 @@
         label?: string;
     }
 
-    let { checked = $bindable(false), onchange = () => {}, label = "", disabled = false }: Props = $props();
+    let { checked = $bindable(false), onchange = () => {}, label = '', disabled = false }: Props = $props();
 
     function createLabelId(): string {
         return `checkbox__${Math.floor(Math.random() * 100000)}`;
@@ -46,9 +46,14 @@
         place-content: center;
         color: #000;
         height: 100%;
-        font-family: "bootstrap-icons";
+        font-family: 'Material Symbols Rounded';
+        font-variation-settings:
+            'FILL' 1,
+            'wght' 300,
+            'GRAD' 0,
+            'opsz' 24;
         font-size: 18px;
-        content: "\F633";
+        content: '\e5ca';
     }
     .checkbox:focus-visible {
         outline: none;

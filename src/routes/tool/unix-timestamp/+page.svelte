@@ -1,77 +1,76 @@
 <script lang="ts">
-    import Container from "$components/Container.svelte";
-    import { browser } from "$app/environment"
-    import { onMount } from "svelte"
+    import Container from '$components/Container.svelte';
+    import { browser } from '$app/environment';
+    import { onMount } from 'svelte';
 
     let inputs: Record<string, string> = $state({
-        year: "2023",
-        month: "12",
-        day: "31",
-        hour: "23",
-        minute: "59",
-        second: "59",
-        ms: "000"
-    })
-    let tz = 0
+        year: '2023',
+        month: '12',
+        day: '31',
+        hour: '23',
+        minute: '59',
+        second: '59',
+        ms: '000'
+    });
+    let tz = 0;
     let outputs = $state({
-        time: "",
-        plain: "",
-        timems: ""
-    })
+        time: '',
+        plain: '',
+        timems: ''
+    });
 
-    const ORDERS = ["year", "month", "day", "hour", "minute", "second"]
+    const ORDERS = ['year', 'month', 'day', 'hour', 'minute', 'second'];
 
     function next() {
-        const selectionNode = document.activeElement
-        if (!selectionNode) return
-        if (!(selectionNode instanceof Element)) return
-        const nowId = selectionNode.id
-        const nowIndex = ORDERS.findIndex(p => p == nowId)
-        if (nowIndex == -1) return
-        let nextId = ""
+        const selectionNode = document.activeElement;
+        if (!selectionNode) return;
+        if (!(selectionNode instanceof Element)) return;
+        const nowId = selectionNode.id;
+        const nowIndex = ORDERS.findIndex((p) => p == nowId);
+        if (nowIndex == -1) return;
+        let nextId = '';
         if (nowIndex + 1 >= ORDERS.length) {
-            nextId = ORDERS[0]
+            nextId = ORDERS[0];
         } else {
-            nextId = ORDERS[nowIndex + 1]
+            nextId = ORDERS[nowIndex + 1];
         }
-        if (!nextId) return
-        document.getElementById(nextId)?.focus()
+        if (!nextId) return;
+        document.getElementById(nextId)?.focus();
     }
 
     function prev() {
-        const selectionNode = document.activeElement
-        if (!selectionNode) return
-        if (!(selectionNode instanceof Element)) return
-        const nowId = selectionNode.id
-        const nowIndex = ORDERS.findIndex(p => p == nowId)
-        if (nowIndex == -1) return
-        let prevId = ""
+        const selectionNode = document.activeElement;
+        if (!selectionNode) return;
+        if (!(selectionNode instanceof Element)) return;
+        const nowId = selectionNode.id;
+        const nowIndex = ORDERS.findIndex((p) => p == nowId);
+        if (nowIndex == -1) return;
+        let prevId = '';
         if (nowIndex - 1 < 0) {
-            prevId = ORDERS[0]
+            prevId = ORDERS[0];
         } else {
-            prevId = ORDERS[nowIndex - 1]
+            prevId = ORDERS[nowIndex - 1];
         }
-        if (!prevId) return
-        document.getElementById(prevId)?.focus()
-
+        if (!prevId) return;
+        document.getElementById(prevId)?.focus();
     }
 
     function formatValue(v: string, c: number, min: number, max: number): string {
-        if (parseInt(v).toString().length > c) v = v.substring(c)
-        v = Math.min(parseInt(v), max).toString()
-        v = Math.max(parseInt(v), min).toString()
-        v = parseInt(v).toString().padStart(c, "0")
-        return v
+        if (parseInt(v).toString().length > c) v = v.substring(c);
+        v = Math.min(parseInt(v), max).toString();
+        v = Math.max(parseInt(v), min).toString();
+        v = parseInt(v).toString().padStart(c, '0');
+        return v;
     }
 
     function update() {
-        if (!browser) return
-        inputs.year = formatValue(inputs.year, 4, 0, 9999)
-        inputs.month = formatValue(inputs.month, 2, 1, 12)
-        inputs.day = formatValue(inputs.day, 2, 1, 31)
-        inputs.hour = formatValue(inputs.hour, 2, 0, 23)
-        inputs.minute = formatValue(inputs.minute, 2, 0, 59)
-        inputs.second = formatValue(inputs.second, 2, 0, 59)
+        if (!browser) return;
+        inputs.year = formatValue(inputs.year, 4, 0, 9999);
+        inputs.month = formatValue(inputs.month, 2, 1, 12);
+        inputs.day = formatValue(inputs.day, 2, 1, 31);
+        inputs.hour = formatValue(inputs.hour, 2, 0, 23);
+        inputs.minute = formatValue(inputs.minute, 2, 0, 59);
+        inputs.second = formatValue(inputs.second, 2, 0, 59);
 
         const out = new Date(
             parseInt(inputs.year),
@@ -81,87 +80,88 @@
             parseInt(inputs.minute),
             parseInt(inputs.second),
             parseInt(inputs.ms)
-        )
-        outputs.time = Math.round(out.getTime() / 1000).toString()
-        outputs.timems = Math.round(out.getTime()).toString()
-        outputs.plain = out.toLocaleString()
+        );
+        outputs.time = Math.round(out.getTime() / 1000).toString();
+        outputs.timems = Math.round(out.getTime()).toString();
+        outputs.plain = out.toLocaleString();
     }
 
     function updateTS() {
-        if (!browser) return
-        const input = new Date(parseInt(outputs.time) * 1000)
+        if (!browser) return;
+        const input = new Date(parseInt(outputs.time) * 1000);
 
-        inputs.year = input.getFullYear().toString()
-        inputs.month = (input.getMonth() + 1).toString()
-        inputs.day = input.getDate().toString()
-        inputs.hour = input.getHours().toString()
-        inputs.minute = input.getMinutes().toString()
-        inputs.second = input.getSeconds().toString()
-        inputs.ms = input.getMilliseconds().toString()
-        update()
+        inputs.year = input.getFullYear().toString();
+        inputs.month = (input.getMonth() + 1).toString();
+        inputs.day = input.getDate().toString();
+        inputs.hour = input.getHours().toString();
+        inputs.minute = input.getMinutes().toString();
+        inputs.second = input.getSeconds().toString();
+        inputs.ms = input.getMilliseconds().toString();
+        update();
     }
 
     function updateTSMS() {
-        if (!browser) return
-        const input = new Date(outputs.timems)
+        if (!browser) return;
+        const input = new Date(outputs.timems);
 
-        inputs.year = input.getFullYear().toString()
-        inputs.month = (input.getMonth() + 1).toString()
-        inputs.day = input.getDate().toString()
-        inputs.hour = input.getHours().toString()
-        inputs.minute = input.getMinutes().toString()
-        inputs.second = input.getSeconds().toString()
-        inputs.ms = input.getMilliseconds().toString()
-        update()
+        inputs.year = input.getFullYear().toString();
+        inputs.month = (input.getMonth() + 1).toString();
+        inputs.day = input.getDate().toString();
+        inputs.hour = input.getHours().toString();
+        inputs.minute = input.getMinutes().toString();
+        inputs.second = input.getSeconds().toString();
+        inputs.ms = input.getMilliseconds().toString();
+        update();
     }
 
     function add() {
-        const selectionNode = document.activeElement
-        if (!selectionNode) return
-        if (!(selectionNode instanceof HTMLInputElement)) return
-        selectionNode.value = (parseInt(selectionNode.value) + 1).toString()
-        inputs[selectionNode.id] = selectionNode.value
-        update()
+        const selectionNode = document.activeElement;
+        if (!selectionNode) return;
+        if (!(selectionNode instanceof HTMLInputElement)) return;
+        selectionNode.value = (parseInt(selectionNode.value) + 1).toString();
+        inputs[selectionNode.id] = selectionNode.value;
+        update();
     }
 
     function subtract() {
-        const selectionNode = document.activeElement
-        if (!selectionNode) return
-        if (!(selectionNode instanceof HTMLInputElement)) return
-        selectionNode.value = (parseInt(selectionNode.value) - 1).toString()
-        inputs[selectionNode.id] = selectionNode.value
-        update()
+        const selectionNode = document.activeElement;
+        if (!selectionNode) return;
+        if (!(selectionNode instanceof HTMLInputElement)) return;
+        selectionNode.value = (parseInt(selectionNode.value) - 1).toString();
+        inputs[selectionNode.id] = selectionNode.value;
+        update();
     }
 
     function key(ev: KeyboardEvent) {
         switch (ev.key) {
-            case "ArrowRight":
-                ev.preventDefault()
-                next()
-                break
-            case "ArrowLeft":
-                ev.preventDefault()
-                prev()
-                break
-            case "ArrowUp":
-                ev.preventDefault()
-                add()
-                break
-            case "ArrowDown":
-                ev.preventDefault()
-                subtract()
-                break
+            case 'ArrowRight':
+                ev.preventDefault();
+                next();
+                break;
+            case 'ArrowLeft':
+                ev.preventDefault();
+                prev();
+                break;
+            case 'ArrowUp':
+                ev.preventDefault();
+                add();
+                break;
+            case 'ArrowDown':
+                ev.preventDefault();
+                subtract();
+                break;
         }
     }
     onMount(() => {
-        outputs.time = Math.floor(new Date().getTime() / 1000).toString()
-        updateTS()
-        update()
-    })
+        outputs.time = Math.floor(new Date().getTime() / 1000).toString();
+        updateTS();
+        update();
+    });
     function copy(v: string) {
-        navigator.clipboard.writeText(v)
+        navigator.clipboard.writeText(v);
     }
 </script>
+
 <Container>
     <h1>UNIX TIMESTAMP 変換</h1>
     <hr />
@@ -170,28 +170,28 @@
         <!-- svelte-ignore a11y_no_static_element_interactions -->
         <div class="inputs" onkeydown={key}>
             <div>
-                <input id="year" type="text" placeholder="年" bind:value={inputs.year} oninput={update}>年
+                <input id="year" type="text" placeholder="年" bind:value={inputs.year} oninput={update} />年
             </div>
             <div>
-                <input id="month" type="text" placeholder="月" bind:value={inputs.month} oninput={update}>月
+                <input id="month" type="text" placeholder="月" bind:value={inputs.month} oninput={update} />月
             </div>
             <div>
-                <input id="day" type="text" placeholder="日" bind:value={inputs.day} oninput={update}>日
+                <input id="day" type="text" placeholder="日" bind:value={inputs.day} oninput={update} />日
             </div>
             <div>
-                <input id="hour" type="text" placeholder="年" bind:value={inputs.hour} oninput={update}>時
+                <input id="hour" type="text" placeholder="年" bind:value={inputs.hour} oninput={update} />時
             </div>
             <div>
-                <input id="minute" type="text" placeholder="月" bind:value={inputs.minute} oninput={update}>分
+                <input id="minute" type="text" placeholder="月" bind:value={inputs.minute} oninput={update} />分
             </div>
             <div>
-                <input id="second" type="text" placeholder="日" bind:value={inputs.second} oninput={update}>秒
+                <input id="second" type="text" placeholder="日" bind:value={inputs.second} oninput={update} />秒
             </div>
         </div>
     </div>
     <div class="item">
         <textarea readonly bind:value={outputs.plain}></textarea>
-        <button onclick={_ => copy(outputs.plain)}>コピー</button>
+        <button onclick={(_) => copy(outputs.plain)}>コピー</button>
     </div>
     <hr />
     <div>
@@ -199,12 +199,12 @@
         <span>秒単位 (Pythonなど)</span>
         <div class="item">
             <input class="out" type="number" bind:value={outputs.time} oninput={updateTS} />
-            <button onclick={_ => copy(outputs.time)}>コピー</button>
+            <button onclick={(_) => copy(outputs.time)}>コピー</button>
         </div>
         <span>ミリ秒単位 (JavaScriptなど)</span>
         <div class="item">
             <input class="out" type="number" bind:value={outputs.timems} oninput={updateTSMS} />
-            <button onclick={_ => copy(outputs.timems)}>コピー</button>
+            <button onclick={(_) => copy(outputs.timems)}>コピー</button>
         </div>
     </div>
 </Container>

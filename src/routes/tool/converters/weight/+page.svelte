@@ -1,6 +1,6 @@
 <script lang="ts">
-    import Container from "$components/Container.svelte";
-    import { Decimal } from "decimal.js";
+    import Container from '$components/Container.svelte';
+    import { Decimal } from 'decimal.js';
 
     let mapping: Record<string, Decimal> = {
         ng: new Decimal(1),
@@ -8,25 +8,25 @@
         mg: new Decimal(1).mul(1000).mul(1000),
         g: new Decimal(1).mul(1000).mul(1000).mul(1000),
         kg: new Decimal(1).mul(1000).mul(1000).mul(1000).mul(1000),
-        t: new Decimal(1).mul(1000).mul(1000).mul(1000).mul(1000).mul(1000),
+        t: new Decimal(1).mul(1000).mul(1000).mul(1000).mul(1000).mul(1000)
     };
     let values: Record<string, string> = $state({});
     let lang: Record<string, string> = {};
     let errs: Record<string, boolean> = $state({});
 
     function change(unit: string) {
-        if (values[unit].endsWith(".")) return;
-        if (values[unit].endsWith("-")) {
-            if (values[unit].startsWith("-")) {
+        if (values[unit].endsWith('.')) return;
+        if (values[unit].endsWith('-')) {
+            if (values[unit].startsWith('-')) {
                 values[unit] = `${values[unit].slice(1, -1)}`;
             } else {
                 values[unit] = `-${values[unit].slice(0, -1)}`;
             }
-            if (values[unit] == "0" || values[unit] == "-0") return;
+            if (values[unit] == '0' || values[unit] == '-0') return;
         }
         errs[unit] = false;
         if (!errs[unit]) {
-            if (!values[unit]) values[unit] = "0";
+            if (!values[unit]) values[unit] = '0';
             if (isNaN(parseFloat(values[unit]))) return (errs[unit] = true);
             values[unit] = parseFloat(values[unit]).toString();
             for (let v of Object.keys(values)) {
@@ -40,7 +40,7 @@
     function load() {
         for (let unit of Object.keys(mapping)) {
             if (!Object.keys(values).includes(unit)) {
-                values[unit] = "0";
+                values[unit] = '0';
             }
         }
 
@@ -54,7 +54,7 @@
     load();
 </script>
 
-<Container back_to={"/tool/converters"}>
+<Container back_to={'/tool/converters'}>
     <h1>質量換算</h1>
     <hr />
     <div class="main">

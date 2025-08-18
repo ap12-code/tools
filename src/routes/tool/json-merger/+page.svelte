@@ -1,21 +1,21 @@
 <script lang="ts">
-    import Button from "$components/Button.svelte";
-    import Container from "$components/Container.svelte";
+    import Button from '$components/Button.svelte';
+    import Container from '$components/Container.svelte';
 
-    let merged = $state("");
+    let merged = $state('');
     let error_a = $state(false);
     let error_b = false;
 
-    let input_b = $state("");
-    let input_a = $state("");
+    let input_b = $state('');
+    let input_a = $state('');
 
-    let mode = $state("none");
+    let mode = $state('none');
     let spaces = $state(4);
     let spaces_error = $state(false);
     let tabs = $state(1);
     let tabs_error = false;
-    let custom_indent = $state("");
-    let copy_btn = $state("コピー");
+    let custom_indent = $state('');
+    let copy_btn = $state('コピー');
 
     function changeMode(_mode: string) {
         mode = _mode;
@@ -27,31 +27,31 @@
         spaces_error = false;
         tabs_error = false;
 
-        if (input_b == "") {
-            merged = "";
+        if (input_b == '') {
+            merged = '';
             return;
         }
 
-        let indent = "";
+        let indent = '';
         switch (mode) {
-            case "none":
-                indent = "";
+            case 'none':
+                indent = '';
                 break;
-            case "spaces":
+            case 'spaces':
                 if (spaces <= 0) {
                     spaces_error = true;
                     return;
                 }
-                indent = " ".repeat(spaces);
+                indent = ' '.repeat(spaces);
                 break;
-            case "tabs":
+            case 'tabs':
                 if (tabs <= 0) {
                     tabs_error = true;
                     return;
                 }
-                indent = "\t".repeat(tabs);
+                indent = '\t'.repeat(tabs);
                 break;
-            case "custom":
+            case 'custom':
                 indent = custom_indent;
                 break;
         }
@@ -66,9 +66,9 @@
 
     function copy() {
         navigator.clipboard.writeText(merged).then(() => {
-            copy_btn = "コピーしました";
+            copy_btn = 'コピーしました';
             setTimeout(() => {
-                copy_btn = "コピー";
+                copy_btn = 'コピー';
             }, 1000);
         });
     }
@@ -81,36 +81,36 @@
         <div>
             <p>元データ</p>
             <textarea bind:value={input_a} oninput={changeInput}></textarea>
-            {#if error_a && input_a != ""}
+            {#if error_a && input_a != ''}
                 <p class="error">無効なJSONです</p>
             {/if}
         </div>
         <div>
             <p>上書きするデータ</p>
             <textarea bind:value={input_b} oninput={changeInput}></textarea>
-            {#if error_b && input_b != ""}
+            {#if error_b && input_b != ''}
                 <p class="error">無効なJSONです</p>
             {/if}
         </div>
         <div class="indent-menu">
             <div>
-                <input type="radio" id="radio-0" name="radio" checked={mode == "none"} oninput={(_) => changeMode("none")} />
+                <input type="radio" id="radio-0" name="radio" checked={mode == 'none'} oninput={(_) => changeMode('none')} />
                 <label for="radio-0">1行にまとめる</label>
             </div>
             <div>
-                <input type="radio" id="radio-1" name="radio" checked={mode == "spaces"} onchange={(_) => changeMode("spaces")} />
+                <input type="radio" id="radio-1" name="radio" checked={mode == 'spaces'} onchange={(_) => changeMode('spaces')} />
                 <input type="number" class:error={spaces_error} min={1} max={99} bind:value={spaces} oninput={changeInput} />
                 <label for="radio-1">スペース</label>
             </div>
             <div>
-                <input type="radio" id="radio-2" name="radio" checked={mode == "tabs"} onchange={(_) => changeMode("tabs")} />
+                <input type="radio" id="radio-2" name="radio" checked={mode == 'tabs'} onchange={(_) => changeMode('tabs')} />
                 <input type="number" min={1} max={99} bind:value={tabs} oninput={changeInput} />
                 <label for="radio-2">タブ</label>
             </div>
             <div>
-                <input type="radio" id="radio-3" name="radio" checked={mode == "custom"} onchange={(_) => changeMode("custom")} />
+                <input type="radio" id="radio-3" name="radio" checked={mode == 'custom'} onchange={(_) => changeMode('custom')} />
                 <label for="radio-3">カスタム</label>
-                {#if mode == "custom"}
+                {#if mode == 'custom'}
                     <input type="text" bind:value={custom_indent} oninput={changeInput} />
                 {/if}
             </div>
@@ -158,24 +158,24 @@
     .result-action {
         margin-left: auto;
     }
-    input[type="number"]::-webkit-outer-spin-button,
-    input[type="number"]::-webkit-inner-spin-button {
+    input[type='number']::-webkit-outer-spin-button,
+    input[type='number']::-webkit-inner-spin-button {
         -webkit-appearance: none;
         appearance: none;
         margin: 0;
     }
-    input[type="number"] {
+    input[type='number'] {
         -moz-appearance: textfield;
         appearance: textfield;
         width: 50px;
         text-align: right;
     }
-    input[type="number"]:not(.error),
-    input[type="text"]:not(.error) {
+    input[type='number']:not(.error),
+    input[type='text']:not(.error) {
         border: #666 1px solid;
     }
-    input[type="number"],
-    input[type="text"] {
+    input[type='number'],
+    input[type='text'] {
         background-color: #222;
         padding: 5px;
         border-radius: 5px;
@@ -183,7 +183,7 @@
         height: 14px;
         outline: none;
     }
-    input[type="radio"] {
+    input[type='radio'] {
         position: relative;
         border: #666 1px solid;
         color: #fff;
@@ -193,8 +193,8 @@
         appearance: none;
         vertical-align: -3px;
     }
-    input[type="radio"]:checked:before {
-        content: "";
+    input[type='radio']:checked:before {
+        content: '';
         position: absolute;
         top: 50%;
         left: 50%;

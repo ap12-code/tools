@@ -2,17 +2,17 @@
     interface Props {
         show_back?: boolean;
         back_to?: string;
-        children?: import("svelte").Snippet;
+        children?: import('svelte').Snippet;
         full?: boolean;
     }
 
-    let { show_back = true, back_to = "/", children, full = false }: Props = $props();
+    let { show_back = true, back_to = '/', children, full = false }: Props = $props();
 </script>
 
 <div class:container={!full}>
     {#if show_back}
         <a class="back" href={back_to}>
-            <span class="icon fill">arrow_left</span>{back_to == "/" ? "ホームに戻る" : "戻る"}
+            <span class="icon fill">arrow_left</span>{back_to == '/' ? 'ホームに戻る' : '戻る'}
         </a>
     {/if}
     {@render children?.()}

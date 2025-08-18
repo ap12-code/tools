@@ -1,5 +1,5 @@
-import type { Component } from "$lib/minecraft/components/index.svelte";
-import type { Nullable } from "$lib/minecraft/types";
+import type { Component } from '$lib/minecraft/components/index.svelte';
+import type { Nullable } from '$lib/minecraft/types';
 
 export class ConsumableAnimation {}
 
@@ -10,8 +10,8 @@ export class ConsumableEffectsRemoveEffect {
 
     public serialize() {
         return JSON.stringify({
-            type: "minecraft:remove_effects",
-            effects: this.effects,
+            type: 'minecraft:remove_effects',
+            effects: this.effects
         });
     }
     public deserialize(value?: string) {
@@ -23,7 +23,7 @@ export class ConsumableEffectsRemoveEffect {
 }
 
 export class Effect {
-    private id: string = "";
+    private id: string = '';
     private amplifier: number = 1;
     private duration: number = 1;
 
@@ -33,7 +33,7 @@ export class Effect {
         return JSON.stringify({
             id: this.id,
             amplifier: this.amplifier,
-            duration: this.duration,
+            duration: this.duration
         });
     }
 
@@ -82,8 +82,8 @@ export class ConsumableEffectsApplyEffect {
 
     public serialize() {
         return JSON.stringify({
-            type: "minecraft:apply_effects",
-            effects: this.effects,
+            type: 'minecraft:apply_effects',
+            effects: this.effects
         });
     }
 
@@ -111,12 +111,12 @@ export class Consumable implements Component<Consumable> {
     public constructor() {}
 
     public serialize(): string {
-        throw new Error("Method not implemented.");
+        throw new Error('Method not implemented.');
     }
     public deserialize(value?: string): Component<Consumable> {
-        throw new Error("Method not implemented.");
+        throw new Error('Method not implemented.');
     }
     public get(): Consumable | undefined {
-        throw new Error("Method not implemented.");
+        throw new Error('Method not implemented.');
     }
 }

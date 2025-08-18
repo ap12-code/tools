@@ -1,11 +1,11 @@
 <script lang="ts">
-    import Container from "$components/Container.svelte";
-    import Text from "$components/form/Text.svelte";
-    import { onMount } from "svelte";
+    import Container from '$components/Container.svelte';
+    import Text from '$components/form/Text.svelte';
+    import { onMount } from 'svelte';
 
-    let ipv4 = $state("取得中...");
+    let ipv4 = $state('取得中...');
 
-    let ipv6 = $state("取得中...");
+    let ipv6 = $state('取得中...');
 
     type Data = {
         ipv4: string;
@@ -22,25 +22,25 @@
     };
 
     let data: Data = $state({
-        ipv4: "取得中...",
-        ipv6: "取得中...",
-        hostname: "取得中...",
-        city: "取得中...",
-        region: "取得中...",
-        country: "取得中...",
-        loc: "取得中...",
-        org: "取得中...",
-        postal: "取得中...",
-        timezone: "取得中...",
-        readme: "取得中...",
+        ipv4: '取得中...',
+        ipv6: '取得中...',
+        hostname: '取得中...',
+        city: '取得中...',
+        region: '取得中...',
+        country: '取得中...',
+        loc: '取得中...',
+        org: '取得中...',
+        postal: '取得中...',
+        timezone: '取得中...',
+        readme: '取得中...'
     });
     onMount(async () => {
-        data = await (await fetch("https://ipapi.co/json/")).json();
-        ipv4 = await (await fetch("https://api.ipify.org/?format=text")).text();
+        data = await (await fetch('https://ipapi.co/json/')).json();
+        ipv4 = await (await fetch('https://api.ipify.org/?format=text')).text();
         try {
-            ipv6 = await (await fetch("https://api6.ipify.org/?format=text")).text();
+            ipv6 = await (await fetch('https://api6.ipify.org/?format=text')).text();
         } catch {
-            ipv6 = "不明またはなし";
+            ipv6 = '不明またはなし';
         }
     });
 </script>

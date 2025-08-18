@@ -1,18 +1,19 @@
 <script>
-    import Container from "$components/Container.svelte";
+    import Container from '$components/Container.svelte';
 
-    let lowerCase = $state("")
-    let upperCase = $state("")
+    let lowerCase = $state('');
+    let upperCase = $state('');
 
     function updateLower() {
-        lowerCase = lowerCase.toLowerCase()
-        upperCase = lowerCase.toUpperCase()
+        lowerCase = lowerCase.toLowerCase();
+        upperCase = lowerCase.toUpperCase();
     }
     function updateUpper() {
-        upperCase = upperCase.toUpperCase()
-        lowerCase = upperCase.toLowerCase()
+        upperCase = upperCase.toUpperCase();
+        lowerCase = upperCase.toLowerCase();
     }
 </script>
+
 <Container>
     <h1>大文字 / 小文字 変換ツール</h1>
     <hr />
