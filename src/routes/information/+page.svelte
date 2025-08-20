@@ -11,7 +11,6 @@
         <p>バグ修正</p>
         <ul>
             <li>(Minecraft)テキストジェネレータのバグを修正</li>
-            <li>(Minecraft)テキストジェネレータのバグを修正</li>
         </ul>
     </div>
     <div class="version">
