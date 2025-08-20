@@ -23,7 +23,7 @@
     }
 
     function compactData(data: TextData) {
-        if (data instanceof Array) {
+        if (data instanceof Array && data.length == 1) {
             return data[0];
         }
         return data;
@@ -140,6 +140,7 @@
                     color = getColor(elm);
                 }
                 const parents = getParents(elm);
+                console.log(e.textContent, parents);
                 data.push({
                     text: e.textContent || '',
                     color: color,
