@@ -1,11 +1,11 @@
 <script lang="ts">
     import Container from '$components/Container.svelte';
-    import { page } from '$app/stores';
+    import { page } from '$app/state';
     import { onMount } from 'svelte';
     import ColorPicker from 'svelte-awesome-color-picker';
     import Button from '$components/Button.svelte';
 
-    let input = 'https://komaken.net';
+    let input = 'https://tools.ap12.net';
     let err: string = '';
     let forecol = $state({
         r: 255,
@@ -40,7 +40,7 @@
         backcol.b = randInt();
     }
     onMount(() => {
-        input = $page.url.origin;
+        input = page.url.origin;
         update();
     });
 </script>
