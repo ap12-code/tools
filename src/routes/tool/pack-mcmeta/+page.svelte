@@ -1,15 +1,12 @@
 <script lang="ts">
     import Container from '$components/Container.svelte';
     import { onMount } from 'svelte';
-    import type { PageServerData } from './$types';
+    import data_versions from '$lib/versions.json';
 
-    interface Props {
-        data: PageServerData;
-    }
+    type VersionType = 'dp' | 'rp';
 
-    let { data }: Props = $props();
     let description = $state('');
-    let types = $state('dp');
+    let types: VersionType = $state('dp');
     let dataVersion = $state('');
     let search = $state('');
     let output = {
@@ -18,23 +15,24 @@
             description: ''
         }
     };
-    let outJSON = $state('');
     let versions: [string, number][] = $state([]);
+    let outJSON = $state('');
+    const data: Record<VersionType, Record<string, number>> = data_versions;
 
     function update() {
-        output.pack.pack_format = data.versions[types][dataVersion];
+        output.pack.pack_format = data[types][dataVersion];
         output.pack.description = description;
         outJSON = JSON.stringify(output, null, 4);
     }
     function updateType() {
-        versions = Object.entries(data.versions[types])
+        versions = Object.entries(data[types])
             .sort((a, b) => a[1] - b[1])
             .toReversed();
         dataVersion = versions[0][0];
         update();
     }
     function updateSearch() {
-        versions = Object.entries(data.versions[types])
+        versions = Object.entries(data[types])
             .filter((p) => p[0].startsWith(search))
             .sort((a, b) => a[1] - b[1])
             .toReversed();

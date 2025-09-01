@@ -5,7 +5,7 @@
     import ColorPicker from 'svelte-awesome-color-picker';
     import Button from '$components/Button.svelte';
 
-    let input = 'https://tools.ap12.net';
+    let input = 'https://example.com';
     let err: string = '';
     let forecol = $state({
         r: 255,

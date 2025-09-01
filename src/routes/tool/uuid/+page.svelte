@@ -86,9 +86,14 @@
         place-content: center;
         color: #000;
         height: 100%;
-        font-family: 'bootstrap-icons';
+        font-family: 'Material Symbols Rounded';
+        font-variation-settings:
+            'FILL' 1,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24;
         font-size: 18px;
-        content: '\F633';
+        content: '\e5ca';
     }
     .checkbox:focus-visible {
         outline: none;

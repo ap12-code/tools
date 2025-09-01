@@ -6,5 +6,5 @@ export const GET: RequestHandler = async ({ url }) => {
     if (!param) error(400);
 
     const data = await qrcode.toBuffer(param);
-    return new Response(data);
+    return new Response(Buffer.from(data));
 };

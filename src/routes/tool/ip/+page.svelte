@@ -49,19 +49,19 @@
     <h1>IPチェッカー</h1>
     <hr />
     <span>IPアドレス (IPv4)</span>
-    <Text read_only value={ipv4} />
+    <Text read_only value={ipv4} copyable />
     <span>IPアドレス (IPv6)</span>
-    <Text read_only value={ipv6} />
+    <Text read_only value={ipv6} copyable />
     <hr />
     <span>国</span>
-    <Text read_only value={data.country} />
+    <Text read_only value={data.country} copyable />
     <span>県</span>
-    <Text read_only value={data.region} />
+    <Text read_only value={data.region} copyable />
     <span>市</span>
-    <Text read_only value={data.city} />
+    <Text read_only value={data.city} copyable />
     <hr />
     <span>プロバイダ</span>
-    <Text read_only value={data.org} />
+    <Text read_only value={data.org} copyable />
     <hr />
     <p>Data Provided by ipapi.co & ipify.org</p>
 </Container>
