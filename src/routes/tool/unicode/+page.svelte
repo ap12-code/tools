@@ -46,7 +46,7 @@
             <textarea bind:value={plain} oninput={changePlain}></textarea>
         </div>
         <div>
-            <button aria-label="入れ替え" onclick={exchange}><i class="bi bi-arrow-down-up"></i></button>
+            <button aria-label="入れ替え" onclick={exchange}><span class="icon">swap_vert</span></button>
         </div>
         <div>
             <p>UNICODE</p>
