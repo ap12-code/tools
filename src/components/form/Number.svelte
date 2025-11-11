@@ -57,27 +57,15 @@
     }
 </script>
 
-<div>
+<div class="input-root">
     {#if label}
         <label for={labelId}>{label}</label>
     {/if}
-    <div class="input-field">
-        {#if error_message}
-            <span class="error-text">{error_message}</span>
-        {/if}
-        <input
-            type="number"
-            class="input-number"
-            bind:value
-            readonly={read_only}
-            {placeholder}
-            id={labelId}
-            {max}
-            {min}
-            class:error
-            oninput={update}
-        />
-    </div>
+    {#if error_message}
+        <span class="error-text">{error_message}</span>
+    {/if}
+
+    <input type="number" class="input-number" bind:value readonly={read_only} {placeholder} id={labelId} {max} {min} class:error oninput={update} />
     {#if copyable}
         <button onclick={copy}>コピー</button>
     {/if}
@@ -87,15 +75,27 @@
     .error {
         border-color: #d00;
     }
+    .input-root {
+        display: flex;
+        align-items: center;
+        height: 30px;
+        gap: 5px;
+        margin: 5px 0;
+    }
+    label {
+        width: 200px;
+        height: 30px;
+    }
     input {
-        flex: 1 1;
-        padding: 5px;
+        height: 30px;
+        flex-grow: 1;
         background-color: #222;
         resize: none;
         align-content: center;
         border-radius: 5px;
+        padding: 0 5px;
+        font-size: 1em;
         color: #fff;
-        font-family: 'Zen Maru Gothic', serif;
         border: 1px #666 solid;
     }
     input:focus {
@@ -113,19 +113,6 @@
         background-color: #666;
         transition: 0.2s all;
         cursor: pointer;
-    }
-    div {
-        gap: 10px;
-        display: flex;
-        margin: 5px 0;
-    }
-    label {
-        width: 200px;
-    }
-    .input-field {
-        width: 100%;
-        flex-grow: 1;
-        position: relative;
     }
     .error-text {
         position: absolute;

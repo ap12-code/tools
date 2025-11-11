@@ -1,5 +1,5 @@
 <script lang="ts" generics="T">
-    import type { Validator } from '$lib/validator';
+    import { alwaysTrueValidator, type Validator } from '$lib/validator';
 
     interface Props {
         label?: string;
@@ -18,7 +18,7 @@
         oninput = null,
         value = $bindable(),
         placeholder = '',
-        validator = null,
+        validator = alwaysTrueValidator(),
         copyable = false,
         error = $bindable(false),
         error_message = $bindable(''),

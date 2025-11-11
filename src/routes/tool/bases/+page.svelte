@@ -1,5 +1,6 @@
 <script lang="ts">
     import Container from '$components/Container.svelte';
+    import Text from '$components/form/Text.svelte';
 
     let mapping: Record<string, number> = { hex: 16, dec: 10, oct: 8, bin: 2 };
     let tests: Record<string, RegExp> = { hex: /^[0-9a-f]+$/, dec: /^[0-9]+$/, oct: /^[0-7]+$/, bin: /^[01]+$/ };
@@ -17,6 +18,7 @@
 
     function change(radix: string) {
         verify();
+        if (vaules[radix] == '') vaules[radix] = '0';
         if (!errs[radix]) {
             for (let v of Object.keys(vaules)) {
                 vaules[v] = parseInt(vaules[radix], mapping[radix]).toString(mapping[v]);
@@ -35,19 +37,19 @@
     <div class="main">
         <div>
             <p>16進数</p>
-            <input class:err={errs.hex} bind:value={vaules.hex} oninput={(_) => change('hex')} />
+            <Text error={errs.hex} bind:value={vaules.hex} oninput={() => change('hex')} copyable />
         </div>
         <div>
             <p>10進数</p>
-            <input class:err={errs.dec} bind:value={vaules.dec} oninput={(_) => change('dec')} />
+            <Text error={errs.dec} bind:value={vaules.dec} oninput={() => change('dec')} copyable />
         </div>
         <div>
             <p>8進数</p>
-            <input class:err={errs.oct} bind:value={vaules.oct} oninput={(_) => change('oct')} />
+            <Text error={errs.oct} bind:value={vaules.oct} oninput={() => change('oct')} copyable />
         </div>
         <div>
             <p>2進数</p>
-            <input class:err={errs.bin} bind:value={vaules.bin} oninput={(_) => change('bin')} />
+            <Text error={errs.bin} bind:value={vaules.bin} oninput={() => change('bin')} copyable />
         </div>
     </div>
 </Container>
@@ -58,22 +60,7 @@
         flex-direction: column;
         gap: 10px;
     }
-    .err {
-        border-color: #d00;
-    }
-    input {
-        padding: 5px;
-        background-color: #222;
-        resize: none;
-        width: 100%;
-        border-radius: 5px;
-        color: #fff;
-        height: 14px;
-        border: #666 1px solid;
-    }
-    input:focus {
-        outline: none;
-    }
+
     hr {
         margin: 20px 0;
         border-color: #666;

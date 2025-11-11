@@ -1,6 +1,7 @@
 <script>
     import Container from '$components/Container.svelte';
     import { converters } from '$lib/converters.json';
+    import Icon from '@iconify/svelte';
 </script>
 
 <Container>
@@ -11,7 +12,7 @@
             {#each converters as t}
                 <div style="border-left: 10px #bb0 solid;" class="tool mg-right">
                     <a href={t.path}>
-                        <span class="icon fill">{t.icon}</span>
+                        <Icon icon="material-symbols:{t.icon.replace('_', '-')}" class="icon" />
                         {t.name}
                     </a>
                 </div>

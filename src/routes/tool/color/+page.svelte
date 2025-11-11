@@ -71,7 +71,6 @@
                 <Button onclick={randombg}>ランダム</Button>
             </div>
         </div>
-        <hr />
     </div>
 </Container>
 

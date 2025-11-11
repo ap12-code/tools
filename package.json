@@ -1,6 +1,6 @@
 {
     "name": "tools.ap12.net",
-    "version": "1.5.2",
+    "version": "1.5.4",
     "scripts": {
         "dev": "vite dev",
         "build": "vite build",
@@ -13,6 +13,7 @@
         "lint": "prettier --check ."
     },
     "devDependencies": {
+        "@iconify/svelte": "^5.1.0",
         "@sveltejs/adapter-node": "^5.2.12",
         "@sveltejs/adapter-static": "^3.0.9",
         "@sveltejs/kit": "^2.21.5",

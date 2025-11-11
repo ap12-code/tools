@@ -10,4 +10,8 @@ export function numberValidator(range?: NumberRange): Validator<number> {
     return (v) => (v <= (max ? max : v) && v >= (min ? min : v) ? ActionResult.success(v) : ActionResult.fail(`無効な数値です。`));
 }
 
+export function alwaysTrueValidator(): Validator<any> {
+    return (v) => ActionResult.success(v);
+}
+
 export type Validator<V> = (val: V) => ActionResult<V>;

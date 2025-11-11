@@ -44,13 +44,17 @@
                 method: 'POST'
             });
             if (resp.ok) {
-                imgSrc.push(URL.createObjectURL(await resp.blob()));
+                imgSrc = [URL.createObjectURL(await resp.blob())];
                 has_result = true;
             } else {
                 err = true;
             }
         }
         processing = false;
+    }
+
+    function changeFormat() {
+        if (has_result) run();
     }
 
     function download() {
@@ -74,7 +78,7 @@
         <hr />
         <div>
             <p>形式</p>
-            <select oninput={run} bind:value={to_ext}>
+            <select onchange={changeFormat} bind:value={to_ext}>
                 {#each IMG_FORMATS as fmt}
                     <option value={fmt}>{fmt}</option>
                 {/each}

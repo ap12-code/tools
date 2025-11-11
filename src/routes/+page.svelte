@@ -1,6 +1,7 @@
 <script>
     import Container from '$components/Container.svelte';
     import { tools } from '$lib/tools.json';
+    import Icon from '@iconify/svelte';
 </script>
 
 <Container show_back={false}>
@@ -21,7 +22,7 @@
                     {#each d.tools as t}
                         <div style="border-left: 10px {d.color} solid;" class="tool mg-right">
                             <a href={t.href}>
-                                <span class="icon fill">{t.icon}</span>
+                                <Icon icon="material-symbols:{t.icon.replaceAll('_', '-')}" class="icon" />
                                 <span>{t.name}</span>
                             </a>
                         </div>

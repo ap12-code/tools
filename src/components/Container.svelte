@@ -1,4 +1,6 @@
 <script lang="ts">
+    import Icon from '@iconify/svelte';
+
     interface Props {
         show_back?: boolean;
         back_to?: string;
@@ -12,7 +14,7 @@
 <div class:container={!full}>
     {#if show_back}
         <a class="back" href={back_to}>
-            <span class="icon fill">arrow_left</span>{back_to == '/' ? 'ホームに戻る' : '戻る'}
+            <Icon icon="material-symbols:arrow-left" class="icon" />{back_to == '/' ? 'ホームに戻る' : '戻る'}
         </a>
     {/if}
     {@render children?.()}

@@ -5,9 +5,10 @@ WORKDIR /app
 COPY . .
 
 RUN apk update
-RUN apk add bind-tools iputils-ping
+RUN apk add bash bind-tools iputils-ping
 
 RUN yarn install
+ENV BUILD_TYPE=node
 RUN yarn run build
 
 FROM node:lts-alpine

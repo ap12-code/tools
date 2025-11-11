@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=fallback');
 @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic&display=fallback');
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=fallback');
 
 @font-face {
     font-family: 'unifont';
@@ -8,12 +8,6 @@
 }
 
 .icon {
-    font-family: 'Material Symbols Rounded';
-    font-variation-settings:
-        'FILL' 0,
-        'wght' 300,
-        'GRAD' 0,
-        'opsz' 24;
     font-size: 20px;
     vertical-align: -4px;
 }
@@ -68,4 +62,9 @@ a .bi {
 
 .font-mc {
     font-family: 'unifont';
+}
+
+input[type='number'] {
+    font-family: 'Inconsolata', monospace;
+    font-weight: 500;
 }

@@ -6,6 +6,8 @@
     import { tools } from '$lib/tools.json';
     import _ from 'lodash';
     import { dev } from '$app/environment';
+    import Icon from '@iconify/svelte';
+
     interface Props {
         children?: import('svelte').Snippet;
     }
@@ -80,7 +82,7 @@
             <div class="sidebar-inner">
                 <div class="button-collapse">
                     <button onclick={switchSidebar}>
-                        <i class="bi bi-chevron-left"></i> 非表示
+                        <Icon icon="material-symbols:arrow-left" class="icon" /> 非表示
                     </button>
                 </div>
                 <div class="sidebar-header">
@@ -91,14 +93,14 @@
                 {#each favorites as t}
                     <div class="tool">
                         <a class:selected={$page.url.pathname == t.href} class="sidebar-button" href={t.href}>
-                            <span class="icon">{t.icon}</span>
+                            <Icon icon="material-symbols:{t.icon.replaceAll('_', '-')}" class="icon" />
                             {t.name}
                         </a>
                         <button class="favorite-button" onclick={(_) => switchFavorite(t)}>
                             {#if favorites.find((p) => p.name == t.name)}
-                                <span class="icon fill">star</span>
+                                <Icon icon="material-symbols:star" class="icon" />
                             {:else}
-                                <span class="icon">star</span>
+                                <Icon icon="material-symbols:star-outline" class="icon" />
                             {/if}
                         </button>
                     </div>
@@ -107,27 +109,27 @@
                 {#each data as d, i}
                     {#if !d.collapsed}
                         <button onclick={(_) => switchCategory(i)} class="sidebar-button">
-                            <span class="icon fill">stat_1</span>
+                            <Icon icon="material-symbols:stat-1" class="icon" />
                             {d.name}
                         </button>
                         {#each d.tools as t}
                             <div class="tool mg-right">
                                 <a class:selected={$page.url.pathname.startsWith(t.href)} class="sidebar-button" href={t.href}>
-                                    <span class="icon fill">{t.icon}</span>
+                                    <Icon icon="material-symbols:{t.icon.replaceAll('_', '-')}" class="icon" />
                                     {t.name}
                                 </a>
                                 <button class="favorite-button" onclick={(_) => switchFavorite(t)}>
                                     {#if favorites.find((p) => p.name == t.name)}
-                                        <span class="icon fill">star</span>
+                                        <Icon icon="material-symbols:star" class="icon" />
                                     {:else}
-                                        <span class="icon">star</span>
+                                        <Icon icon="material-symbols:star-outline" class="icon" />
                                     {/if}
                                 </button>
                             </div>
                         {/each}
                     {:else}
                         <button onclick={(_) => switchCategory(i)} class="sidebar-button">
-                            <span class="icon fill">stat_minus_1</span>
+                            <Icon icon="material-symbols:stat-minus-1" class="icon" />
                             {d.name}
                         </button>
                     {/if}
@@ -137,7 +139,7 @@
     {:else}
         <div class="sidebar-show-button">
             <button onclick={switchSidebar} aria-label="サイドバーを表示">
-                <span class="icon">menu</span>
+                <Icon icon="material-symbols:menu" class="icon" />
             </button>
         </div>
     {/if}

@@ -4,6 +4,7 @@
     import type { Function0 } from 'lodash';
     import type { Nullable, TextData, TextObject } from '$lib/minecraft/types';
     import { isTextArray } from '$lib/utils';
+    import Icon from '@iconify/svelte';
 
     let serialized: string = '';
 
@@ -236,17 +237,19 @@
 
 <div>
     <div class="toolbar">
-        <button aria-label="太字" class="control" onclick={applyBold}><span class="icon fill">format_bold</span></button>
-        <button aria-label="斜体" class="control" onclick={applyItalic}><span class="icon fill">format_italic</span></button>
-        <button aria-label="取り消し線" class="control" onclick={applyStrikeThrough}><span class="icon fill">format_strikethrough</span></button>
-        <button aria-label="下線" class="control" onclick={applyUnderline}><span class="icon fill">format_underlined</span></button>
-        <button aria-label="リセット" class="control" onclick={applyReset}><span class="icon fill">format_clear</span></button>
+        <button aria-label="太字" class="control" onclick={applyBold}><Icon icon="material-symbols:format-bold" class="icon" /></button>
+        <button aria-label="斜体" class="control" onclick={applyItalic}><Icon icon="material-symbols:format-italic" class="icon" /></button>
+        <button aria-label="取り消し線" class="control" onclick={applyStrikeThrough}>
+            <Icon icon="material-symbols:format-strikethrough" class="icon" />
+        </button>
+        <button aria-label="下線" class="control" onclick={applyUnderline}><Icon icon="material-symbols:format-underlined" class="icon" /></button>
+        <button aria-label="リセット" class="control" onclick={applyReset}><Icon icon="material-symbols:format-clear" class="icon" /></button>
         {#each colors as color}
             <button aria-label="色" class="control" onclick={(_) => applyColor(color)}>
-                <span class={`color-${color}`}><span class={`icon fill`}>square</span></span>
+                <span class={`color-${color}`}><Icon icon="material-symbols:square" class="icon" /></span>
             </button>
         {/each}
-        <button aria-label="リロード" class="control" onclick={reload}><span class="icon fill">sync</span></button>
+        <button aria-label="リロード" class="control" onclick={reload}><Icon icon="material-symbols:sync" class="icon" /></button>
     </div>
     <div contenteditable="true" role="textbox" spellcheck="false" class="main font-mc" id={elementId} oninput={onInput}></div>
     <div class="actions">
