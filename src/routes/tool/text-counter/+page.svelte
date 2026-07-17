@@ -25,7 +25,7 @@
             <div class="control-item">
                 <label for="amount">文字数</label>
                 <input readonly bind:value={amount} type="number" id="amount" />
-                <Button onclick={copy}>{copy_state}</Button>
+                <Button inline onclick={copy}>{copy_state}</Button>
             </div>
         </div>
         <div>

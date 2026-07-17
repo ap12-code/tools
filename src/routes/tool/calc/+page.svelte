@@ -184,7 +184,4 @@
         grid-template-columns: repeat(4, 1fr);
         gap: 10px;
     }
-    .buttons :global(.button-component) {
-        padding: 10px;
-    }
 </style>

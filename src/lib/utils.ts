@@ -12,6 +12,15 @@ export function isTextArray(val: any): val is TextObject[] {
     return false;
 }
 
+export function isJsonString(val: string): boolean {
+    try {
+        JSON.parse(val);
+    } catch {
+        return false;
+    }
+    return true;
+}
+
 export function isTextData(val: any): val is TextData {
     return isTextArray(val) || isTextObject(val);
 }
@@ -58,4 +67,8 @@ export function range(a1: number, a2?: number, a3?: number): number[] {
         }
     }
     return ret;
+}
+
+export function remap(v: number, in_min: number, in_max: number, out_min: number, out_max: number): number {
+    return out_min + ((v - in_min) / (in_max - in_min)) * (out_max - out_min);
 }

@@ -27,6 +27,8 @@
         "@types/node": "^20.16.5",
         "@types/qrcode": "^1.5.5",
         "@types/varint": "^6.0.3",
+        "@types/web-push": "^3",
+        "@types/wicg-file-system-access": "^2023.10.7",
         "mdsvex": "^0.11.2",
         "prettier": "^3.4.2",
         "prettier-plugin-svelte": "^3.3.3",
@@ -39,12 +41,17 @@
     },
     "type": "module",
     "dependencies": {
+        "@types/dropzone": "^5.7.9",
         "archiver": "^7.0.1",
+        "bedrock-protocol": "^3.55.1",
         "bootstrap-icons": "^1.11.3",
         "chart.js": "^4.4.3",
         "decimal.js": "^10.4.3",
         "dom-to-image": "^2.6.0",
+        "dropzone": "^6.0.0-beta.2",
         "esbuild": "^0.25.5",
+        "fpnum": "^1.0.0",
+        "highlight.js": "^11.11.1",
         "js-base64": "^3.7.7",
         "katex": "^0.16.10",
         "lodash": "^4.17.21",
@@ -57,10 +64,14 @@
         "nerdamer-prime": "^1.1.19",
         "prismjs": "^1.30.0",
         "qrcode": "^1.5.3",
+        "sequelize-typescript": "^2.1.6",
         "sharp": "^0.33.4",
         "svelte-awesome-color-picker": "^3.1.0",
+        "svelte-highlight": "^7.9.0",
         "varint": "^6.0.0",
         "vite-plugin-pwa": "^1.0.2",
-        "xml-js": "^1.6.11"
+        "web-push": "^3.6.7",
+        "xml-js": "^1.6.11",
+        "zod": "^4.3.6"
     }
 }

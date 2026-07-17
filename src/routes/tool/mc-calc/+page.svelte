@@ -1,5 +1,6 @@
 <script lang="ts">
     import Container from '$components/Container.svelte';
+    import CheckBox from '$components/form/CheckBox.svelte';
     let n = $state(0);
     let use_lc = $state(true);
     let mapping: Record<string, number> = { lc: 3456, sb: 1728, stack: 64, item: 1 };
@@ -37,6 +38,7 @@
             vaules.sb = (c % 2).toString();
             vaules.lc = Math.floor(c / 2).toString();
         }
+        changeInput();
     }
 
     function changeInput() {
@@ -102,8 +104,7 @@
 
         <div>
             <div class="field2">
-                <input type="checkbox" id="cb-0" bind:checked={use_lc} oninput={changeUseLC} />
-                <label for="cb-0">LCを使用する</label>
+                <CheckBox id="cb-0" bind:checked={use_lc} onchange={changeUseLC} label="LC/SB切り替え" />
             </div>
         </div>
 
@@ -123,9 +124,6 @@
         flex-direction: column;
         gap: 10px;
     }
-    .err {
-        border-color: #d00;
-    }
     input[type='number'] {
         flex-grow: 1;
         padding: 5px;
@@ -134,7 +132,13 @@
         border-radius: 5px;
         color: #fff;
         height: 14px;
-        border: #666 1px solid;
+        border: 1px solid;
+    }
+    input[type='number']:not(.err) {
+        border-color: #666;
+    }
+    input.err {
+        border: 1px solid #d66;
     }
     input:focus {
         outline: none;
@@ -154,16 +158,5 @@
     .field2 {
         display: flex;
         align-items: center;
-    }
-    .field2 input[type='checkbox'] {
-        display: block;
-        height: 15px;
-        width: 15px;
-        background-color: #222;
-        border-radius: 10px;
-        margin: 0 10px;
-    }
-    .field2 label {
-        line-height: 15px;
     }
 </style>

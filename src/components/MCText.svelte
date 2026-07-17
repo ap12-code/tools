@@ -3,7 +3,7 @@
     import '$components/mctext.css';
     import type { Function0 } from 'lodash';
     import type { Nullable, TextData, TextObject } from '$lib/minecraft/types';
-    import { isTextArray } from '$lib/utils';
+    import { isTextArray, isTextObject } from '$lib/utils';
     import Icon from '@iconify/svelte';
 
     let serialized: string = '';
@@ -23,11 +23,19 @@
         if (update) update();
     }
 
-    function compactData(data: TextData) {
-        if (data instanceof Array && data.length == 1) {
-            return data[0];
+    function compactData(inputData: TextData): TextData {
+        let result: TextData = inputData;
+        if (inputData instanceof Array && inputData.length == 1) {
+            result = inputData[0];
         }
-        return data;
+
+        if (isTextObject(result)) {
+            const keys = (Object.keys(result) as (keyof TextObject)[]).filter((k) => result[k] !== undefined);
+            if (keys.length == 1 && keys[0] == 'text') {
+                return result.text;
+            }
+        }
+        return result;
     }
 
     function createNestedElementWithText(nodeNames: string[], text: string) {
@@ -141,7 +149,6 @@
                     color = getColor(elm);
                 }
                 const parents = getParents(elm);
-                console.log(e.textContent, parents);
                 data.push({
                     text: e.textContent || '',
                     color: color,

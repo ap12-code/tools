@@ -1,10 +1,9 @@
 <script lang="ts">
     import { afterNavigate } from '$app/navigation';
-    import { page } from '$app/stores';
+    import { page } from '$app/state';
     import './global.css';
     import { onMount } from 'svelte';
     import { tools } from '$lib/tools.json';
-    import _ from 'lodash';
     import { dev } from '$app/environment';
     import Icon from '@iconify/svelte';
 
@@ -14,8 +13,11 @@
 
     let { children }: Props = $props();
 
+    const sidebar_disabled_paths = ['/nbteditor'];
+
     let fs = false;
     let shown_sidebar = $state(false);
+    let sidebar_enabled = $derived(!sidebar_disabled_paths.includes(page.url.pathname));
 
     type Tool = { href: string; name: string; icon: string };
     type Tools = Tool[];
@@ -71,77 +73,79 @@
     }
     onMount(load);
     afterNavigate(() => {
-        sel = $page.url.pathname;
+        sel = page.url.pathname;
         load();
     });
 </script>
 
 <div class="app">
-    {#if shown_sidebar}
-        <div class="sidebar scroll">
-            <div class="sidebar-inner">
-                <div class="button-collapse">
-                    <button onclick={switchSidebar}>
-                        <Icon icon="material-symbols:arrow-left" class="icon" /> 非表示
-                    </button>
-                </div>
-                <div class="sidebar-header">
-                    <img src="/favicon.png" alt="logo" class="sidebar-logo" />
-                    <a href="/" class:back={$page.url.pathname != '/'}>ToolBox</a>
-                </div>
-                <a class:selected={$page.url.pathname == '/'} class="sidebar-button" href="/">ホーム</a>
-                {#each favorites as t}
-                    <div class="tool">
-                        <a class:selected={$page.url.pathname == t.href} class="sidebar-button" href={t.href}>
-                            <Icon icon="material-symbols:{t.icon.replaceAll('_', '-')}" class="icon" />
-                            {t.name}
-                        </a>
-                        <button class="favorite-button" onclick={(_) => switchFavorite(t)}>
-                            {#if favorites.find((p) => p.name == t.name)}
-                                <Icon icon="material-symbols:star" class="icon" />
-                            {:else}
-                                <Icon icon="material-symbols:star-outline" class="icon" />
-                            {/if}
+    {#if sidebar_enabled}
+        {#if shown_sidebar}
+            <div class="sidebar scroll">
+                <div class="sidebar-inner">
+                    <div class="button-collapse">
+                        <button onclick={switchSidebar}>
+                            <Icon icon="material-symbols:arrow-left" class="icon" /> 非表示
                         </button>
                     </div>
-                {/each}
-                <hr />
-                {#each data as d, i}
-                    {#if !d.collapsed}
-                        <button onclick={(_) => switchCategory(i)} class="sidebar-button">
-                            <Icon icon="material-symbols:stat-1" class="icon" />
-                            {d.name}
-                        </button>
-                        {#each d.tools as t}
-                            <div class="tool mg-right">
-                                <a class:selected={$page.url.pathname.startsWith(t.href)} class="sidebar-button" href={t.href}>
-                                    <Icon icon="material-symbols:{t.icon.replaceAll('_', '-')}" class="icon" />
-                                    {t.name}
-                                </a>
-                                <button class="favorite-button" onclick={(_) => switchFavorite(t)}>
-                                    {#if favorites.find((p) => p.name == t.name)}
-                                        <Icon icon="material-symbols:star" class="icon" />
-                                    {:else}
-                                        <Icon icon="material-symbols:star-outline" class="icon" />
-                                    {/if}
-                                </button>
-                            </div>
-                        {/each}
-                    {:else}
-                        <button onclick={(_) => switchCategory(i)} class="sidebar-button">
-                            <Icon icon="material-symbols:stat-minus-1" class="icon" />
-                            {d.name}
-                        </button>
-                    {/if}
-                {/each}
+                    <div class="sidebar-header">
+                        <img src="/favicon.png" alt="logo" class="sidebar-logo" />
+                        <a href="/" class:back={page.url.pathname != '/'}>ToolBox</a>
+                    </div>
+                    <a class:selected={page.url.pathname == '/'} class="sidebar-button" href="/">ホーム</a>
+                    {#each favorites as t}
+                        <div class="tool">
+                            <a class:selected={page.url.pathname == t.href} class="sidebar-button" href={t.href}>
+                                <Icon icon="material-symbols:{t.icon.replaceAll('_', '-')}" class="icon" />
+                                {t.name}
+                            </a>
+                            <button class="favorite-button" onclick={(_) => switchFavorite(t)}>
+                                {#if favorites.find((p) => p.name == t.name)}
+                                    <Icon icon="material-symbols:star" class="icon" />
+                                {:else}
+                                    <Icon icon="material-symbols:star-outline" class="icon" />
+                                {/if}
+                            </button>
+                        </div>
+                    {/each}
+                    <hr />
+                    {#each data as d, i}
+                        {#if !d.collapsed}
+                            <button onclick={(_) => switchCategory(i)} class="sidebar-button">
+                                <Icon icon="material-symbols:stat-1" class="icon" />
+                                {d.name}
+                            </button>
+                            {#each d.tools as t}
+                                <div class="tool mg-right">
+                                    <a class:selected={page.url.pathname.startsWith(t.href)} class="sidebar-button" href={t.href}>
+                                        <Icon icon="material-symbols:{t.icon.replaceAll('_', '-')}" class="icon" />
+                                        {t.name}
+                                    </a>
+                                    <button class="favorite-button" onclick={(_) => switchFavorite(t)}>
+                                        {#if favorites.find((p) => p.name == t.name)}
+                                            <Icon icon="material-symbols:star" class="icon" />
+                                        {:else}
+                                            <Icon icon="material-symbols:star-outline" class="icon" />
+                                        {/if}
+                                    </button>
+                                </div>
+                            {/each}
+                        {:else}
+                            <button onclick={(_) => switchCategory(i)} class="sidebar-button">
+                                <Icon icon="material-symbols:stat-minus-1" class="icon" />
+                                {d.name}
+                            </button>
+                        {/if}
+                    {/each}
+                </div>
             </div>
-        </div>
-    {:else}
-        <div class="sidebar-show-button">
-            <button onclick={switchSidebar} aria-label="サイドバーを表示">
-                <Icon icon="material-symbols:menu" class="icon" />
-            </button>
-        </div>
+        {:else}
+            <div class="sidebar-show-button">
+                <button onclick={switchSidebar} aria-label="サイドバーを表示">
+                    <Icon icon="material-symbols:menu" class="icon" />
+                </button>
+            </div>
+        {/if}
     {/if}
     <div class="main scroll">
         <div class="dev-banner">
@@ -151,11 +155,12 @@
         </div>
         {@render children?.()}
 
-        {#if $page.url.pathname == '/'}
+        {#if page.url.pathname == '/'}
             <div class="footer">
                 <span>
-                    &copy;2025 ap12<br />
-                    このサイトのソースコードはMITでライセンスされています。ソースコード: <a href="https://github.com/ap12-code/tools">GitHub</a>
+                    &copy;2025-{new Date().getFullYear()} ap12<br />
+                    このサイトのソースコードはMITでライセンスされています。ソースコード: <a href="https://github.com/ap12-code/tools">GitHub</a><br />
+                    <span class="other">「QRコード」は株式会社デンソーウェーブの登録商標です。</span>
                 </span>
             </div>
         {/if}
@@ -242,6 +247,10 @@
         display: block;
         border-radius: 5px;
     }
+    .other {
+        font-size: 13px;
+        color: #bbb;
+    }
     .tool {
         display: flex;
     }
@@ -273,6 +282,8 @@
     .main {
         flex: 1;
         overflow-y: scroll;
+        height: 100%;
+        padding: 0;
     }
 
     .back {

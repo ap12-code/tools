@@ -1,6 +1,7 @@
 <script lang="ts">
     import { browser } from '$app/environment';
     import Container from '$components/Container.svelte';
+    import CheckBox from '$components/form/CheckBox.svelte';
     import { onMount } from 'svelte';
 
     const LOCAL_STORAGE_KEY = 'data:password';
@@ -81,24 +82,34 @@
             </div>
             <div class="control-item">
                 <label for="use-lower">小文字を使用する</label>
-                <input bind:checked={use_lower} onchange={() => gen()} type="checkbox" class="checkbox" id="use-lower" />
+                <div>
+                    <CheckBox bind:checked={use_lower} onchange={() => gen()} id="use-lower" />
+                </div>
             </div>
             <div class="control-item">
                 <label for="use-upper">大文字を使用する</label>
-                <input bind:checked={use_upper} onchange={() => gen()} type="checkbox" class="checkbox" id="use-upper" />
+                <div>
+                    <CheckBox bind:checked={use_upper} onchange={() => gen()} id="use-upper" />
+                </div>
             </div>
             <div class="control-item">
                 <label for="use-digits">数字を使用する</label>
-                <input bind:checked={use_digits} onchange={() => gen()} type="checkbox" class="checkbox" id="use-digits" />
+                <div>
+                    <CheckBox bind:checked={use_digits} onchange={() => gen()} id="use-digits" />
+                </div>
             </div>
             <div class="control-item">
                 <label for="use-symbols">記号を使用する</label>
-                <input bind:checked={use_symbols} onchange={() => gen()} type="checkbox" class="checkbox" id="use-symbols" />
+                <div>
+                    <CheckBox bind:checked={use_symbols} onchange={() => gen()} id="use-symbols" />
+                </div>
             </div>
             <hr />
             <div class="control-item">
                 <label for="auto-regen">自動再生成</label>
-                <input bind:checked={auto_regen} onchange={updateAutoRegen} type="checkbox" class="checkbox" id="auto-regen" />
+                <div>
+                    <CheckBox bind:checked={auto_regen} onchange={updateAutoRegen} id="auto-regen" />
+                </div>
             </div>
             <button onclick={() => gen(true)}>再生成</button>
         </div>
@@ -120,44 +131,15 @@
         align-items: center;
         width: 100%;
     }
-    .control-item > input[type='number'] {
+    .control-item input[type='number'] {
         margin-left: auto;
         width: 50%;
         text-align: end;
+        font-size: 14px;
     }
-    .control-item > input[type='checkbox'] {
+    .control-item > div {
         margin-left: auto;
         text-align: end;
-    }
-    .checkbox {
-        cursor: pointer;
-        appearance: none;
-        height: 24px;
-        width: 24px;
-        margin: 4px;
-        border: 1px solid #8b98a5;
-        border-radius: 4px;
-    }
-    .checkbox:checked {
-        border: 1px solid #8b98a5;
-        background-color: #fff;
-    }
-    .checkbox:checked::before {
-        display: grid;
-        place-content: center;
-        color: #000;
-        height: 100%;
-        font-family: 'Material Symbols Rounded';
-        font-variation-settings:
-            'FILL' 1,
-            'wght' 400,
-            'GRAD' 0,
-            'opsz' 24;
-        font-size: 18px;
-        content: '\e5ca';
-    }
-    .checkbox:focus-visible {
-        outline: none;
     }
     .main {
         display: flex;

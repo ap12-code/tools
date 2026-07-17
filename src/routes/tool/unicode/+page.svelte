@@ -1,5 +1,6 @@
 <script>
     import Container from '$components/Container.svelte';
+    import Icon from '@iconify/svelte';
 
     let plain = $state('');
     let unicode = $state('');
@@ -46,7 +47,7 @@
             <textarea bind:value={plain} oninput={changePlain}></textarea>
         </div>
         <div>
-            <button aria-label="入れ替え" onclick={exchange}><span class="icon">swap_vert</span></button>
+            <button aria-label="入れ替え" onclick={exchange}><Icon icon="material-symbols:swap-vert"></Icon> 入れ替え</button>
         </div>
         <div>
             <p>UNICODE</p>

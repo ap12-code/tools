@@ -1,24 +1,22 @@
 <script lang="ts">
-    import { createEventDispatcher } from 'svelte';
-
     interface Props {
         name?: string;
         value?: boolean;
+        oninput?: () => any;
     }
 
-    let { name = '', value = $bindable(false) }: Props = $props();
+    let { name = '', value = $bindable(false), oninput = () => {} }: Props = $props();
 
-    const dispatch = createEventDispatcher();
     function update() {
-        dispatch('input');
+        oninput();
     }
 </script>
 
-<div class="toggleWapper">
+<div class="toggle-wrapper">
     <label class="toggle-button">
-        {name}
         <input type="checkbox" bind:checked={value} onchange={update} />
     </label>
+    <span class="toggle-name">{name}</span>
 </div>
 
 <style>

@@ -1,0 +1,26 @@
+.tree .tree-element {
+    margin-bottom: 5px;
+    position: relative;
+}
+.tree .tree-element::before {
+    content: '';
+    position: absolute;
+    left: -14px;
+    width: 14px;
+    height: calc(100% + 21px);
+    border-left: 1px solid #666;
+}
+.tree .tree-element:nth-last-child(2) {
+    margin-bottom: 0;
+}
+.tree .tree-element:last-child::before {
+    height: 7px;
+}
+.tree .tree-element::after {
+    content: '';
+    top: 7px;
+    left: -14px;
+    width: 10px;
+    position: absolute;
+    border-bottom: 1px solid #666;
+}

@@ -11,7 +11,7 @@
     let { show_back = true, back_to = '/', children, full = false }: Props = $props();
 </script>
 
-<div class:container={!full}>
+<div class="container" class:full>
     {#if show_back}
         <a class="back" href={back_to}>
             <Icon icon="material-symbols:arrow-left" class="icon" />{back_to == '/' ? 'ホームに戻る' : '戻る'}
@@ -39,5 +39,8 @@
         .container {
             margin: 20px 100px;
         }
+    }
+    .full {
+        margin: 10px;
     }
 </style>

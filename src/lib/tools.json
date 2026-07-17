@@ -70,6 +70,11 @@
                     "icon": "123"
                 },
                 {
+                    "href": "/tool/roulette",
+                    "name": "ルーレット",
+                    "icon": "casino"
+                },
+                {
                     "href": "/tool/qrcode",
                     "name": "QRコード",
                     "icon": "qr_code"
@@ -179,6 +184,11 @@
                     "href": "/tool/timeavg",
                     "name": "平均時間",
                     "icon": "avg_pace"
+                },
+                {
+                    "href": "/tool/timer",
+                    "name": "タイマー",
+                    "icon": "av-timer"
                 }
             ],
             "collapsed": false,
@@ -222,6 +232,11 @@
                     "href": "/tool/mathjax",
                     "name": "数式表示",
                     "icon": "function"
+                },
+                {
+                    "href": "/tool/ratio",
+                    "name": "比率",
+                    "icon": "aspect-ratio"
                 }
             ],
             "collapsed": false,

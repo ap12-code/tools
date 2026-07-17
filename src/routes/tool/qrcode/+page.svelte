@@ -1,11 +1,10 @@
 <script lang="ts">
     import Container from '$components/Container.svelte';
     import QRCode from 'qrcode';
-    import { page } from '$app/stores';
     import { onMount } from 'svelte';
     import ColorPicker from 'svelte-awesome-color-picker';
 
-    let input = $state('https://komaken.net');
+    let input = $state('https://tools.ap12.net');
     let err: string = $state('');
     let backcol = $state('#ffffffff');
     let forecol = $state('#00000000');
@@ -61,8 +60,11 @@
             element.click();
         });
     }
+    function share() {
+        navigator.clipboard.writeText(`${location.protocol}//${location.host}/qrcode.png?data=${input}`);
+    }
     onMount(() => {
-        input = $page.url.origin;
+        input = location.origin;
         update();
     });
 </script>
@@ -87,8 +89,10 @@
             <p>{err}</p>
         {/if}
         <button onclick={copy}>コピー</button>
+        <button onclick={share}>URLとしてコピー</button>
         <button onclick={download}>ダウンロード</button>
     </div>
+    <p>QRコードは(株)デンソーウェーブの登録商標です。</p>
 </Container>
 
 <style>

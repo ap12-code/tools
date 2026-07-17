@@ -2,7 +2,6 @@
     import Container from '$components/Container.svelte';
     import { DateTime, Duration } from 'luxon';
     import { browser } from '$app/environment';
-    import { SvelteDate } from 'svelte/reactivity';
 
     let latency = $state(Duration.fromMillis(0));
     let offset = $state(Duration.fromMillis(0));
@@ -12,7 +11,7 @@
     let tzs: string[] = $state([]);
 
     let fixedTime: DateTime | null = $state(null);
-    let dtime: number | null = $state(null);
+    let syncing: boolean | null = $state(false);
 
     let timeStr: string = $state('');
     let dateStr: string = $state('');
@@ -37,6 +36,7 @@
         if (last_sync && last_sync.diffNow().seconds < 60) {
             return;
         }
+        syncing = true;
         const sendTime = DateTime.now();
         const fetched = await fetch(`https://timeapi.io/api/time/current/zone?timeZone=${tz}`);
         const json: TimeAPICurrentZone = await fetched.json();
@@ -47,6 +47,7 @@
         last_sync = fixedTime;
         console.log('[FETCH] Time: OK');
         console.log(fixedTime.toFormat('yyyy/MM/dd HH:mm:ss'));
+        syncing = false;
     }
 
     function day(day: number) {
@@ -66,10 +67,6 @@
             case 7:
                 return '日';
         }
-    }
-
-    function pad(val: number): string {
-        return val.toString().padStart(2, '0');
     }
 
     function getTimeStr(val: DateTime): string {
@@ -99,7 +96,6 @@
             last_sync_sec = fixedTime.diff(last_sync).milliseconds;
         }, 1000);
         setInterval(async () => {
-            fixedTime = null;
             await fetchTime();
         }, 64000);
     }
@@ -130,6 +126,9 @@
                     <option value={tze}>{tze.replace('Etc/', '')}</option>
                 {/each}
             </select>
+            {#if syncing}
+                <p>同期中...</p>
+            {/if}
             {#if last_sync}
                 <span class="debug">
                     最終同期: {last_sync.toFormat('yyyy/MM/dd HH:mm:ss')} ({Math.floor(last_sync_sec / 1000)}秒前)
