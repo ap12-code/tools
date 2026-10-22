@@ -42,7 +42,7 @@ async function run_whois(address: string) {
                 whoisServer = element.elements.find((p) => p.name == 'whoisServer')?.attributes.host ?? '';
             }
         });
-        const { stdout } = await execFileAsync(`whois`, [address, whoisServer]);
+        const { stdout } = await execFileAsync(`whois`, [address, whoisServer], { timeout: 5000, maxBuffer: 1024 * 1024 });
         const splited = stdout.split('\n');
         let result: Record<string, any> = {};
 
