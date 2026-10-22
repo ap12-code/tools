@@ -1,7 +1,7 @@
 <script lang="ts">
     import Container from '$components/Container.svelte';
     import { read, NBTData, write as nbtWrite, type RootTag } from 'nbtify';
-    import FileUpload from '$components/FileUpload.svelte';
+    import FileUpload from '$components/EditableFileUpload.svelte';
     import NBTValue from './NBTValue.svelte';
     import Menu from '$components/menu/Menu.svelte';
     import MenuItem from '$components/menu/MenuItem.svelte';

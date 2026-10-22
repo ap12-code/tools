@@ -1,7 +1,7 @@
 <script lang="ts" generics="T">
     import { alwaysTrueValidator, type Validator } from '$lib/validator';
 
-    interface Props {
+    type Props = {
         label?: string;
         oninput?: (() => any) | null;
         value?: T;
@@ -9,9 +9,11 @@
         validator?: Validator<T> | null;
         copyable?: boolean;
         error?: boolean;
-        error_message?: string;
+        error_message?: string | null;
         read_only?: boolean;
-    }
+        multiline?: boolean;
+        height?: string;
+    };
 
     let {
         label = '',
@@ -22,13 +24,16 @@
         copyable = false,
         error = $bindable(false),
         error_message = $bindable(''),
-        read_only = false
+        height = '',
+        read_only = false,
+        multiline = false,
+        ...restProps
     }: Props = $props();
 
     let labelId = $derived(createLabelId());
 
     function update() {
-        if (validator && value) {
+        if (validator && value !== undefined) {
             const result = validator(value);
             error = result.is_error();
             if (!error) {
@@ -55,16 +60,23 @@
     {#if label}
         <label for={labelId}>{label}</label>
     {/if}
-    <input readonly={read_only} type="text" bind:value {placeholder} id={labelId} class:error oninput={update} />
+    {#if multiline}
+        <textarea style:height readonly={read_only} bind:value {placeholder} id={labelId} class:error oninput={update}></textarea>
+    {:else}
+        <input {...restProps} readonly={read_only} type="text" bind:value {placeholder} id={labelId} class:error oninput={update} />
+    {/if}
     {#if copyable}
         <button onclick={copy}>コピー</button>
     {/if}
 </div>
-<span>{error_message}</span>
+<span class="error-message">{error_message}</span>
 
 <style>
     .error {
-        border-color: #d00;
+        border-color: #d33;
+    }
+    .error-message {
+        color: #d77;
     }
     input {
         flex: 1 1;
@@ -77,7 +89,18 @@
         font-family: 'Zen Maru Gothic', serif;
         border: 1px #666 solid;
     }
-    input:focus {
+    textarea {
+        flex: 1 1;
+        padding: 5px;
+        background-color: #222;
+        resize: none;
+        border-radius: 5px;
+        color: #fff;
+        font-family: 'Zen Maru Gothic', serif;
+        border: 1px #666 solid;
+    }
+    input:focus,
+    textarea:focus {
         outline: none;
     }
     button {

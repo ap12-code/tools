@@ -18,8 +18,21 @@ export function int(value: number) {
     return new Integer(value);
 }
 
-export class Byte {}
-export class Short {}
+export class Byte extends Number {
+    private internalValue: number | Number;
+    constructor(i: number | Number) {
+        super();
+        this.internalValue = i;
+    }
+}
+export class Short extends Number {
+    private internalValue: number | Number;
+    constructor(i: number | Number) {
+        super();
+        this.internalValue = i;
+    }
+}
+
 export class Integer extends Number implements Comparable<Integer> {
     private internalValue: number;
 
@@ -27,17 +40,10 @@ export class Integer extends Number implements Comparable<Integer> {
         super();
         this.internalValue = i;
     }
-
-    public static toString(i: Integer, radix: Integer) {
-        if (radix < int(2) || radix > int(36)) {
-            radix = int(10);
-        }
-        if (radix == int(10)) {
-            return this.toString2(i);
-        } else {
-            const buf = new ByteArray();
-        }
+    compareTo(other: Integer): Integer {
+        throw new Error('Method not implemented.');
     }
+
     valueOf(): number {
         return this.internalValue;
     }

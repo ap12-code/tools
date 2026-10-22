@@ -1,5 +1,7 @@
 <script lang="ts">
+    import { page } from '$app/state';
     import Icon from '@iconify/svelte';
+    import { onMount } from 'svelte';
 
     interface Props {
         show_back?: boolean;
@@ -8,7 +10,15 @@
         full?: boolean;
     }
 
-    let { show_back = true, back_to = '/', children, full = false }: Props = $props();
+    let { show_back = true, back_to, children, full = false }: Props = $props();
+
+    onMount(() => {
+        if (page.url.searchParams.has('ref') && !back_to) {
+            back_to = page.url.searchParams.get('ref')!!;
+        } else {
+            back_to = '/';
+        }
+    });
 </script>
 
 <div class="container" class:full>

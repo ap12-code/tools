@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
     import Icon from '@iconify/svelte';
+    import { onMount } from 'svelte';
 
     interface Props {
-        files: FileSystemFileHandle[];
+        files: File[];
         onchange?: () => any;
     }
 
@@ -24,17 +24,11 @@
             if (!event.dataTransfer) return;
             const promises = Array.from(event.dataTransfer.items)
                 .filter((x) => x.kind === 'file')
-                .map((x) => x.getAsFileSystemHandle());
+                .map((x) => x.getAsFile());
             const handles = (await Promise.all(promises)).filter((x) => x !== null && x instanceof FileSystemFileHandle);
             files.push(...handles);
             onchange();
             hovering = false;
-        });
-        element.addEventListener('click', async (event) => {
-            const picker = await window.showOpenFilePicker();
-            if (picker.length <= 0) return;
-            files.push(picker[0]);
-            onchange();
         });
         element.addEventListener('dragleave', () => {
             hovering = false;
@@ -45,17 +39,19 @@
     });
 </script>
 
-<div class="dropzone" class:hovering {id}>
-    <Icon icon="material-symbols:drive-folder-upload" width="50px" height="50px"></Icon>
-    {#if hovering}
-        <p>ドロップして開く</p>
-    {:else}
-        <p>クリックまたはドラッグ&ドロップしてファイルを開く</p>
-    {/if}
+<div class="dropzone-parent">
+    <Icon icon="material-symbols:drive-folder-upload" color="dropzone" width="50px" height="50px"></Icon>
+    <input type="file" class="dropzone" class:hovering {id} />
 </div>
 
 <style>
+    .dropzone-parent {
+        text-align: center;
+        background: none;
+        border: none;
+    }
     .dropzone {
+        appearance: none;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -65,7 +61,12 @@
         border: #666 1px dotted;
         border-radius: 5px;
         color: #777;
+    }
+    .dropzone::file-selector-button {
         text-align: center;
+        background: none;
+        border: none;
+        color: transparent;
     }
     .hovering {
         border: #fff 1px solid;

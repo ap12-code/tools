@@ -65,8 +65,11 @@
         points = [];
         let lines: string[] = [];
 
-        const solver = one(nerdamer(expr));
-        const solver_y = one(solver.solveFor('y')).evaluate();
+        const solver = one(nerdamer(expr)).solveFor;
+        if (!solver) {
+            return;
+        }
+        const solver_y = one(solver('y')).evaluate();
 
         const max = Math.ceil(graph_size / small_grid_size / zoom / 2 / 10);
 

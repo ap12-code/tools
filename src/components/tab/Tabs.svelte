@@ -6,20 +6,27 @@
         tab: Snippet<[{ name: string }]>;
     }
 
-    let props: Props = $props();
-    let selectedTab: string = $state(props.tabs[0]);
+    let { tabs, tab }: Props = $props();
+    let selectedTab: string = $state('');
+
+    function setTab(tab: string) {
+        selectedTab = tab;
+    }
+    $effect(() => {
+        selectedTab = tabs[0];
+    });
 </script>
 
 <div class="tabs">
     <div class="nav">
-        {#each props.tabs as tab}
-            <button class:active={selectedTab == tab} class="nav-button" onclick={() => (selectedTab = tab)}>{tab}</button>
+        {#each tabs as tab}
+            <button class:active={selectedTab == tab} class="nav-button" onclick={() => setTab(tab)}>{tab}</button>
         {/each}
     </div>
 
     {#if selectedTab}
         <div class="content">
-            {@render props.tab?.({ name: selectedTab })}
+            {@render tab?.({ name: selectedTab })}
         </div>
     {/if}
 </div>

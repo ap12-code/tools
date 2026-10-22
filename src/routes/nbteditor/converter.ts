@@ -59,11 +59,11 @@ function createIntN(n: IntBit, input: bigint | number): IntMap[typeof n] {
         case IntBit.INT64:
             return BigInt(input);
         case IntBit.INT32:
-            return new Int32(input);
+            return new Int32(Number(input));
         case IntBit.INT16:
-            return new Int16(input);
+            return new Int16(Number(input));
         case IntBit.INT8:
-            return new Int8(input);
+            return new Int8(Number(input));
     }
 }
 
@@ -76,9 +76,9 @@ function convertNumber(to: TAG, input: TagTypeMap[typeof to]): TypedTag<typeof t
 
     switch (to) {
         case TAG.LONG:
-            return createIntN(IntBit.INT64, input.valueOf());
+            return createIntN(IntBit.INT64, Number(input));
         case TAG.INT:
-            return createIntN(IntBit.INT32, input.valueOf());
+            return createIntN(IntBit.INT32, Number(input));
     }
 
     return null;

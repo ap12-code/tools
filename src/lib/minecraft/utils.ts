@@ -7,4 +7,7 @@ export class Optional<T> {
     public static empty<T>(): Optional<T> {
         return new Optional(null as any);
     }
+    public static of<T>(value: T): Optional<T> {
+        return new Optional(value);
+    }
 }

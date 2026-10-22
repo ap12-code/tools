@@ -1,8 +1,10 @@
-import { Integer, type Byte } from '$lib/fixed';
+import { Integer, Byte } from '$lib/fixed';
 import { Optional } from '../utils';
+import type { NBTEnd } from './end';
 import type { DataInput } from './input';
 import { NBTScanner } from './scanner';
 import type { NBTSizeTracker } from './tracker';
+import type { NBTElementVisitor } from './visitor';
 
 export abstract class NBTType<T extends NBTElement> {
     abstract read(input: DataInput, tracker: NBTSizeTracker): T;
@@ -18,7 +20,9 @@ export abstract class NBTType<T extends NBTElement> {
         }
     }
     abstract skip(input: DataInput, count: Integer | null, tracker: NBTSizeTracker): void;
-    createInvalid(): NBTType<NBTEnd>;
+    createInvalid(): NBTType<NBTEnd> | null {
+        return null;
+    }
 }
 
 export abstract class NBTElement {
@@ -44,7 +48,7 @@ export abstract class NBTElement {
         return Optional.empty();
     }
     asByte(): Optional<Byte> {
-        return this.asNumber();
+        return Optional.empty();
     }
 }
 

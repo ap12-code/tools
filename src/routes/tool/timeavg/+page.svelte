@@ -1,7 +1,7 @@
 <script lang="ts">
     import Container from '$components/Container.svelte';
-    import moment from 'moment';
     import { onMount } from 'svelte';
+    import { Duration } from 'luxon';
 
     let texts: string[] = $state(['']);
     let avgTimes: number = $state(0);
@@ -18,9 +18,9 @@
             i = '00:' + i;
         }
 
-        const ti = moment.duration(i, 'seconds');
-        if (ti.isValid()) {
-            return ti.asSeconds();
+        const ti = Duration.fromMillis(1000);
+        if (ti.isValid) {
+            return ti.as('seconds');
         }
         return NaN;
     }

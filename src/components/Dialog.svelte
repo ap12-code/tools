@@ -7,14 +7,16 @@
         title?: string;
         children?: Snippet;
         closeable?: boolean;
+        onclose?: () => boolean;
     }
 
     let element: HTMLDialogElement;
 
-    let { show = $bindable(false), title = '', children, closeable = true }: Props = $props();
+    let { show = $bindable(false), title = '', children, closeable = true, onclose }: Props = $props();
 
     $effect(() => {
         show ? element.showModal() : element.close();
+        if (!show && onclose) onclose();
     });
 </script>
 

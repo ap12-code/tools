@@ -1,5 +1,6 @@
 <script lang="ts">
     import Button from '$components/Button.svelte';
+    import Code from '$components/Code.svelte';
     import Container from '$components/Container.svelte';
 
     let formatted = $state('');
@@ -111,7 +112,9 @@
                     <Button onclick={copy}><i class="bi bi-clipboard2"></i> {copy_btn}</Button>
                 </div>
             </div>
-            <div class="output">{formatted}</div>
+            <div>
+                <Code bind:content={formatted} language="json"></Code>
+            </div>
         </div>
     </div>
 </Container>
@@ -192,15 +195,6 @@
         height: 11px;
         border-radius: 50%;
         background: #999;
-    }
-    .output {
-        display: block;
-        background-color: #111;
-        padding: 10px;
-        border-radius: 5px;
-        height: 200px;
-        font-family: monospace;
-        white-space: break-spaces;
     }
     input.error {
         border: red 1px solid;

@@ -44,6 +44,11 @@
                     "href": "/tool/json-merger",
                     "name": "JSONの結合(マージ)",
                     "icon": "merge"
+                },
+                {
+                    "href": "/tool/era",
+                    "name": "歴・年齢",
+                    "icon": "cake_outline"
                 }
             ],
             "collapsed": false,

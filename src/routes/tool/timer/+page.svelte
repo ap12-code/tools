@@ -15,6 +15,11 @@
     let push_notification: boolean | undefined = $state();
     let push_notification_error = $state(false);
 
+    const push_notification_options = {
+        applicationServerKey: 'BCW2UvZB-Ta-vKESvbzmR5-RAmQf2Bdc-7_E8rL8ELJBY6Uq74OkKXihEoCZEHamqHnxUr6ZkeMHOgtxouBLhJY',
+        userVisibleOnly: true
+    };
+
     onMount(async () => {
         await navigator.serviceWorker.register('/service-worker.js', {
             type: dev ? 'module' : 'classic'
@@ -28,9 +33,7 @@
     }
     async function loadPushNotification() {
         const registaration = await navigator.serviceWorker.ready;
-        const permission = await registaration.pushManager.permissionState({
-            userVisibleOnly: true
-        });
+        const permission = await registaration.pushManager.permissionState(push_notification_options);
         const state = permission === 'granted';
         if (!state) {
             updatePushNotification(false);
@@ -169,11 +172,7 @@
         if (value) {
             try {
                 const worker = await navigator.serviceWorker.ready;
-                const options = {
-                    applicationServerKey: 'BCW2UvZB-Ta-vKESvbzmR5-RAmQf2Bdc-7_E8rL8ELJBY6Uq74OkKXihEoCZEHamqHnxUr6ZkeMHOgtxouBLhJY',
-                    userVisibleOnly: true
-                };
-                const subscription = await worker.pushManager.subscribe(options);
+                const subscription = await worker.pushManager.subscribe(push_notification_options);
                 if (subscription === undefined) {
                     await updatePushNotification(false);
                     return;

@@ -1,12 +1,12 @@
 <script lang="ts">
     import Container from '$components/Container.svelte';
-    import nerdamer from 'nerdamer-prime';
+    import nerdamer, { type NerdamerExpression } from 'nerdamer-prime';
     import katex from 'katex';
     import 'katex/dist/katex.css';
     import Button from '$components/Button.svelte';
 
     let plain = $state('');
-    let output: nerdamer.Expression | null = $state(null);
+    let output: NerdamerExpression | null = $state(null);
     let out2 = '';
 
     function update() {

@@ -1,61 +1,248 @@
 <script lang="ts">
+    import { page } from '$app/state';
+    import Button from '$components/Button.svelte';
+    import Buttons from '$components/Buttons.svelte';
     import Container from '$components/Container.svelte';
+    import CopyButton from '$components/CopyButton.svelte';
+    import CheckBox from '$components/form/CheckBox.svelte';
+    import Text from '$components/form/Text.svelte';
+    import Icon from '@iconify/svelte';
+    import { onMount } from 'svelte';
+    import z from 'zod';
 
-    let amount = $state(4);
-    let noph = $state(false);
-    let useupper = $state(false);
-    let uuids: string[] = $state([]);
-    function gen() {
-        if (amount <= 0) amount = 1;
-        uuids = [];
-        for (let i = 0; i < amount; i++) {
-            let uuid: string = crypto.randomUUID();
-            if (noph) {
-                uuid = uuid.replace(/-/g, '');
-            }
-            if (useupper) {
-                uuid = uuid.toUpperCase();
-            }
-            uuids.push(uuid);
+    const HexSchema = z.string().regex(/^[0-9a-fA-F]{32}$/);
+    const StorageSchema = z.object({
+        uuid: HexSchema,
+        minecraft: z.boolean(),
+        noph: z.boolean(),
+        useupper: z.boolean()
+    });
+    let uuid = new Uint8Array(16);
+    let uuidView = new DataView(uuid.buffer);
+    const UUID_GROUP_SIZES = [8, 4, 4, 4, 12];
+
+    let hex: string = $state('');
+    let ver: string = $state('');
+    let minecraft: boolean = $state(false);
+    let error: string | null = $state(null);
+    let fmtHex: string = $state('');
+    let intArray: string[] = $state([]);
+    let fmtIntArray: string = $derived(`[I;${intArray[0]},${intArray[1]},${intArray[2]},${intArray[3]}]`);
+    let most: string = $state('');
+    let least: string = $state('');
+
+    let noph: boolean = $state(false);
+    let useupper: boolean = $state(false);
+
+    function onInput(param: string) {
+        switch (param) {
+            case 'hex':
+                hex = fmtHex.trim();
+                update();
+                break;
+            case 'most':
+            case 'least':
+                updateMostLeast();
+                break;
+            case 'fmt':
+                update();
         }
     }
-    function copy(data: string) {
-        navigator.clipboard.writeText(data);
+
+    function setHex(value: string) {
+        hex = value.trim().toLowerCase();
+        if (hex.includes('-')) {
+            hex = hex
+                .split('-')
+                .map((n, i) => n.padStart(UUID_GROUP_SIZES[i], '0'))
+                .join('');
+        }
+        hex = hex.replace(/^0+/, '').padStart(32, '0');
     }
-    gen();
+
+    function updateMostLeast() {
+        console.log(most, least);
+        uuidView.setBigInt64(0, BigInt(most), false);
+        uuidView.setBigInt64(8, BigInt(least), false);
+        hex = uuidView.getBigInt64(0, false).toString(16) + uuidView.getBigInt64(8, false).toString(16);
+        update();
+    }
+
+    function update() {
+        setHex(hex);
+        if (!HexSchema.safeParse(hex).success) {
+            error = '無効なUUIDです';
+            return;
+        }
+
+        uuidView.setBigUint64(0, BigInt('0x' + hex.substring(0, 16)), false);
+        uuidView.setBigUint64(8, BigInt('0x' + hex.substring(16)), false);
+
+        const groups = [];
+        let offset = 0;
+        for (const size of UUID_GROUP_SIZES) {
+            groups.push(hex.substring(offset, offset + size));
+            offset += size;
+        }
+        if (noph) {
+            fmtHex = groups.join('');
+        } else {
+            fmtHex = groups.join('-');
+        }
+        if (useupper) {
+            fmtHex = fmtHex.toUpperCase();
+        }
+
+        most = uuidView.getBigInt64(0, false).toString();
+        least = uuidView.getBigInt64(8, false).toString();
+        ver = hex.at(12)!!;
+
+        for (let index = 0; index < 4; index++) {
+            intArray[index] = uuidView.getInt32(index * 4, false).toString();
+        }
+    }
+
+    function random() {
+        hex = crypto.randomUUID();
+        update();
+    }
+
+    function lookupPlayer() {
+        localStorage.setItem('data:mc-uuid', hex);
+        location.href = `/tool/mcid?q=${fmtHex}&ref=${encodeURIComponent(location.pathname)}`;
+    }
+
+    onMount(() => {
+        if (page.url.searchParams.has('v')) {
+            hex = page.url.searchParams.get('v')!!;
+            update();
+            return;
+        }
+        const storage = localStorage.getItem('data:uuid');
+        if (!storage) {
+            random();
+            return;
+        }
+        const parsedStorage = StorageSchema.safeParse(JSON.parse(storage));
+        if (parsedStorage.success) {
+            setHex(parsedStorage.data.uuid);
+            useupper = parsedStorage.data.useupper;
+            noph = parsedStorage.data.noph;
+            update();
+        } else {
+            random();
+        }
+    });
+
+    $effect(() => {
+        localStorage.setItem('data:uuid', JSON.stringify({ uuid: hex.toLowerCase(), minecraft: minecraft, noph: noph, useupper: useupper }));
+    });
 </script>
 
 <Container>
-    <h1>UUIDジェネレーター</h1>
+    <h1>UUID</h1>
     <hr />
-    <div class="main">
-        <div>
-            <div class="controls">
-                <div class="checks">
-                    <input bind:checked={noph} onchange={gen} type="checkbox" class="checkbox" id="no-ph" />
-                    <label for="no-ph">ハイフンなし</label>
-                </div>
-                <div class="checks">
-                    <input bind:checked={useupper} onchange={gen} type="checkbox" class="checkbox" id="use-upper" />
-                    <label for="use-upper">大文字</label>
-                </div>
-                <div class="counts">
-                    <label for="amount">生成数</label>
-                    <input bind:value={amount} onchange={gen} min={1} max={50} type="number" id="amount" />
-                </div>
-                <button onclick={gen}>再生成</button>
-            </div>
-            {#each uuids as uuid, i}
-                <div class="item">
-                    <input type="text" readonly={true} bind:value={uuids[i]} />
-                    <button onclick={(_) => copy(uuid)}>コピー</button>
-                </div>
-            {/each}
+    <Text bind:value={fmtHex} oninput={() => onInput('hex')} error={error !== null} error_message={error}></Text>
+    <Buttons>
+        <Button onclick={() => onInput('hex')}><Icon icon="material-symbols:keyboard-return" class="icon" width="24" height="24" /> 変換</Button>
+        <Button onclick={random}><Icon icon="material-symbols:casino" class="icon" width="24" height="24" /> ランダム (v4)</Button>
+        <CopyButton data={fmtHex}>コピー</CopyButton>
+    </Buttons>
+    <div class="controls">
+        <div class="checks">
+            <CheckBox bind:checked={noph} onchange={() => onInput('fmt')} id="no-ph" />
+            <label for="no-ph">ハイフンなし</label>
         </div>
+        <div class="checks">
+            <CheckBox bind:checked={useupper} onchange={() => onInput('fmt')} id="use-upper" />
+            <label for="use-upper">大文字</label>
+        </div>
+    </div>
+    <br />
+    <Text copyable={true} read_only label="UUID バージョン" bind:value={ver} oninput={() => onInput('ver')}></Text>
+    <br />
+    <button
+        class="minecraft"
+        onclick={() => {
+            minecraft = !minecraft;
+        }}
+    >
+        {#if minecraft}
+            <Icon icon="material-symbols:arrow-drop-up" width="24" height="24" class="icon" mode="mask"></Icon>
+        {:else}
+            <Icon icon="material-symbols:arrow-drop-down" width="24" height="24" class="icon" mode="mask"></Icon>
+        {/if}
+        <span>Minecraft</span>
+    </button>
+    <div style:display={minecraft ? 'block' : 'none'}>
+        <Text copyable={true} label="UUID Most" bind:value={most} oninput={() => onInput('most')}></Text>
+        <Text copyable={true} label="UUID Least" bind:value={least} oninput={() => onInput('least')}></Text>
+        <br />
+        <div class="int-array">
+            <p>[I;</p>
+            <input type="text" bind:value={intArray[0]} />
+            <p>,</p>
+            <input type="text" bind:value={intArray[1]} />
+            <p>,</p>
+            <input type="text" bind:value={intArray[2]} />
+            <p>,</p>
+            <input type="text" bind:value={intArray[3]} />
+            <p>]</p>
+        </div>
+        <CopyButton data={fmtIntArray}>配列をコピー</CopyButton>
+        <div class="spacer"></div>
+        <Button onclick={lookupPlayer}><Icon icon="material-symbols:search" class="icon" width="24" height="24" /> プレイヤーを検索</Button>
     </div>
 </Container>
 
 <style>
+    .int-array {
+        display: flex;
+        gap: 5px;
+        margin: 5px 0;
+        padding: 10px;
+        border: 1px solid #333;
+        border-radius: 5px;
+        background-color: #111;
+    }
+    .int-array > p {
+        line-height: 1.5;
+        margin: 0;
+        font-family: monospace, serif;
+        color: #ddd;
+    }
+    input {
+        box-sizing: border-box;
+        flex: 1 1;
+        padding: 5px;
+        background-color: #111;
+        resize: none;
+        align-content: center;
+        border-radius: 5px;
+        color: #fff;
+        font-family: monospace, serif;
+        border: 1px #666 solid;
+    }
+    input:focus {
+        outline: none;
+    }
+    .minecraft {
+        transition: all 0.25s;
+        color: #fff;
+        background-color: transparent;
+        border: none;
+        border-radius: 5px;
+    }
+    .minecraft span {
+        font-size: 1.2em;
+        vertical-align: 3px;
+    }
+    .minecraft:hover {
+        background-color: #fff3;
+    }
+    .spacer {
+        margin-top: 5px;
+    }
     .checks {
         display: flex;
         align-items: center;
@@ -67,79 +254,5 @@
         display: flex;
         gap: 20px;
         align-items: center;
-    }
-    .checkbox {
-        cursor: pointer;
-        appearance: none;
-        height: 24px;
-        width: 24px;
-        margin: 4px;
-        border: 1px solid #8b98a5;
-        border-radius: 4px;
-    }
-    .checkbox:checked {
-        border: 1px solid #8b98a5;
-        background-color: #fff;
-    }
-    .checkbox:checked::before {
-        display: inline-block;
-        position: absolute;
-        color: #000;
-        height: 24px;
-        width: 18px;
-        padding: 2px;
-        vertical-align: -0.125em;
-        content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='m9.55 18l-5.7-5.7l1.425-1.425L9.55 15.15l9.175-9.175L20.15 7.4z'/%3E%3C/svg%3E");
-    }
-    .checkbox:focus-visible {
-        outline: none;
-    }
-    .counts > input {
-        background-color: #222;
-        padding: 5px;
-        border: #666 1px solid;
-        border-radius: 5px;
-        color: #fff;
-        height: 24px;
-    }
-    .counts {
-        height: 100%;
-    }
-    .main {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-    button {
-        padding: 5px;
-        background-color: #222;
-        width: 20%;
-        border: #666 1px solid;
-        border-radius: 5px;
-        color: #fff;
-        transition: 0.2s all;
-    }
-    button:hover {
-        background-color: #666;
-        transition: 0.2s all;
-        cursor: pointer;
-    }
-    .item {
-        display: flex;
-        gap: 10px;
-        margin: 10px 0;
-        height: 30px;
-    }
-    hr {
-        margin: 20px 0;
-        border-color: #666;
-    }
-    input[type='text'] {
-        width: 100%;
-        padding: 5px;
-        background-color: #222;
-        border: #666 1px solid;
-        border-radius: 5px;
-        color: #fff;
     }
 </style>

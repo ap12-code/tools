@@ -1,15 +1,18 @@
 <script lang="ts">
     import Container from '$components/Container.svelte';
     import { Decimal } from 'decimal.js';
-    import type { PageServerData } from './$types';
-    import moment from 'moment';
+    import { DateTime } from 'luxon';
     import { onMount } from 'svelte';
 
-    interface Props {
-        data: Record<string, number>;
-    }
+    type Data = {
+        status: boolean;
+        datetime: string;
+    } & Record<string, number>;
 
-    let { data = $bindable() }: Props = $props();
+    let loading = $state(true);
+    let load_error = $state('');
+
+    let data: Data | null = $state(null);
     let errs: Record<string, boolean> = $state({});
     let vaules: Record<string, string> = $state({
         JPY: '0',
@@ -27,17 +30,23 @@
 
     async function load() {
         const resp = await fetch(`https://exchange-rate-api.krnk.org/api/rate`);
+        if (!resp.ok) {
+            load_error = '';
+            return;
+        }
         data = await resp.json();
+        loading = false;
     }
 
     function change(unit: string, re?: boolean) {
         if (vaules[unit].endsWith('.')) return;
+        if (data == null) return;
+
         errs[unit] = false;
         if (!errs[unit]) {
             if (!vaules[unit]) vaules[unit] = '0';
             if (isNaN(parseFloat(vaules[unit]))) return (errs[unit] = true);
             vaules[unit] = parseFloat(vaules[unit]).toString();
-            console.log(vaules);
             for (let v of Object.keys(vaules)) {
                 if (v == unit) continue;
                 if (unit == 'JPY') {
@@ -58,15 +67,21 @@
 <Container back_to={'/tool/converters'}>
     <h1>通貨換算</h1>
     <hr />
-    <div class="main">
-        {#each Object.keys(vaules) as k}
-            <div>
-                <input class:err={errs[k]} bind:value={vaules[k]} oninput={(_) => change(k)} />
-                <span>{k}</span>
-            </div>
-        {/each}
-    </div>
-    <p>為替データ取得日時: {moment(data.datetime).format('YYYY/MM/DD HH:mm:ss')}</p>
+    {#if loading}
+        <p>データを取得しています...</p>
+    {:else if data != null}
+        <div class="main">
+            {#each Object.keys(vaules) as k}
+                <div>
+                    <input class:err={errs[k]} bind:value={vaules[k]} oninput={(_) => change(k)} />
+                    <span>{k}</span>
+                </div>
+            {/each}
+        </div>
+        <p>為替データ取得日時: {DateTime.fromISO(data.datetime).toFormat('YYYY/MM/DD HH:mm:ss')}</p>
+    {:else}
+        <p>データを取得できませんでした。</p>
+    {/if}
 </Container>
 
 <style>

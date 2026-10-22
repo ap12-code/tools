@@ -72,3 +72,7 @@ export function range(a1: number, a2?: number, a3?: number): number[] {
 export function remap(v: number, in_min: number, in_max: number, out_min: number, out_max: number): number {
     return out_min + ((v - in_min) / (in_max - in_min)) * (out_max - out_min);
 }
+
+export function clamp(v: number, min: number, max: number): number {
+    return Math.min(Math.max(v, min), max);
+}

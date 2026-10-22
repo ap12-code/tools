@@ -16,8 +16,8 @@
 
         if (resp.ok) {
             result = await resp.json();
-            console.log(result);
             result.description = parseText(result.description);
+            console.log($state.snapshot(result.description));
             has_result = true;
         } else {
             error = true;
@@ -52,7 +52,7 @@
                 if (!str) continue;
                 a += str.replace(str, `<span style="${COLOR_MAPPING[str.at(0) || 'f'] || ''}; font-family: unifont;">${str.substring(1)}</span>`);
             }
-            a = a.replaceAll('\n', '<br />');
+            a = a.replaceAll('\\n', '<br />');
             return a || '';
         }
         if (text instanceof Object) {

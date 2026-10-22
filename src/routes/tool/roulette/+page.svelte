@@ -71,28 +71,23 @@
     }
 
     function createTextSize(index: number): number {
-        const angle = resolveAngle();
-        const startAngle = angle * index;
-        const endAngle = angle * (index + 1);
-        const arc = 2 * Math.PI * 50 * ((endAngle - startAngle) / 360);
+        const padding = 0.65;
+        const placement = 0.7;
+        const length = entries[index].name.length * 1.5;
+        const arc = 2 * Math.PI * placement * padding;
 
-        return arc / 4;
+        return Math.min((arc / (entries.length * length)) * 50, 25);
     }
 
     function createTextX(index: number): number {
-        const angle = resolveAngle();
-        const size = Math.min(createTextSize(index) / 2);
-        const startAngle = (angle / 2) * (index * 2 + 1);
-        const radius = 45 - size;
-        return 50 + radius * Math.cos((startAngle * Math.PI) / 180);
+        const angle = (resolveAngle() / 2) * (index * 2 + 1);
+        return 50 + 33 * Math.cos(angle * (Math.PI / 180));
     }
 
     function createTextY(index: number): number {
-        const angle = resolveAngle();
-        const size = Math.min(createTextSize(index) / 2);
-        const startAngle = (angle / 2) * (index * 2 + 1);
-        const radius = 45 - size;
-        return 50 + radius * Math.sin((startAngle * Math.PI) / 180) + size / 2;
+        const angle = (resolveAngle() / 2) * (index * 2 + 1);
+        const offset = createTextSize(index) * 0.07;
+        return 50 + 33 * Math.sin(angle * (Math.PI / 180)) - offset;
     }
 
     function clearIntervals() {
@@ -142,6 +137,7 @@
                 speed -= 0.25;
             }
         }
+        getResult();
     }
 
     function stop() {
@@ -207,7 +203,7 @@
         if (data == null) return;
         try {
             const raw = JSON.parse(data);
-            if (inputs.length <= 1) inputs = raw;
+            if (inputs.length >= 2) inputs = raw;
 
             handleUpdateEntries();
         } catch (e) {
@@ -217,7 +213,7 @@
     }
 
     function save() {
-        const data = JSON.stringify($state.snapshot(inputs));
+        const data = JSON.stringify(entries);
         localStorage.setItem('roulette', data);
     }
 
@@ -280,11 +276,10 @@
                                     <path d="{createArcParam(index)} Z" fill={'#' + input.color.hex} />
                                     <text
                                         x={createTextX(index)}
+                                        y={createTextY(index)}
                                         font-size={createTextSize(index)}
                                         text-anchor="middle"
-                                        alignment-baseline="middle"
-                                        dominant-baseline="center"
-                                        y={createTextY(index)}
+                                        dominant-baseline="central"
                                     >
                                         {input.name}
                                     </text>

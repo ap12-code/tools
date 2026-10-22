@@ -1,5 +1,5 @@
 <script lang="ts" generics="T">
-    import type { Validator } from '$lib/validator';
+    import { alwaysTrueValidator, type Validator } from '$lib/validator';
     import type { Snippet } from 'svelte';
 
     interface Props {
@@ -19,7 +19,7 @@
         oninput = null,
         value = $bindable(),
         placeholder = '',
-        validator = null,
+        validator = alwaysTrueValidator(),
         copyable = false,
         error = $bindable(false),
         error_message = $bindable(''),
@@ -53,8 +53,10 @@
 </script>
 
 <div>
-    <label for={labelId}>{label}</label>
-    <select bind:value {placeholder} id={labelId} class:error onselect={update}>
+    {#if label}
+        <label for={labelId}>{label}</label>
+    {/if}
+    <select bind:value {placeholder} id={labelId} class:error onchange={update}>
         {@render children?.()}
     </select>
     {#if copyable}

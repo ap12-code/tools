@@ -36,7 +36,7 @@
         processing = true;
         err = false;
         imgSrc = [];
-        for (let file of files) {
+        for (let file of Array.from(files)) {
             const fd = new FormData();
             fd.append('uploadfile', file);
             const resp = await fetch(`/tool/image/convert?to=${to_ext}`, {

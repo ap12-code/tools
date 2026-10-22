@@ -1,17 +1,20 @@
 <script lang="ts">
+    import { page } from '$app/state';
     import Container from '$components/Container.svelte';
+    import Text from '$components/form/Text.svelte';
+    import { onMount } from 'svelte';
     let mcid = $state('');
     let result: Record<string, any> = $state({
         players: {}
     });
-    let error = $state(false);
+    let error: string | null = $state(null);
     let processing = $state(false);
     let has_result = $state(false);
 
     async function run() {
         processing = true;
         has_result = false;
-        error = false;
+        error = null;
         const resp = await fetch(`/tool/mcid/lookup`, {
             method: 'POST',
             body: JSON.stringify({
@@ -25,11 +28,20 @@
         if (resp.ok) {
             result = await resp.json();
             has_result = true;
-        } else {
-            error = true;
+        } else if (resp.status == 404) {
+            error = 'プレイヤーが見つかりません';
+        } else if (resp.status == 400) {
+            error = 'MCIDまたはUUIDが無効です。';
         }
         processing = false;
     }
+
+    onMount(() => {
+        if (page.url.searchParams.has('q')) {
+            mcid = page.url.searchParams.get('q')!!;
+            run();
+        }
+    });
 </script>
 
 <Container>
@@ -38,7 +50,7 @@
     <div class="main">
         <div class="input">
             <span>MCID</span>
-            <input type="text" placeholder="akpc" bind:value={mcid} class:err={error} />
+            <Text placeholder="akpc" bind:value={mcid} error_message={error} error={error != null} />
         </div>
         <div>
             <button onclick={(_) => run()}>実行</button>
@@ -81,9 +93,6 @@
         margin: 10px 0;
         display: block;
     }
-    .err {
-        border-color: #d00;
-    }
     .main {
         display: flex;
         flex-direction: column;
@@ -92,15 +101,6 @@
     hr {
         margin: 20px 0;
         border-color: #666;
-    }
-    input {
-        background-color: #222;
-        padding: 5px;
-        border: #666 1px solid;
-        border-radius: 5px;
-        color: #fff;
-        height: 24px;
-        width: 100%;
     }
     button {
         padding: 5px 10px;

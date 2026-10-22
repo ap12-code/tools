@@ -1,5 +1,5 @@
 import adapterNode from '@sveltejs/adapter-node';
-import adapterStatic from "@sveltejs/adapter-static"
+import adapterStatic from "@sveltejs/adapter-static";
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { mdsvex } from 'mdsvex';
 import { env } from 'process';
@@ -26,9 +26,6 @@ const config = {
         }),
         alias: {
             $components: 'src/components/*'
-        },
-        csrf: {
-            checkOrigin: false
         },
     }
 };
