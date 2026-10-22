@@ -13,7 +13,7 @@ const RESPONSE_HEADERS = {
 const RequestSchema = z
     .object({
         address: z.string(),
-        param: z.enum(['A', 'AAAA', 'CNAME', 'MX', 'NS', 'SOA', 'TXT'] as const)
+        param: z.enum(['ANY', 'A', 'AAAA', 'CNAME', 'MX', 'NS', 'SOA', 'TXT'] as const)
     })
     .superRefine((data, ctx) => {
         if (!verifyAddress(data.address)) {
