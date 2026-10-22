@@ -1,19 +1,57 @@
 import { error, type RequestHandler } from '@sveltejs/kit';
 import { promisify } from 'util';
-import { exec } from 'child_process';
 import { verifyAddress } from '$lib/server/verifier';
+import { execFile } from 'node:child_process';
+import z from 'zod';
 
-const execAsync = promisify(exec);
+const execFileAsync = promisify(execFile);
+const RESPONSE_HEADERS = {
+    'Content-Type': 'text/plain; charset=utf-8',
+    'Access-Control-Allow-Origin': '*'
+};
+
+const RequestSchema = z
+    .object({
+        address: z.string()
+    })
+    .superRefine((data, ctx) => {
+        if (!verifyAddress(data.address)) {
+            ctx.addIssue({
+                code: 'custom',
+                message: 'Invalid address',
+                path: ['address']
+            });
+        }
+    });
+type RequestSchema = z.infer<typeof RequestSchema>;
 
 export const POST: RequestHandler = async ({ request }) => {
-    const body = await request.json();
-    if (!body || !body.address) error(400);
-    if (!verifyAddress(body.address)) error(403);
-    if (body.address.includes(' ')) error(403);
+    let input: unknown;
+
     try {
-        const { stdout } = await execAsync(`nslookup ${body.address} 1.1.1.1`);
-        return new Response(stdout, { headers: { 'Access-Control-Allow-Origin': '*' } });
+        input = await request.json();
+    } catch {
+        error(400, 'Invalid Payload');
+    }
+
+    const parse_result = RequestSchema.safeParse(input);
+    if (!parse_result.success) {
+        error(400, 'Invalid Request');
+    }
+    const body = parse_result.data;
+
+    if (!body || typeof body.address !== 'string' || !verifyAddress(body.address)) {
+        error(400, 'Invalid request');
+    }
+
+    try {
+        const { stdout } = await execFileAsync(`nslookup`, [body.address, '1.1.1.1'], { timeout: 5000, maxBuffer: 1024 * 1024 });
+        return new Response(stdout, { headers: RESPONSE_HEADERS });
     } catch (e: any) {
-        return new Response(e.stdout);
+        console.log('DNS Lookup Failed');
+        return new Response('DNS Lookup Failed', {
+            status: 502,
+            headers: RESPONSE_HEADERS
+        });
     }
 };

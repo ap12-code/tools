@@ -1,10 +1,14 @@
 import { error, fail, json, type RequestHandler } from '@sveltejs/kit';
 import { promisify } from 'util';
-import { exec } from 'child_process';
 import { xml2json } from 'xml-js';
 import { verifyAddress } from '$lib/server/verifier';
+import { execFile } from 'node:child_process';
 
-const execAsync = promisify(exec);
+const execFileAsync = promisify(execFile);
+const RESPONSE_HEADERS = {
+    'Content-Type': 'application/json; charset=utf-8',
+    'Access-Control-Allow-Origin': '*'
+};
 
 const keys1 = ['Registrant', 'Admin', 'Tech', 'Registry', 'Billing', 'Registrar'];
 const keys2 = ['Domain Name', 'WHOIS Server', 'Updated Date', 'Creation Date', 'DNSSEC', 'Domain Status'];
@@ -38,7 +42,7 @@ async function run_whois(address: string) {
                 whoisServer = element.elements.find((p) => p.name == 'whoisServer')?.attributes.host ?? '';
             }
         });
-        const { stdout } = await execAsync(`whois ${address} ${whoisServer}`);
+        const { stdout } = await execFileAsync(`whois`, [address, whoisServer]);
         const splited = stdout.split('\n');
         let result: Record<string, any> = {};
 
@@ -77,11 +81,11 @@ export const GET: RequestHandler = async ({ url }) => {
     if (!address) error(400);
     if (!verifyAddress(address))
         throw fail(422, {
-            message: `query 'domain' is not available.`,
+            message: `query 'domain' is not valid.`,
             domain: address
         });
 
-    return json(await run_whois(address));
+    return json(await run_whois(address), { headers: RESPONSE_HEADERS });
 };
 
 export const POST: RequestHandler = async ({ request, fetch }) => {
@@ -90,9 +94,9 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
     if (!body || !body.address) error(400);
     if (!verifyAddress(body.address))
         throw fail(422, {
-            message: `body 'address' is not available.`,
+            message: `body 'address' is not valid.`,
             address: body.address
         });
 
-    return json(await run_whois(body.address));
+    return json(await run_whois(body.address), { headers: RESPONSE_HEADERS });
 };
