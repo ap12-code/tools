@@ -88,7 +88,7 @@ export const GET: RequestHandler = async ({ url }) => {
     return json(await run_whois(address), { headers: RESPONSE_HEADERS });
 };
 
-export const POST: RequestHandler = async ({ request, fetch }) => {
+export const POST: RequestHandler = async ({ request }) => {
     const body = await request.json();
 
     if (!body || !body.address) error(400);
